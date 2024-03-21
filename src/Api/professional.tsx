@@ -1,5 +1,6 @@
 import api from '../Services/axios'
 import profRoutes from '../Services/Endpoints/profEndpoints'
+import errorHandler from './errorHandler'
 
 export const signup = async (email:string,password:string)=>{
     try{
@@ -7,6 +8,7 @@ export const signup = async (email:string,password:string)=>{
         return res;
     }catch(err){
         console.log(err);
+        errorHandler(err as Error);
     }
 }
 
@@ -16,6 +18,7 @@ export const login = async (email:string,password:string)=>{
         return res;
     }catch(err){
         console.log(err);
+        errorHandler(err as Error);
     }
 }
 
@@ -25,6 +28,17 @@ export const verifyOTP = async (otp:string)=>{
         return res;
     }catch(err){
         console.log(err);
+        errorHandler(err as Error);
+    }
+}
+
+export const gsignup = async (firstname:string,email:string,password:string)=>{
+    try{
+        let res = await api.post(profRoutes.gsignup,{firstname,email,password})
+        return res;
+    }catch(err){
+        console.log(err);
+        errorHandler(err as Error);
     }
 }
 
@@ -45,6 +59,6 @@ export const fillProfile = async (data:FormData)=>{
              
     }catch(err){
         console.log(err);
-        return null;
+        errorHandler(err as Error);
     }
 }

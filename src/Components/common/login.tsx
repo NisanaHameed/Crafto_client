@@ -4,6 +4,8 @@ import { login as profLogin } from '../../Api/professional'
 import { login as userLogin } from '../../Api/user'
 import { useDispatch } from "react-redux"
 import { setProfCredential, setUserCredential } from "../../Store/Slice/AuthSlice"
+import toast from "react-hot-toast"
+import GoogleAuth from "./GoogleAuth"
 
 const Login = () => {
 
@@ -15,10 +17,10 @@ const Login = () => {
     const dispatch = useDispatch();
     const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    const handleNavigate = ()=>{
-        if(role===true){
+    const handleNavigate = () => {
+        if (role === true) {
             navigate('/signup')
-        }else{
+        } else {
             navigate('/professional/signup')
         }
     }
@@ -40,16 +42,31 @@ const Login = () => {
                 if (res.data.success) {
                     console.log('success')
                     dispatch(setUserCredential(res.data.token));
+                    toast((t) => (
+                        <span className="text-[#2e695e]">
+                          Successfully logged in!
+                          <button className="pl-4" onClick={() => toast.dismiss(t.id)}>
+                          <img src="/close.png" alt="" />
+                          </button>
+                        </span>
+                      ))
+               
                     navigate('/')
 
-                } else {
-                    setErr(res.data.message);
-                }
+                } 
             } else {
                 console.log('professional login')
                 let res = await profLogin(email, password);
                 if (res.data.success) {
                     dispatch(setProfCredential(res.data.token));
+                    toast((t) => (
+                        <span className="text-[#2e695e]">
+                          Successfully logged in!
+                          <button className="pl-4" onClick={() => toast.dismiss(t.id)}>
+                          <img src="/close.png" alt="" />
+                          </button>
+                        </span>
+                      ))
                     navigate('/professional')
                 }
             }
@@ -74,9 +91,9 @@ const Login = () => {
                 {/* Signup Section */}
                 <div className="w-full md:w-1/2 flex items-center justify-center">
                     <div className="w-full bg-white md:mt-0 sm:max-w-md xl:p-0 dark:bg-white">
-                    <h1 className="ml-7 text-xl font-normal leading-tight tracking-tight text-gray-900 md:text-2xl">
-                                Login
-                            </h1>
+                        <h1 className="ml-7 text-xl font-normal leading-tight tracking-tight text-gray-900 md:text-2xl">
+                            Login
+                        </h1>
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                             <p className="font-normal text-sm">Click below to login as <span className="ms-1 text-sm font-medium text-gray-900 ">{role == true ? 'Professional' : 'User'}</span></p>
                             <label className="inline-flex items-center cursor-pointer mb-5">
@@ -85,10 +102,10 @@ const Login = () => {
                                 <div onClick={() => setRole(!role)} className={`relative w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-gray-600 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px]  after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all peer-checked:bg-[#007562]`}>
 
                                 </div>
-                                
+
 
                             </label>
-                           
+
                             <form className="space-y-4 md:space-y-3" action="#">
 
                                 <div>
@@ -105,10 +122,15 @@ const Login = () => {
                                     <p>{err}</p>
                                     <button type="button" onClick={handleSubmit} className="w-full mt-2 text-white bg-[#007562] hover:bg-[#2a5b53] focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-md text-sm px-5 py-2.5 text-center ">Login</button>
                                     {/* <button type="button" className="w-full mt-2 hover:text-white hover:bg-zinc-500 bg-white text-black border border-[#007562] focus:ring-4 focus:outline-none  font-medium rounded-md text-sm px-5 py-2.5 text-center ">Sign In with Google</button> */}
+                                    <div className="btn-wrapper mt-3 text-center">
+                                        <GoogleAuth Login={true} user={role} />
+                                        </div>
                                 </div>
-                                <p className="text-sm font-light text-gray-800">
-                                    Create new account? <a onClick={handleNavigate} className="font-medium text-primary-600 hover:underline text-[#007562] cursor-pointer">SignUp</a>
+                                <p className="font-semibold text-sm text-[#3f8377] cursor-pointer">Forgot your password?</p>
+                                <p className="text-sm font-normal text-gray-800">
+                                    Don't have an account yet? <a onClick={handleNavigate} className="font-medium text-primary-600 hover:underline text-[#007562] cursor-pointer">Join Now</a>
                                 </p>
+
                             </form>
                         </div>
                     </div>

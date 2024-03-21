@@ -8,14 +8,11 @@ interface state{
 }
 
 const UserLoggedIn = ()=>{
-
     const userData = useSelector((state:state)=>state.auth);
-    console.log(userData)
-    console.log('token checking...')
-    return (
-        userData.userData ? <Navigate to='/' /> : <Outlet />
-    )
 
+    return (
+        userData.userData ? < Outlet /> : <Navigate to='/login' />
+    )
 }
 
 export default UserLoggedIn;

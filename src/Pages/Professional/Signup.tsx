@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { signup } from '../../Api/professional'
+import GoogleAuth from "../../Components/common/GoogleAuth"
 
 const Signup = () => {
 
@@ -81,6 +82,9 @@ const Signup = () => {
                                     <p>{err}</p>
                                     <button type="button" onClick={handleSubmit} className="w-full mt-2 text-white bg-[#007562] hover:bg-[#2a5b53] focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-md text-sm px-5 py-2.5 text-center ">SignUp</button>
                                     {/* <button type="button" className="w-full mt-2 hover:text-white hover:bg-zinc-500 bg-white text-black border border-[#007562] focus:ring-4 focus:outline-none  font-medium rounded-md text-sm px-5 py-2.5 text-center ">Sign In with Google</button> */}
+                                    <div className="btn-wrapper mt-3 text-center">
+                                        <GoogleAuth Login={false} user={false} />
+                                        </div>
                                 </div>
                                 <p className="text-sm font-light text-gray-800" >
                                     Already have an account? <a onClick={()=>navigate('/professional/login')} className="font-medium text-primary-600 hover:underline text-[#007562] cursor-pointer">Login here</a>

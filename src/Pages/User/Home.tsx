@@ -1,16 +1,17 @@
 import Navbar from '../../Components/common/Navbar'
+import HeroSection from '../../Components/common/HeroSection';
+import Footer from '../../Components/common/Footer';
+import DesignCards from '../../Components/User/DesignCards';
 
 const Home = () => {
+    let userData = localStorage.getItem('userData')
+    console.log(userData)
     return (
         <>
-            <Navbar role={'user'}/>
-
-            <div className='relative flex justify-center overflow-hidden '>
-                <div className='absolute px-4 bg-[#0e3014] h-1/2 lg:h-80'>
-                    <h2 className=' text-gray-400 mt-28 lg:mt-52 text-xl lg:text-3xl font-sans'>Find professionals for<br />your perfect space</h2>
-                </div>
-                <img src="sofa.jpg" className=' p-0 max-h-full' alt="" />
-            </div>
+            < Navbar role={'user'} isLoggedIn={userData} />
+            < HeroSection />
+            < DesignCards />
+            < Footer />
         </>
     )
 }
