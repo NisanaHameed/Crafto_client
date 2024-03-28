@@ -12,7 +12,7 @@ const ProfLoggedOut = ()=>{
 
     const {userData,profData} = useSelector((state:state)=>state.auth);
     console.log(profData)
-    console.log('token checking...')
+    console.log('In profLoggedOut')
     // return (
     //     profData ? <Navigate to='/professional' /> : < Outlet />
     // )

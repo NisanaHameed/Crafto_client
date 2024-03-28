@@ -4,6 +4,7 @@ const Dashboard = ()=>{
     return (
         <>
         <Sidebar />
+        <h2>Dashboard</h2>
         </>
     )
 }

@@ -9,6 +9,7 @@ interface ErrorResponse {
 const errorHandler = (error: Error | AxiosError) => {
 
     const axiosError = error as AxiosError;
+
     if (axiosError.response?.data) {
         const errorResponse = axiosError.response.data as ErrorResponse;
         if (errorResponse.message === "User is blocked by admin!") {
@@ -23,6 +24,7 @@ const errorHandler = (error: Error | AxiosError) => {
     } else {
         toast.error('Something went wrong. Please try again!');
     }
+    
 }
 
 export default errorHandler

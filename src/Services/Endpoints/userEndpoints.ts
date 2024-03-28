@@ -4,7 +4,8 @@ const userRoutes = {
     gsignUp:'/gsignup',
     login:"/login",
     profile:"/profile",
-    editProfile:"/editProfile"
+    editProfile:"/editProfile",
+    logout:'/logout'
 }
 
 export default userRoutes;

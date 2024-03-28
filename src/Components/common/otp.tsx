@@ -82,7 +82,6 @@ console.log(role);
                 console.log('in prof')
                 let res = await verifyOTP(otp.digitOne+otp.digitTwo+otp.digitThree+otp.digitFour);
                 if(res.data.success){
-                    await dispatch(setProfCredential(res.data.token));
                     navigate('/professional/fillProfile')
                 }
             }

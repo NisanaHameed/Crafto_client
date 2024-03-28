@@ -10,7 +10,7 @@ interface state {
 const ProfLoggedIn = ()=>{   
 
     const {profData} = useSelector((state:state)=>state.auth);
-console.log('In profLoggedout'+profData);
+console.log('In profLoggedIn'+profData);
 
     return (
 

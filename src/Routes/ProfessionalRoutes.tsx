@@ -4,10 +4,12 @@ import Signup from '../Pages/Professional/Signup'
 import Otp from '../Components/common/otp'
 import FillProfile from '../Pages/Professional/FillProfile'
 import Home from '../Pages/Professional/Home'
-import Profile from '../Pages/Professional/Profile'
+import ProfilePage from '../Pages/Professional/Profile'
 import ProfLoggedOut from '../Components/Professional/ProfLoggedOut'
 import ProfLoggedIn from '../Components/Professional/ProfLoggedIn'
 import HomeProtect from '../Components/Professional/HomeProtect'
+import FillProfileProtect from '../Components/Professional/FillProfileProtect'
+import EditProfile from '../Pages/Professional/EditProfile'
 
 const ProfessionalRoutes = () => {
     return (
@@ -21,10 +23,12 @@ const ProfessionalRoutes = () => {
                 <Route path='signup' element={<Signup />} />
                 <Route path='verifyOtp' element={<Otp role={'professional'} />} />
             </Route>
-
-            <Route path='' element={< ProfLoggedIn />}>
+            <Route path='' element={<FillProfileProtect />}>
                 <Route path='fillProfile' element={<FillProfile />} />
-                <Route path='profile' element={<Profile />} />
+            </Route>
+            <Route path='' element={< ProfLoggedIn />}>
+                <Route path='profile' element={<ProfilePage />} />
+                <Route path='/editProfile' element={<EditProfile/>} />
             </Route>
 
         </Routes>

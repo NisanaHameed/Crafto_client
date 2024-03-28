@@ -1,39 +1,82 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from "react-redux"
 import { profLogout, userLogout } from "../../Store/Slice/AuthSlice"
+import { profProfile,logout } from "../../Api/professional"
+import { logout as userLogoutapi } from "../../Api/user"
+import toast from "react-hot-toast"
 
 interface NavbarProps {
     role: 'user' | 'professional',
     isLoggedIn: string | null
 }
 
-const Navbar: React.FC<NavbarProps> = ({ role,isLoggedIn }) => {
-   
+
+const Navbar: React.FC<NavbarProps> = ({ role, isLoggedIn }) => {
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (role == 'professional' && isLoggedIn !== null) {
+                let Data = await profProfile();
+                console.log(Data)
+                setImage(Data.data.profdata.image);
+            }
+        }
+        fetchData();
+    }, [role, isLoggedIn])
+
+
     const [toggle, setToggle] = useState(false);
-    const [loggedIn,setLoggedIn] = useState(isLoggedIn)
+    const [loggedIn, setLoggedIn] = useState(isLoggedIn)
+    const [image, setImage] = useState('/profile.png')
     console.log(loggedIn)
+    console.log(image)
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    
 
-    const handleLogout = () => {
+
+    const handleLogout = async () => {
         if (role === 'user') {
+            await userLogoutapi();
             dispatch(userLogout())
+            toast.success("You are logged out!")
             setLoggedIn(null)
         } else if (role === 'professional') {
+            await logout();
             dispatch(profLogout());
+            toast.success("You are logged out!")
             setLoggedIn(null);
         }
     }
-    const handleSignin = () =>{
+    const handleSignin = () => {
         navigate('/login')
+    }
+
+    const clickProfile = () => {
+
+        if (role == 'user') {
+            navigate('/profile')
+        } else {
+            navigate('/professional/profile')
+        }
+    }
+
+    const handleNotification = () =>{
+        if(isLoggedIn==null){
+            toast('Please Login!')
+        }else{
+            toast('Feature will be done in week3',{
+                style:{
+                   color:'gray'
+                }
+            })
+        }
     }
 
     return (
         <div>
-            <nav className="bg-white border">
+            <nav className="bg-white border shadow-lg shadow-gray-200">
                 <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                     <div className="relative flex h-16 items-center justify-between">
                         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -61,7 +104,7 @@ const Navbar: React.FC<NavbarProps> = ({ role,isLoggedIn }) => {
                         </div>
                         <div className="flex flex-1 items-center justify-center sm:justify-start">
                             <div className="flex flex-shrink-0 items-center">
-                                <img onClick={() => navigate('/')} className="w-44 h-auto cursor-pointer" src="craftoLogo.png" alt="CRAFTO" />
+                                <img onClick={() => navigate('/')} className="w-44 h-auto cursor-pointer" src="/craftoLogo.png" alt="CRAFTO" />
                             </div>
                             <div className="hidden sm:ml-6 sm:block">
                                 <div className="flex space-x-4">
@@ -81,14 +124,15 @@ const Navbar: React.FC<NavbarProps> = ({ role,isLoggedIn }) => {
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                                 </svg>
                             </button> */}
+                            <img src="/notification.png" onClick={handleNotification} className="w-6 cursor-pointer" alt="" />
 
                             {/* <!-- Profile dropdown --> */}
-                           {loggedIn ? (<div className="relative ml-3">
+                            {loggedIn ? (<div className="relative ml-3">
                                 <div>
                                     <button type="button" onClick={() => setToggle(toggle => !toggle)} className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                         <span className="absolute -inset-1.5"></span>
                                         <span className="sr-only">Open user menu</span>
-                                        <img className="h-8 w-8 rounded-full" src="/profile.png" alt="" />
+                                        <img className="h-8 w-8 rounded-full" src={image} alt="" />
                                     </button >
                                 </div>
 
@@ -104,21 +148,21 @@ const Navbar: React.FC<NavbarProps> = ({ role,isLoggedIn }) => {
           --> */}
                                 <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden " role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" style={{ display: toggle ? 'block' : 'none' }}>
                                     {/* <!-- Active: "bg-gray-100", Not Active: "" --> */}
-                                    <a onClick={()=>navigate('/profile')} className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-0">Profile</a>
+                                    <a onClick={clickProfile} className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-0">Profile</a>
                                     <a href="#" className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-1">Settings</a>
                                     <a onClick={handleLogout} className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-2">Logout</a>
                                 </div>
                             </div>)
-                            :
-                            (
-                            <button type="button" onClick={handleSignin} className="relative py-2 px-4 border border-green-800 p-1 text-gray-800 font-semibold hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                                {/* <span className="absolute -inset-1.5"></span>
+                                :
+                                (
+                                    <button type="button" onClick={handleSignin} className="relative py-2 px-4 border border-green-800 p-1 text-gray-800 font-semibold hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                                        {/* <span className="absolute -inset-1.5"></span>
                                 <span className="sr-only">Sign In</span>
                                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                                 </svg> */}
-                                Sign In
-                            </button>)
+                                        Sign In
+                                    </button>)
                             }
                         </div>
                     </div>

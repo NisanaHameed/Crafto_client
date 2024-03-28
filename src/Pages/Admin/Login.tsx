@@ -30,10 +30,7 @@ const Login = ()=>{
                     console.log('success')
                     dispatch(setAdminCredential(res.data.token));
                     navigate('/admin')
-
-                } else {
-                    setErr(res.data.message);
-                }
+                } 
 
         } catch (err) {
             console.log(err);

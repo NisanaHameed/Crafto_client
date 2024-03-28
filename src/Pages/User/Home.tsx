@@ -5,7 +5,7 @@ import DesignCards from '../../Components/User/DesignCards';
 
 const Home = () => {
     let userData = localStorage.getItem('userData')
-    console.log(userData)
+    
     return (
         <>
             < Navbar role={'user'} isLoggedIn={userData} />

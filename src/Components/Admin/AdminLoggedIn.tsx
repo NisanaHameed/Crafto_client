@@ -7,10 +7,10 @@ interface state{
     }
 }
 
-const AdminLoggedOut = ()=>{
+const AdminLoggedIn = ()=>{
 
     const {adminData} = useSelector((state:state)=>state.auth);
-    console.log('in adminLoggedOut'+adminData)
+    console.log('in adminLoggedIn'+adminData)
 
     return (
 
@@ -19,4 +19,4 @@ const AdminLoggedOut = ()=>{
     )
 }
 
-export default AdminLoggedOut;
+export default AdminLoggedIn;
