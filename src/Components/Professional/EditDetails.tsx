@@ -3,7 +3,7 @@ import { getJobrole } from "../../Api/admin";
 import { useNavigate } from "react-router-dom";
 import { editEmail, editImage, editPassword, editProfile, profProfile } from "../../Api/professional";
 import toast from "react-hot-toast";
-import Otp from "../common/otp";
+
 interface Jobrole {
     name: string
 }
@@ -42,12 +42,12 @@ const EditDetails = () => {
     useEffect(() => {
         const fetchJobroles = async () => {
             try {
-                const { data } = await getJobrole();
+                const res = await getJobrole();
                 const profileResponse = await profProfile();
-                let userdata = profileResponse.data.profdata
+                let userdata = profileResponse?.data.profdata
                 setUserData(userdata);
                 if (data) {
-                    setJobroles(data.jobroles);
+                    setJobroles(res?.data.jobroles);
                 }
             } catch (err) {
                 console.log(err);
@@ -110,7 +110,7 @@ const EditDetails = () => {
         }
 
         const response = await editProfile(data.firstname, data.lastname, data.city, data.company, data.job, data.experience, data.bio);
-        if (response.data.success) {
+        if (response?.data.success) {
             toast.success('Profile edited!');
         }
     }
@@ -119,19 +119,23 @@ const EditDetails = () => {
         let formdata = new FormData();
         formdata.append('image', data.image);
         const response = await editImage(formdata);
-        if (response.data.success) {
+        if (response?.data.success) {
             toast.success('Image updated!');
         }
     }
 
     const handleEditEmail = async (e: any) => {
         e.preventDefault();
+        console.log(data.email)
+        console.log(userData?.email)
         if (data.email === userData?.email) {
             return;
         } else {
             const response = await editEmail(data.email);
-            if (response.data.success) {
-                // <Otp role="professional" />
+            if (response?.data?.success) {
+                navigate('/professional/editProfile/verifyOtp');
+            }else{
+                navigate('/professional/editProfile')
             }
         }
     }
@@ -150,7 +154,7 @@ const EditDetails = () => {
         }
 
         const response = await editPassword(newPassword,currentPassword);
-        if(response.data.success){
+        if(response?.data.success){
             toast.success('Password updated!');
         }
     }

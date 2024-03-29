@@ -28,10 +28,10 @@ const FillProfile = () => {
     useEffect(() => {
         const fetchJobroles = async () => {
             try {
-                const { data } = await getJobrole();
+                const res = await getJobrole();
                 console.log(data)
                 if (data) {
-                    setJobroles(data.jobroles);
+                    setJobroles(res?.data.jobroles);
                 }
             } catch (err) {
                 console.log(err);
@@ -103,9 +103,9 @@ const FillProfile = () => {
             }
 
             let res = await fillProfile(formData);
-            if (res.data.success) {
+            if (res?.data.success) {
                 toast.success("Successfully registered!");
-                await dispatch(setProfCredential(res.data.token));
+                await dispatch(setProfCredential(res?.data.token));
                 navigate('/')
             }
         } catch (err) {

@@ -116,16 +116,52 @@ export const editImage = async (image: FormData) => {
 
 export const editEmail = async (email: string) => {
     try {
-        const res = await api.patch(profRoutes.editEmail, { email })
+        const res = await api.post(profRoutes.editEmail, { email })
+        localStorage.setItem('editEmailToken', res.data.token)
         return res;
     } catch (err) {
         errorHandler(err as Error);
     }
 }
 
-export const editPassword = async (newPassword: string,currentPassword:string) => {
+export const verifyEmailOtp = async (otp: string) => {
     try {
-        const res = await api.patch(profRoutes.editPassword, { newPassword,currentPassword });
+        let token = localStorage.getItem('editEmailToken')
+        let headers = {
+            'authorization': `Bearer ${token}`
+        }
+        const res = await api.put(profRoutes.verifyEmailOtp, { otp }, { headers })
+        localStorage.removeItem('editEmailToken');
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const editPassword = async (newPassword: string, currentPassword: string) => {
+    try {
+        const res = await api.patch(profRoutes.editPassword, { newPassword, currentPassword });
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const createPost = async (formdata: FormData) => {
+    try {
+        const headers = {
+            'Content-Type': 'multipart/form-data'
+        }
+        const res = await api.post(profRoutes.createPost, formdata, { headers });
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const getPosts = async () => {
+    try {
+        const res = await api.get(profRoutes.getPosts);
         return res;
     } catch (err) {
         errorHandler(err as Error);

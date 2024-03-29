@@ -21,7 +21,7 @@ const Sidebar = () => {
             </button>
 
             <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 pr-4 w-64 rounded h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-                <div className="h-full bg-[#0e3014] px-3 py-4 overflow-y-auto shadow-md">
+                <div className="h-full bg-[#0a250f] px-3 py-4 overflow-y-auto shadow-md">
                     <a onClick={() => navigate('/professional')} className="flex items-center pt-4 pb-6 ">
                         <img src="/craftoLogo.png" className="w-48 bg-white rounded-lg h-14 me-3  object-cover" alt="Crafto Logo" />
 

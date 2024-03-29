@@ -47,7 +47,7 @@ const UserEdit: React.FC<Prop> = ({ setShowEdit, userdata }) => {
             }
             console.log(formData)
             let res = await editProfile(formData);
-            if (res.data.success) {
+            if (res?.data.success) {
                 toast.success('Profile edited!');
                 setShowEdit(false);
             }

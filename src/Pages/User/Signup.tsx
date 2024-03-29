@@ -33,12 +33,12 @@ const Signup = () => {
             }
 
             let res = await signup(name, email, mobile, password);
-            if (res.data.success) {
+            if (res?.data.success) {
                 console.log('success')
                 navigate('/verifyOtp')
 
             } else {
-                setErr(res.data.message);
+                setErr(res?.data.message);
             }
         } catch (err) {
             console.log(err);

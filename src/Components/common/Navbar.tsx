@@ -17,9 +17,8 @@ const Navbar: React.FC<NavbarProps> = ({ role, isLoggedIn }) => {
     useEffect(() => {
         const fetchData = async () => {
             if (role == 'professional' && isLoggedIn !== null) {
-                let Data = await profProfile();
-                console.log(Data)
-                setImage(Data.data.profdata.image);
+                let res = await profProfile();
+                setImage(res?.data.profdata.image);
             }
         }
         fetchData();

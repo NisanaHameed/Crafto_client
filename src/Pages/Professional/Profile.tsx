@@ -26,8 +26,8 @@ const ProfilePage = () => {
     useEffect(()=>{
         const fetchData = async()=>{
             try{
-                const {data} = await profProfile();
-                setData(data.profdata);
+                const res = await profProfile();
+                setData(res?.data.profdata);
             }catch(err){
                 console.log(err);
             }

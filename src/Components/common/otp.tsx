@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from "react"
-import { verifyOTP  } from "../../Api/professional"
+import { verifyEmailOtp, verifyOTP  } from "../../Api/professional"
 import { verifyOtp } from "../../Api/user"
 import {useNavigate} from 'react-router-dom'
 import { useDispatch } from "react-redux"
-import { setProfCredential, setUserCredential } from "../../Store/Slice/AuthSlice"
+import { setUserCredential } from "../../Store/Slice/AuthSlice"
+import Navbar from "./Navbar"
+import toast from "react-hot-toast"
 
 interface OtpProps{
     role:'user' | 'professional'
+    signup:Boolean
 }
 
-const Otp:React.FC<OtpProps> = ({role})=> {
+const Otp:React.FC<OtpProps> = ({role,signup})=> {
 console.log(role);
 
     const inputRef = useRef<(HTMLInputElement | null)[]>([]);
@@ -70,19 +73,25 @@ console.log(role);
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
         event.preventDefault();
         try{
-            if(role=='user'){
+            if(role=='user' && signup){
                 console.log('in user')
                 let num = otp.digitOne+otp.digitTwo+otp.digitThree+otp.digitFour
                 let res = await verifyOtp(num);
-                if(res.data.success){
+                if(res?.data.success){
                     dispatch(setUserCredential(res.data.token));
                     navigate('/')
                 }
-            }else if(role=='professional'){
+            }else if(role=='professional' && signup){
                 console.log('in prof')
                 let res = await verifyOTP(otp.digitOne+otp.digitTwo+otp.digitThree+otp.digitFour);
-                if(res.data.success){
+                if(res?.data.success){
                     navigate('/professional/fillProfile')
+                }
+            }else{
+                let res = await verifyEmailOtp(otp.digitOne+otp.digitTwo+otp.digitThree+otp.digitFour);
+                if(res?.data.success){
+                    toast.success('Email updated!');
+                    navigate('/professional/editProfile');
                 }
             }
         }catch(err){
@@ -90,8 +99,10 @@ console.log(role);
         }
     }
     return (
-        <section className="bg-white white:bg-white-900 h-screen flex items-center justify-center">
-            <div className="flex p-10 flex-wrap items-center justify-center border border-gray-400 rounded">
+        <>< Navbar role={role} isLoggedIn={null}/>
+        <section className=" h-screen flex items-center justify-center">
+            
+            <div className="flex p-10 flex-wrap items-center justify-center border shadow-lg rounded">
                 <form action="">
                     <h3 className="text-lg mb-8 ml-16">Please enter otp</h3>
                     <div>
@@ -101,6 +112,7 @@ console.log(role);
                 </form>
             </div>
         </section>
+        </>
     )
 }
 

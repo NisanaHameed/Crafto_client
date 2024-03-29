@@ -14,10 +14,10 @@ const Category = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await getCategory();
+                const res = await getCategory();
                 if (data) {
                     console.log(data)
-                    setCategory(data.categories);
+                    setCategory(res?.data.categories);
                 }
             } catch (err) {
                 console.log(err);
@@ -62,7 +62,7 @@ const Category = () => {
         formData.append('image', data.image);
 
         let res = await addCategory(formData);
-        if (res.data.success) {
+        if (res?.data.success) {
             toast.success('Category added!');
             setRerender(prevstate => !prevstate);
             console.log(rerender);

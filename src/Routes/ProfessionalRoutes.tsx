@@ -10,6 +10,7 @@ import ProfLoggedIn from '../Components/Professional/ProfLoggedIn'
 import HomeProtect from '../Components/Professional/HomeProtect'
 import FillProfileProtect from '../Components/Professional/FillProfileProtect'
 import EditProfile from '../Pages/Professional/EditProfile'
+import CreatePost from '../Pages/Professional/CreatePost'
 
 const ProfessionalRoutes = () => {
     return (
@@ -21,7 +22,7 @@ const ProfessionalRoutes = () => {
             <Route path='' element={< ProfLoggedOut />}>
                 <Route path='login' element={<Login />} />
                 <Route path='signup' element={<Signup />} />
-                <Route path='verifyOtp' element={<Otp role={'professional'} />} />
+                <Route path='verifyOtp' element={<Otp role={'professional'} signup={true}/>} />
             </Route>
             <Route path='' element={<FillProfileProtect />}>
                 <Route path='fillProfile' element={<FillProfile />} />
@@ -29,6 +30,8 @@ const ProfessionalRoutes = () => {
             <Route path='' element={< ProfLoggedIn />}>
                 <Route path='profile' element={<ProfilePage />} />
                 <Route path='/editProfile' element={<EditProfile/>} />
+                <Route path='/editProfile/verifyOtp' element={<Otp role={'professional'} signup={false}/>} />
+                <Route path='/createPost' element={< CreatePost />} />
             </Route>
 
         </Routes>
