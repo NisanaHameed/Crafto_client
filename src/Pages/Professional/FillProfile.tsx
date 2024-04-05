@@ -115,7 +115,7 @@ const FillProfile = () => {
     }
 
     return (
-        <section className="bg-white white:bg-white-900 h-screen flex items-center justify-center">
+        <section className="bg-white bg-white-900 h-screen flex items-center justify-center">
             <div className="flex flex-wrap justify-center ">
                 <div className="w-full flex items-center justify-center">
                     <div className="w-full bg-white md:mt-0 sm:max-w-md xl:p-0 dark:bg-white">
@@ -151,7 +151,7 @@ const FillProfile = () => {
                                             <option selected>Choose a jobrole</option>
                                             {jobroles.map((val, index) => {
                                                 return (
-                                                    <option key={index} value="US">{val.name}</option>
+                                                    <option key={index} value={val.name}>{val.name}</option>
                                                 )
                                             })}
 

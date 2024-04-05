@@ -1,22 +1,51 @@
-import { useSelector } from "react-redux"
-import { Outlet,Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux"
+import { Outlet, Navigate } from "react-router-dom";
+import { profProfile } from "../../Api/professional";
+import { profLogout } from "../../Store/Slice/AuthSlice";
 
 interface state {
-    auth:{
-        profData : string
+    auth: {
+        profData: string
     }
 }
 
-const ProfLoggedIn = ()=>{   
+const ProfLoggedIn = () => {
+    console.log('In ProfLoggedIn')
 
-    const {profData} = useSelector((state:state)=>state.auth);
-console.log('In profLoggedIn'+profData);
+    const [data, setData] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res:any = await profProfile();
+                if (res?.response?.data?.message == "Professional is blocked by admin!") {
+                    setData(true);
+                }
+            } catch (err) {
+                console.log(err);
+            } finally {
+                setLoading(false);
+            }
 
-    return (
+        }
+        fetchData();
+    }, [])
 
-        profData ? < Outlet /> : < Navigate to='/professional/login' />
 
-    )
+    const { profData } = useSelector((state: state) => state.auth);
+
+    if (loading == false && data) {
+        dispatch(profLogout());
+        return (< Navigate to='/professional/login' />)
+    } else if (loading == false) {
+        return (
+
+            profData ? < Outlet /> : < Navigate to='/professional/login' />
+
+        )
+    }
 }
 
 export default ProfLoggedIn;

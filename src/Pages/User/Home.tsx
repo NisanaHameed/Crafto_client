@@ -4,13 +4,12 @@ import Footer from '../../Components/common/Footer';
 import DesignCards from '../../Components/User/DesignCards';
 
 const Home = () => {
-    let userData = localStorage.getItem('userData')
     
     return (
         <>
-            < Navbar role={'user'} isLoggedIn={userData} />
-            < HeroSection />
-            < DesignCards />
+            < Navbar role={'user'} />
+            < HeroSection role={'user'} />
+            < DesignCards role={'user'}/>
             < Footer />
         </>
     )

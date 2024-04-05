@@ -1,12 +1,16 @@
 import Navbar from '../../Components/common/Navbar'
 import HeroSection from '../../Components/common/HeroSection';
+import DesignCards from '../../Components/User/DesignCards';
+import Footer from '../../Components/common/Footer';
 
 const Home = () => {
-    let profData = localStorage.getItem('profData');
+   
     return (
         <>
-            <Navbar role={'professional'} isLoggedIn={profData} />
-            < HeroSection />
+            <Navbar role={'professional'} />
+            < HeroSection role={'professional'} />
+            < DesignCards role={'professional'}/>
+            < Footer />
         </>
     )
 }

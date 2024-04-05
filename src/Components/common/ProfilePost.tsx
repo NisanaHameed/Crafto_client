@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getPosts } from "../../Api/professional"
+import { getPosts, getPostsById } from "../../Api/professional"
 
 interface IPost {
     _id?: string
@@ -8,23 +8,35 @@ interface IPost {
     image: string
 }
 
-const ProfilePost = () => {
+interface IProf {
+    professional: Boolean
+    id: string
+    postCount: Function
+}
+
+const ProfilePost: React.FC<IProf> = ({ professional, id, postCount }) => {
 
     useEffect(() => {
         const fetchPost = async () => {
-            const res = await getPosts();
-            console.log(res)
-            if (res?.data.posts) {
-                setPosts(res.data.posts);
+            if (professional) {
+                const res = await getPosts();
+                console.log(res)
+                if (res?.data.posts) {
+                    setPosts(res.data.posts);
+                }
+            } else {
+                const res = await getPostsById(id);
+                setPosts(res?.data?.posts);
             }
         }
         fetchPost();
+        postCount(posts.length);
     }, [])
 
     const [posts, setPosts] = useState<IPost[]>([]);
     return (
         <>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-2">
                 {posts && posts.map((val, index) =>
                 (
                     <div key={index}>

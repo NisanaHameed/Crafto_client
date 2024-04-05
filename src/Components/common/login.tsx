@@ -39,7 +39,7 @@ const Login = () => {
             if (role) {
                 console.log('user login')
                 let res = await userLogin(email, password);
-                if (res.data.success) {
+                if (res?.data.success) {
                     console.log('success')
                     dispatch(setUserCredential(res.data.token));
                     toast((t) => (
@@ -57,7 +57,7 @@ const Login = () => {
             } else {
                 console.log('professional login')
                 let res = await profLogin(email, password);
-                if (res.data.success) {
+                if (res?.data.success) {
                     dispatch(setProfCredential(res.data.token));
                     toast((t) => (
                         <span className="text-[#2e695e]">

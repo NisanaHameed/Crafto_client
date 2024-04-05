@@ -5,6 +5,11 @@ const userRoutes = {
     login:"/login",
     profile:"/profile",
     editProfile:"/editProfile",
+    getDesigns:'/designs',
+    getAllDesigns:'/allDesigns',
+    postRequirement:'/postRequirement',
+    getRequirements:'/requirements',
+    updateReq:'/updateReq',
     logout:'/logout'
 }
 

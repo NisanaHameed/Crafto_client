@@ -51,13 +51,6 @@ const Sidebar = () => {
                                 <span className="flex-1 ms-3 whitespace-nowrap">Create Post</span>
                             </a>
                         </li>
-
-                        <li>
-                            <a onClick={() => navigate('/professional/portrait')} className="flex items-center font-normal p-2 pb-4 text-gray-200 rounded-lg hover:bg-[#133819] group cursor-pointer">
-                                <img src="/portraiticon.png" className="w-6" alt="" />
-                                <span className="flex-1 ms-3 whitespace-nowrap">View Portrait</span>
-                            </a>
-                        </li>
                         <li>
                             <a onClick={handleLogout} className="flex items-center font-normal p-2 pb-4 cursor-pointer text-gray-200 rounded-lg hover:bg-[#133819] group">
                                 <img src="/logouticon.png" className="w-6" alt="" />

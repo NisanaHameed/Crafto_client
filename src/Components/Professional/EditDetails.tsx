@@ -43,7 +43,7 @@ const EditDetails = () => {
         const fetchJobroles = async () => {
             try {
                 const res = await getJobrole();
-                const profileResponse = await profProfile();
+                const profileResponse:any = await profProfile();
                 let userdata = profileResponse?.data.profdata
                 setUserData(userdata);
                 if (data) {

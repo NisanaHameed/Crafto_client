@@ -2,6 +2,17 @@ import api from '../Services/axios'
 import userRoutes from '../Services/Endpoints/userEndpoints'
 import errorHandler from './errorHandler'
 
+interface IRequirement {
+    area: string,
+    budget: string,
+    workPeriod: string,
+    service: string,
+    rooms?: string,
+    type?: string,
+    scope?: string,
+    plan?: string
+}
+
 export const signup = async (name: string, email: string, mobile: number, password: string) => {
     try {
         console.log('in signup api')
@@ -57,34 +68,81 @@ export const verifyOtp = async (otp: string) => {
     }
 }
 
-export const userProfile = async () =>{
-    try{
+export const userProfile = async () => {
+    try {
         let res = await api.get(userRoutes.profile);
         return res;
 
-    }catch(err){
+    } catch (err) {
         errorHandler(err as Error);
+        return err;
     }
 }
 
-export const editProfile = async (data:FormData)=>{
-    try{
+export const editProfile = async (data: FormData) => {
+    try {
         console.log(data)
         const headers = {
             'Content-Type': 'multipart/form-data'
         }
-        const res = await api.patch(userRoutes.editProfile,data,{headers});
+        const res = await api.patch(userRoutes.editProfile, data, { headers });
         return res;
-    }catch(err){
+    } catch (err) {
         errorHandler(err as Error);
     }
 }
 
-export const logout = async () =>{
-    try{
+export const getDesigns = async (category: string) => {
+    try {
+        const res = await api.get(`${userRoutes.getDesigns}/${category}`);
+        console.log(res)
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const getAllDesigns = async () => {
+    try {
+        const res = await api.get(userRoutes.getAllDesigns);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const postRequirement = async (data: IRequirement) => {
+    try {
+        const res = await api.post(userRoutes.postRequirement, data);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const getRequirements = async () => {
+    try {
+        const res = await api.get(userRoutes.getRequirements);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const updateReq = async (id: string, status: string) => {
+    try {
+        const res = await api.put(userRoutes.updateReq, { id, status });
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const logout = async () => {
+    try {
         const res = await api.get(userRoutes.logout);
         return res;
-    }catch(err){
+    } catch (err) {
         errorHandler(err as Error);
     }
 }

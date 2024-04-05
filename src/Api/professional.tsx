@@ -86,10 +86,12 @@ export const fillProfile = async (data: FormData) => {
 
 export const profProfile = async () => {
     try {
+        console.log('in profProfile api')
         let res = await api.get(profRoutes.profile);
         return res;
     } catch (err) {
         errorHandler(err as Error)
+        return err;
     }
 }
 
@@ -162,6 +164,44 @@ export const createPost = async (formdata: FormData) => {
 export const getPosts = async () => {
     try {
         const res = await api.get(profRoutes.getPosts);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const getPortraits = async () => {
+    try {
+        const res = await api.get(profRoutes.getPortraits);
+        console.log(res);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const getProfs = async () => {
+    try {
+        const res = await api.get(profRoutes.getProfessionals);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const profDetails = async (id: string) => {
+    try {
+        const res = await api.get(`${profRoutes.profDetails}/${id}`);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const getPostsById = async (id: string) => {
+    try {
+        console.log(id)
+        const res = await api.get(`${profRoutes.getPostsById}/${id}`);
         return res;
     } catch (err) {
         errorHandler(err as Error);

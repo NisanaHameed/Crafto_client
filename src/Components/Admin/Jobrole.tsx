@@ -23,8 +23,8 @@ const Jobrole = () => {
     useEffect(() => {
         const fetchJobroles = async () => {
             try {
-                const { data } = await getJobrole();
-                setJobroles(data.jobroles);
+                const res = await getJobrole();
+                setJobroles(res?.data.jobroles);
             } catch (err) {
                 console.log(err);
             }
@@ -40,7 +40,7 @@ const Jobrole = () => {
         }
         console.log(name)
         const res = await addJobrole(name);
-        if (res.data.success) {
+        if (res?.data.success) {
             toast.success('Jobrole added!');
             setRerender(!rerender);
             setName('')
@@ -56,7 +56,7 @@ const Jobrole = () => {
 
     const handleConfirmDelete = async () => {
         const res = await deleteJobrole(deletingJId);
-        if (res.data.success) {
+        if (res?.data.success) {
             toast.success('Jobrole deleted!')
         }
         setShowConfirmationModal(false);
@@ -77,7 +77,7 @@ const Jobrole = () => {
         }
 
         const res = await editJobrole(id,editedName);
-        if(res.data.success){
+        if(res?.data.success){
             toast.success('jobrole edited!');
         }
         setEditingId('');

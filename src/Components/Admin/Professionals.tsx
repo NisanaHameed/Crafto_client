@@ -23,11 +23,9 @@ const Professional = () => {
         const fetchUsers = async () => {
             try {
                 const response = await getProfessionals();
-                const { data } = response;
-                console.log(data);
-                if (data) {
-                    setProfs(data.profs);
-                    console.log('profs' + profs)
+                const res = response;
+                if (res) {
+                    setProfs(res.data.profs);
                 }
             } catch (error) {
                 console.log(error);

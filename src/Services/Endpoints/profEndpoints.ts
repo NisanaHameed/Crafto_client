@@ -12,6 +12,10 @@ const profRoutes = {
     editPassword:'/professional/editPassword',
     createPost:'/professional/createPost',
     getPosts:'/professional/getPosts',
+    getPortraits:'/professional/portraits',
+    getProfessionals:'/professional/professionals',
+    profDetails:'/professional/profDetails',
+    getPostsById:'/professional/postsById',
     logout:'/professional/logout'
 }
 

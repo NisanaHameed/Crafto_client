@@ -204,8 +204,8 @@ const Category = () => {
                         {category.map((val, index) => {
                             return (
                                 <tr className="bg-white border-b" key={index}>
-                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowra">
-                                        <img src={val.image} alt="" className="w-24 object-cover rounded-sm" />
+                                    <th scope="row" className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                        <img src={val.image} alt="" className="w-24 h-16 object-cover rounded-sm" />
 
                                     </th>
                                     <td className="px-6 py-4">

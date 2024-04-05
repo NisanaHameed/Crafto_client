@@ -15,8 +15,8 @@ const ProfileSection = () => {
     const [userdata,setUserdata] = useState<Userdata>()
     useEffect(()=>{
         let fetchData = async ()=>{
-            let {data} = await userProfile();
-            setUserdata(data.userdata);
+            let res:any = await userProfile();
+            setUserdata(res?.data.userdata);
         }
         fetchData();
     },[])

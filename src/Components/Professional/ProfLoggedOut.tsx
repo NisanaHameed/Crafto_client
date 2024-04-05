@@ -13,9 +13,6 @@ const ProfLoggedOut = ()=>{
     const {userData,profData} = useSelector((state:state)=>state.auth);
     console.log(profData)
     console.log('In profLoggedOut')
-    // return (
-    //     profData ? <Navigate to='/professional' /> : < Outlet />
-    // )
     if(userData){
         return <Navigate to='/' />
     }else if(profData){

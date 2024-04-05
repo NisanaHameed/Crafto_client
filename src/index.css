@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.scrlbr::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }

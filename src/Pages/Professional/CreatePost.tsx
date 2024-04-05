@@ -80,7 +80,7 @@ const CreatePost = () => {
                             </div>
                         ) :
                             (
-                                <div className="h-56 bg-[#c1c1c1] flex rounded items-center">
+                                <div className="h-56 border border-dashed border-slate-300 flex rounded items-center">
                                     <img src='/homeicon.png' className="rounded w-24 mx-auto object-cover" alt="" />
                                 </div>
                             )
@@ -97,7 +97,7 @@ const CreatePost = () => {
                                         <option key={index}>{val.name}</option>
                                     )
                                     )}
-
+                                    <option>Other</option>
                                 </select>
                             </div>
                             <div className="w-1/2">

@@ -11,6 +11,11 @@ import HomeProtect from '../Components/Professional/HomeProtect'
 import FillProfileProtect from '../Components/Professional/FillProfileProtect'
 import EditProfile from '../Pages/Professional/EditProfile'
 import CreatePost from '../Pages/Professional/CreatePost'
+import Designs from '../Pages/CommonPages/Designs'
+import AllDesigns from '../Pages/CommonPages/AllDesigns'
+import Feed from '../Pages/CommonPages/Feed'
+import Professionals from '../Pages/CommonPages/Professionals'
+import ProfDetail from '../Pages/CommonPages/ProfDetail'
 
 const ProfessionalRoutes = () => {
     return (
@@ -22,16 +27,21 @@ const ProfessionalRoutes = () => {
             <Route path='' element={< ProfLoggedOut />}>
                 <Route path='login' element={<Login />} />
                 <Route path='signup' element={<Signup />} />
-                <Route path='verifyOtp' element={<Otp role={'professional'} signup={true}/>} />
+                <Route path='verifyOtp' element={<Otp role={'professional'} signup={true} />} />
             </Route>
             <Route path='' element={<FillProfileProtect />}>
                 <Route path='fillProfile' element={<FillProfile />} />
             </Route>
             <Route path='' element={< ProfLoggedIn />}>
                 <Route path='profile' element={<ProfilePage />} />
-                <Route path='/editProfile' element={<EditProfile/>} />
-                <Route path='/editProfile/verifyOtp' element={<Otp role={'professional'} signup={false}/>} />
+                <Route path='/editProfile' element={<EditProfile />} />
+                <Route path='/editProfile/verifyOtp' element={<Otp role={'professional'} signup={false} />} />
                 <Route path='/createPost' element={< CreatePost />} />
+                <Route path='/designs/:category' element={<Designs role={'professional'} />} />
+                <Route path='/allDesigns' element={<AllDesigns role={'professional'} />} />
+                <Route path='/feed' element={<Feed role='professional' />} />
+                <Route path='/professionals' element={<Professionals role={'professional'} />} />
+                <Route path='/profDetails/:id' element={<ProfDetail role={'professional'} />} />
             </Route>
 
         </Routes>

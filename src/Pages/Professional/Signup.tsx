@@ -5,7 +5,6 @@ import GoogleAuth from "../../Components/common/GoogleAuth"
 
 const Signup = () => {
 
-    // const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [pass, setPass] = useState('');
@@ -29,12 +28,12 @@ const Signup = () => {
             }
 
             let res = await signup( email,password);
-            if (res.data.success) {
+            if (res?.data.success) {
                 console.log('success')
                 navigate('/professional/verifyOtp')
 
             } else {
-                setErr(res.data.message);
+                setErr(res?.data.message);
             }
         } catch (err) {
             console.log(err);
@@ -61,10 +60,6 @@ const Signup = () => {
                                 SignUp
                             </h1>
                             <form className="space-y-4 md:space-y-3" action="#">
-                                {/* <div>
-                                    <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-dark">Name</label>
-                                    <input type="text" onChange={(e) => setName(e.target.value)} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:placeholder-gray-500 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                                </div> */}
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-dark">Email</label>
                                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:placeholder-gray-500 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
