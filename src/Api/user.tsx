@@ -138,6 +138,69 @@ export const updateReq = async (id: string, status: string) => {
     }
 }
 
+export const getConversations = async () => {
+    try {
+        const res = await api.get(userRoutes.getConversations);
+        console.log(res)
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const followProfessional = async (profId: string) => {
+    try {
+        const res = await api.post(userRoutes.follow, { profId });
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const unfollowProf = async (profId: string) => {
+    try {
+        const res = await api.post(userRoutes.unfollow, { profId });
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const likePost = async (postid: string) => {
+    try {
+        const res = await api.put(`${userRoutes.likePost}/${postid}`);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+export const unlikePost = async (postid: string) => {
+    try {
+        const res = await api.put(`${userRoutes.unlikePost}/${postid}`);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const postDetail = async (postid: string) => {
+    try {
+        const res = await api.get(`${userRoutes.postDetails}/${postid}`);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const searchDesigns = async (searchQuery: string) => {
+    try {
+        const res = await api.get(`${userRoutes.searchDesign}?${searchQuery}`);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error)
+    }
+}
+
 export const logout = async () => {
     try {
         const res = await api.get(userRoutes.logout);

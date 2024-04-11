@@ -207,6 +207,68 @@ export const getPostsById = async (id: string) => {
         errorHandler(err as Error);
     }
 }
+export const likePostbyProf = async (postid: string) => {
+    try {
+        const res = await api.put(`${profRoutes.likePostbyProf}/${postid}`);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+export const unlikePostbyProf = async (postid: string) => {
+    try {
+        const res = await api.put(`${profRoutes.unlikePostbyProf}/${postid}`);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const getConversations = async () => {
+    try {
+        const res = await api.get(profRoutes.getConversations);
+        console.log(res)
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const getMessages = async (conversationId: string) => {
+    try {
+        const res = await api.get(`${profRoutes.messages}/${conversationId}`);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const newConversation = async (profId: string) => {
+    try {
+        const res = await api.post(`${profRoutes.newConversation}/${profId}`)
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const sendNewMessage = async (text: string, conversationId: string, senderId: string) => {
+    try {
+        const res = await api.post(profRoutes.newMessage, { text, conversationId, senderId });
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const getUserById = async (id: string) => {
+    try {
+        const res = await api.get(`${profRoutes.getUserById}/${id}`);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
 
 export const logout = async () => {
     try {

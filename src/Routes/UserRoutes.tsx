@@ -13,6 +13,8 @@ import Feed from "../Pages/CommonPages/Feed";
 import Professionals from "../Pages/CommonPages/Professionals";
 import ProfDetail from "../Pages/CommonPages/ProfDetail";
 import RequirementForm from "../Pages/User/RequirementForm";
+import Chat from "../Pages/User/Chat";
+import Search from "../Pages/CommonPages/Search";
 
 const UserRoutes = () => {
     return (
@@ -33,6 +35,8 @@ const UserRoutes = () => {
                 <Route path='/professionals' element={<Professionals role={'user'} />} />
                 <Route path='/profDetails/:id' element={<ProfDetail role={'user'} />} />
                 <Route path='/postRequirement' element={< RequirementForm />} />
+                <Route path='/chat' element={<Chat />} />
+                <Route path='/search' element={< Search role={'user'}/>} />
             </Route>
         </Routes>
     )

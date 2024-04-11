@@ -20,6 +20,7 @@ interface state {
 const Navbar: React.FC<NavbarProps> = ({ role }) => {
 
     const [isLoggedIn, setIsLoggedIn] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
     useEffect(() => {
         const fetchData = async () => {
             if (role == 'professional' && isLoggedIn !== null) {
@@ -45,6 +46,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
             setIsLoggedIn(profData);
         }
     }, [])
+    console.log('isLoggedIn', isLoggedIn)
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -104,6 +106,15 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
         }
     }
 
+    const handleSubmit = ()=>{
+        // e.preventDefault();
+
+        // const urlParams = new URLSearchParams(location.search);
+        // urlParams.set('searchTerm',searchTerm);
+        // const searchQuery = urlParams.toString();
+        navigate('/search');
+    }
+
     return (
         <div>
             <nav className="bg-white border shadow-lg shadow-gray-200">
@@ -136,8 +147,18 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
                                 </div>
                             </div>
                         </div>
+                        <form onSubmit={handleSubmit}>
+                            <input
+                                type='text'
+                                placeholder='Search...'
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className='hidden lg:inline rounded-full border-gray-300 cursor-pointer'
+
+                            />
+                        </form>
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                            {isLoggedIn && role=='user' && <img src='/plus.png' onClick={()=>navigate('/postRequirement')} className="relative py-1 px-2 mr-2 rounded-full hover:bg-gray-100 cursor-pointer" />}
+                            {isLoggedIn && role == 'user' && <img src='/plus.png' onClick={() => navigate('/postRequirement')} className="relative py-1 px-2 mr-2 rounded-full hover:bg-gray-100 cursor-pointer" />}
                             {isLoggedIn && <img src="/notification.png" onClick={handleNotification} className="w-6 cursor-pointer" alt="" />}
 
                             {/* <!-- Profile dropdown --> */}
@@ -152,7 +173,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
                                 <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden " role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" style={{ display: toggle ? 'block' : 'none' }}>
                                     {/* <!-- Active: "bg-gray-100", Not Active: "" --> */}
                                     <a onClick={clickProfile} className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-0">Profile</a>
-                                    <a href="#" className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-1">Settings</a>
+                                    {role == 'user' && <a onClick={() => navigate('/chat')} className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-1">Messages</a>}
                                     <a onClick={handleLogout} className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-2">Logout</a>
                                 </div>
                             </div>)

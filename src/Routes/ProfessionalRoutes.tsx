@@ -16,6 +16,8 @@ import AllDesigns from '../Pages/CommonPages/AllDesigns'
 import Feed from '../Pages/CommonPages/Feed'
 import Professionals from '../Pages/CommonPages/Professionals'
 import ProfDetail from '../Pages/CommonPages/ProfDetail'
+import Chat from '../Pages/Professional/Chat'
+import Search from '../Pages/CommonPages/Search'
 
 const ProfessionalRoutes = () => {
     return (
@@ -42,6 +44,8 @@ const ProfessionalRoutes = () => {
                 <Route path='/feed' element={<Feed role='professional' />} />
                 <Route path='/professionals' element={<Professionals role={'professional'} />} />
                 <Route path='/profDetails/:id' element={<ProfDetail role={'professional'} />} />
+                <Route path='/chat' element={< Chat />} />
+                <Route path='/search' element={< Search role={'professional'} />} />
             </Route>
 
         </Routes>

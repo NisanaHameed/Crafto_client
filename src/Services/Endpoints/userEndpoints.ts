@@ -10,6 +10,13 @@ const userRoutes = {
     postRequirement:'/postRequirement',
     getRequirements:'/requirements',
     updateReq:'/updateReq',
+    getConversations:'/conversations',
+    follow:'/follow',
+    unfollow:'/unfollow',
+    likePost:'/like',
+    unlikePost:'/unlike',
+    postDetails:'/postDetails',
+    searchDesign:'/searchDesign',
     logout:'/logout'
 }
 

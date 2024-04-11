@@ -20,9 +20,9 @@ interface IDesign {
   likes: [string]
 }
 
-const Feed: React.FC<IRole> = ({ role }) => {
+const Comments: React.FC<IRole> = ({ role }) => {
 
-  const [posts, setPosts] = useState<IDesign[]>([])
+  const [post, setPost] = useState<IDesign[]>([])
   const [rerender, setRerender] = useState(false);
   const [userId, setUserId] = useState('');
 
@@ -76,27 +76,12 @@ const Feed: React.FC<IRole> = ({ role }) => {
   return (
     <>
       <Navbar role={role} />
-      <div className="w-full max-w-md md:max-w-xl mt-10 bg-white mx-auto">
-        {posts && posts.map((val, index) =>
-        (
-          <div key={index} className="border-b border-gray-200 mt-5"><img src={val.profId.image} className="inline w-6 h-6 object-cover rounded-full" alt="" />
-            <h2 className="inline ml-3">{val.profId.firstname} {val.profId.lastname}</h2>
-            <img className="mt-4 rounded" src={val.image} />
-            {val.likes.includes(userId) ?
-              <img onClick={() => handleUnlike(val?._id)} src="/liked.png" className="w-5 inline mt-2 cursor-pointer" alt="" />
-              :
-              <img onClick={() => handleLike(val?._id)} src="/like.png" className="w-5 inline mt-2 cursor-pointer" alt="" />
-            }
-
-            <img src="/comment.png" className="w-6 inline mt-2 ml-2" alt="" />
-            <p className="text-sm">{val.likes.length} likes</p>
-            <h2 className="text-sm mt-2 text-gray-700 pb-5">{val.caption}</h2>
-          </div>
-        )
-        )}
+      <div className="w-full flex-col mt-10 bg-white mx-auto">
+        <div className="w-1/2 flex"></div>
+       <div className="w-1/2 flex"></div>
       </div>
     </>
   )
 }
 
-export default Feed
+export default Comments;

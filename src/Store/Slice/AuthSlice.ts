@@ -1,10 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+// import { jwtDecode } from "jwt-decode";
 
 const initialState = {
     userData: localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData') as string) : null,
+    // userId: localStorage.getItem('userData') ? jwtDecode(JSON.parse(localStorage.getItem('userData') as string)) : null,
     profData: localStorage.getItem('profData') ? JSON.parse(localStorage.getItem('profData') as string) : null,
+    // profId: localStorage.getItem('profData') ? jwtDecode(JSON.parse(localStorage.getItem('profData') as string)) : null,
     adminData: localStorage.getItem('adminData') ? JSON.parse(localStorage.getItem('adminData') as string) : null
 }
+
 
 const authSlice = createSlice({
     name: 'auth',
@@ -26,11 +30,13 @@ const authSlice = createSlice({
             console.log('user logout');
             state.userData = null;
             localStorage.removeItem('userData');
+            // localStorage.removeItem('userId');
         },
         profLogout: (state) => {
             console.log('prof logout');
             state.profData = null;
             localStorage.removeItem('profData');
+            // localStorage.removeItem('profId');
         },
         adminLogout: (state) => {
             state.adminData = null;

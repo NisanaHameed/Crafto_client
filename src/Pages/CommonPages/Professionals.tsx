@@ -53,7 +53,7 @@ const Professionals: React.FC<IRole> = ({ role }) => {
                         <div className="col-span-1 mx-auto"><img src={val.image} className="rounded-full w-20 h-20 object-cover" alt="" /></div>
                         <div className="col-span-2">
                             <h2 className="font-semibold inline">{val.firstname} {val.lastname}</h2>
-                            {/* <button className="border border-[#3f8377] text-[#3f8377] hover:text-white hover:bg-[#3f8377] inline ml-6 px-4 py-[2px] rounded">Follow</button> */}
+                            {/* <button className="border border-[#3f8377] text-[#3f8377] hover:text-white hover:bg-[#3f8377] inline ml-6 px-4 py-[2px] rounded">Message</button> */}
                             <h2 className="text-sm mt-2">{val.job} | {val.experience} years</h2>
                         </div>
                     </div>

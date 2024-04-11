@@ -3,10 +3,14 @@ import ProfilePost from "../../Components/common/ProfilePost";
 import ProfileAbout from "../../Components/common/ProfileAbout";
 import { useEffect, useState } from "react";
 import { profDetails } from "../../Api/professional";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../../Components/common/Navbar";
+import { newConversation } from "../../Api/professional";
+import { followProfessional, unfollowProf } from "../../Api/user";
+import { jwtDecode } from "jwt-decode";
 
 interface Prof {
+    _id?: string
     firstname: string
     lastname: string
     email: string
@@ -16,7 +20,7 @@ interface Prof {
     company: string
     bio: string
     image: string
-    followers: number
+    followers: Array<string>
 }
 
 interface IRole {
@@ -29,7 +33,15 @@ const ProfDetail: React.FC<IRole> = ({ role }) => {
     const [tab, setTab] = useState('post');
     const [data, setData] = useState<Prof>()
     const [postCount, setPostCount] = useState(0)
-   
+    const [rerender, setRerender] = useState(false);
+    const [userId, setUserId] = useState('');
+
+    useEffect(() => {
+        if (role == 'user') {
+            const { Id } = jwtDecode(JSON.parse(localStorage.getItem('userData') as string))
+            setUserId(Id);
+        }
+    }, [])
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -41,8 +53,30 @@ const ProfDetail: React.FC<IRole> = ({ role }) => {
             }
         }
         fetchData();
-    }, [])
-    // const navigate = useNavigate();
+    }, [rerender])
+    const navigate = useNavigate();
+
+    const handleConversation = async () => {
+        const res = await newConversation(data?._id as string);
+        console.log(res);
+        if (res?.data.success) {
+            navigate('/chat');
+        }
+    }
+
+    const handlefollow = async () => {
+        const res = await followProfessional(data?._id as string);
+        if (res?.data?.success) {
+            setRerender(!rerender);
+        }
+    }
+
+    const handleUnfollow = async () => {
+        const res = await unfollowProf(data?._id as string);
+        if (res?.data?.success) {
+            setRerender(!rerender);
+        }
+    }
 
     return (
         <>
@@ -63,14 +97,37 @@ const ProfDetail: React.FC<IRole> = ({ role }) => {
                                 <h2 className="text-xl lg:text-2xl inline-block md:mr-2 mb-2 sm:mb-0">
                                     {data?.firstname} {data?.lastname}
                                 </h2>
-                                {/* <a
-                                    onClick={() => navigate('/professional/editProfile')}
-                                    className="border border-[#007562] px-2 py-1 ml-5
+                                {role == 'user' &&
+                                    <><a
+                                        onClick={handleConversation}
+                                        className="border border-[#007562] px-2 py-1 ml-5
       text-[#007562] hover:bg-[#007562] hover:text-white font-semibold text-sm rounded text-center 
-      sm:inline-block block"
-                                >
-                                    Follow
-                                </a> */}
+      sm:inline-block block cursor-pointer"
+                                    >
+                                        Message
+                                    </a>
+                                        {data?.followers?.includes(userId as string) ?
+
+                                            <a
+                                                onClick={handleUnfollow}
+                                                className="bg-[#007562] px-2 py-1 ml-5
+      text-white hover:text-white font-semibold text-sm rounded text-center 
+      sm:inline-block block cursor-pointer"
+                                            >
+                                                Following
+                                            </a>
+                                            :
+                                            <a
+                                                onClick={handlefollow}
+                                                className="border border-[#007562] px-2 py-1 ml-5
+      text-[#007562] hover:bg-[#007562] hover:text-white font-semibold text-sm rounded text-center 
+      sm:inline-block block cursor-pointer"
+                                            >
+                                                Follow
+                                            </a>
+                                        }
+                                    </>
+                                }
                             </div>
                             <ul className=" flex space-x-4 mb-4">
                                 <li>
