@@ -50,7 +50,8 @@ const ShowRequirements = () => {
         return (
             <>
                 {reqs && reqs.map((val, index) =>
-                    <div key={index} className="max-w-xs p-6 my-4 bg-[#007562] border rounded shadow">
+                    <div key={index} className="flex flex-col max-w-xs p-6 my-4 bg-[#007562] border rounded shadow">
+                        <div className="flex flex-col flex-grow">
                         <h5 className="mb-2 text-xl text-white font-semibold">
                             {val.service}
                         </h5>
@@ -65,6 +66,7 @@ const ShowRequirements = () => {
                             <p className="text-gray-400">Budget: {val.budget == 'Yes' ? 'Fixed budget' : val.budget}</p>
                             <p className="text-gray-400">Location:Calicut,Kerala</p>
                         </div>
+                        </div>
                         <a
                             onClick={()=> {
                                 if(val.status!=='active'){
@@ -72,10 +74,11 @@ const ShowRequirements = () => {
                                 }
                                 handleSubmit(val._id)
                             }}
-                            className={`inline-flex items-center px-3 py-2 mt-5 text-sm font-medium text-center text-gray-200 ${val.status == 'active' ? 'bg-[#a2a2a2]' : 'bg-[#044733]'} rounded hover:bg-[#757575] cursor-pointer`}
+                            className={`inline-flex items-baseline w-1/2 px-3 py-2 mt-5 mb-0 text-sm font-medium text-center text-gray-200 ${val.status == 'active' ? 'bg-[#a2a2a2]' : 'bg-[#044733]'} rounded hover:bg-[#757575] cursor-pointer`}
                         >
                             {val.status == 'active' ? 'Deactivate' : 'Deactivated'}
-                            {val.status == 'active' && <svg
+                            {val.status == 'active' &&
+                             <svg
                                 className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
                                 aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg"

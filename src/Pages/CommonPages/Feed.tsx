@@ -3,6 +3,7 @@ import Navbar from "../../Components/common/Navbar"
 import { getAllDesigns, likePost, unlikePost } from "../../Api/user"
 import { jwtDecode } from "jwt-decode"
 import { likePostbyProf, unlikePostbyProf } from "../../Api/professional"
+import { useNavigate } from "react-router-dom"
 
 interface IRole {
   role: 'user' | 'professional'
@@ -12,6 +13,7 @@ interface IDesign {
   image: string
   caption: string
   profId: {
+    _id?:string
     firstname: string
     lastname: string
     company: string
@@ -25,6 +27,7 @@ const Feed: React.FC<IRole> = ({ role }) => {
   const [posts, setPosts] = useState<IDesign[]>([])
   const [rerender, setRerender] = useState(false);
   const [userId, setUserId] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (role == 'user') {
@@ -73,14 +76,31 @@ const Feed: React.FC<IRole> = ({ role }) => {
 
   }
 
+  const handleComment = (id: string) => {
+    if (role == 'user') {
+      navigate(`/postDetail/${id}`);
+    } else {
+      navigate(`/professional/postDetail/${id}`);
+    }
+  }
+
+  const profDetail = (id: string) => {
+    if (role == 'user') {
+      navigate(`/profDetails/${id}`);
+    } else {
+      navigate(`/professional/profDetails/${id}`);
+    }
+  }
+
   return (
     <>
       <Navbar role={role} />
       <div className="w-full max-w-md md:max-w-xl mt-10 bg-white mx-auto">
         {posts && posts.map((val, index) =>
         (
-          <div key={index} className="border-b border-gray-200 mt-5"><img src={val.profId.image} className="inline w-6 h-6 object-cover rounded-full" alt="" />
-            <h2 className="inline ml-3">{val.profId.firstname} {val.profId.lastname}</h2>
+          <div key={index} className="border-b border-gray-200 mt-5">
+            <img onClick={() => profDetail(val?.profId._id as string)} src={val.profId.image} className="inline w-6 h-6 object-cover rounded-full cursor-pointer" alt="" />
+            <h2 onClick={() => profDetail(val?.profId._id as string)} className="inline ml-3 cursor-pointer">{val.profId.firstname} {val.profId.lastname}</h2>
             <img className="mt-4 rounded" src={val.image} />
             {val.likes.includes(userId) ?
               <img onClick={() => handleUnlike(val?._id)} src="/liked.png" className="w-5 inline mt-2 cursor-pointer" alt="" />
@@ -88,7 +108,7 @@ const Feed: React.FC<IRole> = ({ role }) => {
               <img onClick={() => handleLike(val?._id)} src="/like.png" className="w-5 inline mt-2 cursor-pointer" alt="" />
             }
 
-            <img src="/comment.png" className="w-6 inline mt-2 ml-2" alt="" />
+            <img onClick={() => handleComment(val?._id)} src="/comment.png" className="w-6 inline mt-2 ml-2 cursor-pointer" alt="" />
             <p className="text-sm">{val.likes.length} likes</p>
             <h2 className="text-sm mt-2 text-gray-700 pb-5">{val.caption}</h2>
           </div>

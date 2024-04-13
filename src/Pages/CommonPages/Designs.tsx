@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { getDesigns } from "../../Api/user";
 import Navbar from "../../Components/common/Navbar";
 
@@ -18,6 +18,7 @@ const Designs:React.FC<IRole> = ({role}) => {
 
     const { category } = useParams();
     const [design, setDesign] = useState<IDesign[]>([])
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchPost = async () => {
             const res = await getDesigns(category as string);
@@ -26,8 +27,14 @@ const Designs:React.FC<IRole> = ({role}) => {
         }
         fetchPost();
     }, [])
-    console.log(design);
-
+    
+    const designDetail = (id:string)=>{
+        if(role=='user'){
+          navigate(`/postDetail/${id}`);
+        }else{
+          navigate(`/professional/postDetail/${id}`);
+        }
+      }
     return (
         <>
         <Navbar role={role} />
@@ -36,7 +43,7 @@ const Designs:React.FC<IRole> = ({role}) => {
                 <h2 className="ml-5 mb-5 text-xl font-semibold text-[#007562] md:ml-14">{category}</h2>
                 <div className="max-w-8xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:px-5 gap-4 mx-auto">
                     {design.map((val, index) => (
-                        <div key={index} className="max-w-full bg-white rounded-md">
+                        <div onClick={()=>designDetail(val?._id)} key={index} className="max-w-full bg-white rounded-md">
                             <a>
                                 <img className="rounded h-52 lg:h-80 w-full object-cover filter hover:brightness-75 cursor-pointer" src={val.image} alt="" />
                             </a>

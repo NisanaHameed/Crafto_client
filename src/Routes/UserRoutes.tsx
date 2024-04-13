@@ -15,6 +15,7 @@ import ProfDetail from "../Pages/CommonPages/ProfDetail";
 import RequirementForm from "../Pages/User/RequirementForm";
 import Chat from "../Pages/User/Chat";
 import Search from "../Pages/CommonPages/Search";
+import PostDetail from "../Pages/CommonPages/PostDetail";
 
 const UserRoutes = () => {
     return (
@@ -32,6 +33,7 @@ const UserRoutes = () => {
                 <Route path='/designs/:category' element={<Designs role={'user'} />} />
                 <Route path='/allDesigns' element={<AllDesigns role={'user'} />} />
                 <Route path="/feed" element={<Feed role={'user'} />} />
+                <Route path="/postDetail/:id" element={<PostDetail role={'user'} />} />
                 <Route path='/professionals' element={<Professionals role={'user'} />} />
                 <Route path='/profDetails/:id' element={<ProfDetail role={'user'} />} />
                 <Route path='/postRequirement' element={< RequirementForm />} />

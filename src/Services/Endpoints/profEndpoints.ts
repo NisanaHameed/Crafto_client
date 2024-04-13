@@ -18,6 +18,7 @@ const profRoutes = {
     getPostsById: '/professional/postsById',
     likePostbyProf: '/professional/like',
     unlikePostbyProf: '/professional/unlike',
+    postComment:'/professional/postComment',
     getUserById: '/chat/getUserById',
     getConversations: '/chat/conversations',
     newConversation: '/chat/newConversation',

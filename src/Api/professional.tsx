@@ -223,6 +223,14 @@ export const unlikePostbyProf = async (postid: string) => {
         errorHandler(err as Error);
     }
 }
+export const postCommentbyProf = async (postId: string, comment: string) => {
+    try {
+        const res = await api.put(profRoutes.postComment, { postId, comment });
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
 
 export const getConversations = async () => {
     try {

@@ -15,6 +15,7 @@ const userRoutes = {
     unfollow:'/unfollow',
     likePost:'/like',
     unlikePost:'/unlike',
+    postComment:'/postComment',
     postDetails:'/postDetails',
     searchDesign:'/searchDesign',
     logout:'/logout'

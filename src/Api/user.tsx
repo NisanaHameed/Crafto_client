@@ -182,6 +182,14 @@ export const unlikePost = async (postid: string) => {
         errorHandler(err as Error);
     }
 }
+export const postComment = async (postId: string, comment: string) => {
+    try {
+        const res = await api.put(userRoutes.postComment, { postId, comment });
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
 
 export const postDetail = async (postid: string) => {
     try {

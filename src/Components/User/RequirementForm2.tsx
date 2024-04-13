@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { postRequirement } from "../../Api/user"
 import toast from "react-hot-toast"
+import RequirementModal from "./RequirementModal"
 
 interface IState{
     setState:Function
@@ -15,6 +16,7 @@ const RequirementForm2:React.FC<IState> = ({setState}) => {
         budget: '',
         workPeriod: ''
     })
+    const [successModal, setSuccessModal] = useState(false);
 
     const handleSubmit =async(e:any)=>{
         
@@ -36,7 +38,7 @@ const RequirementForm2:React.FC<IState> = ({setState}) => {
         const res = await postRequirement(data);
         if(res?.data.success){
             toast.success('Requirement posted successfully!');
-            setState('Form');
+            setSuccessModal(true);
         }
     }
 
@@ -81,6 +83,7 @@ const RequirementForm2:React.FC<IState> = ({setState}) => {
             <button onClick={handleSubmit} className="w-[150px] inline text-white bg-[#007562] hover:bg-white hover:border border-[#007562] hover:text-[#007562] focus:ring-2 focus:outline-none focus:ring-green-700  font-medium rounded-md text-sm px-5 py-2.5 text-center ">Submit</button>
             <button onClick={()=>setState('Form')} className="w-[150px] inline hover:text-white hover:bg-[#007562] border border-[#007562] text-[#007562] focus:ring-2 focus:outline-none focus:ring-green-700 font-medium rounded-md text-sm px-5 py-2.5 text-center ">Back</button>
             </div>
+            {successModal && < RequirementModal requirement={data} />}
         </div>
 
     )
