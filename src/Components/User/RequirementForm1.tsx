@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { postRequirement } from "../../Api/user"
 import toast from "react-hot-toast"
 import RequirementModal from "./RequirementModal"
+import { io,Socket } from "socket.io-client"
 
 interface IState{
     setState:Function
@@ -16,6 +17,11 @@ const RequirementForm1:React.FC<IState> = ({setState}) => {
         workPeriod: ''
     })
     const [successModal, setSuccessModal] = useState(false);
+    const socket = useRef<Socket | undefined>()
+
+    useEffect(() => {
+        socket.current = io("ws://localhost:3000");
+    }, [])
 
     const handleSubmit =async(e:any)=>{
         e.preventDefault();
@@ -36,8 +42,19 @@ const RequirementForm1:React.FC<IState> = ({setState}) => {
             return;
         }
 
-        console.log('submit button clicked')
+        console.log('submit button clicked');
         const res = await postRequirement(data);
+        
+        socket.current?.emit('pushNotification', {
+            requirement:res?.data.requirement,
+            message: 'You have a requirement, check details!'
+        })
+        if (res?.data.success) {
+            toast.success('Requirement posted successfully!');
+            setSuccessModal(true);
+        }
+
+       
         if(res?.data.success){
             toast.success('Requirement posted successfully!');
             setSuccessModal(true);

@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
 import { profLogout, userLogout } from "../../Store/Slice/AuthSlice"
-import { profProfile, logout } from "../../Api/professional"
+import { profProfile, logout, getNotifications } from "../../Api/professional"
 import { logout as userLogoutapi, userProfile } from "../../Api/user"
 import toast from "react-hot-toast"
+import { io, Socket } from "socket.io-client"
+import { jwtDecode } from "jwt-decode"
 
 interface NavbarProps {
     role: 'user' | 'professional',
@@ -16,11 +18,51 @@ interface state {
         userData: string
     }
 }
+interface INotification {
+    userId: string,
+    message: string,
+    category: string,
+    createdAt: Date,
+    readStatus: Boolean
+}
 
 const Navbar: React.FC<NavbarProps> = ({ role }) => {
 
     const [isLoggedIn, setIsLoggedIn] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
+    // const [notification, setNotification] = useState('');
+    const [notifications, setNotications] = useState(0);
+    const socket = useRef<Socket | undefined>();
+
+    useEffect(() => {
+        socket.current = io("ws://localhost:3000");
+
+        socket.current.on('getNotification', (data) => {
+            console.log(data);
+            toast((t) => (
+                <div className="flex flex-row px-2 py-3">
+                    <img src="/requirement.png" className="w-8 h-8 mr-4" alt="" />
+                    <span className="text-[#2e695e]">
+                        {data.message}
+                    </span>
+                    <button className="pl-4 " onClick={() => toast.dismiss(t.id)}>
+                        <img src="/close.png" className="" alt="" />
+                    </button>
+                </div>
+            ))
+            // setNotification(data.message)
+            setNotications((prev) => prev + 1);
+        })
+    }, [])
+
+    useEffect(() => {
+        if (role == 'professional') {
+            const decoded: any = jwtDecode(JSON.parse(localStorage.getItem('profData') as string))
+            console.log('profidfrom token', decoded.Id)
+            socket.current?.emit('addUser', decoded.Id);
+        }
+    }, [])
+
     useEffect(() => {
         const fetchData = async () => {
             if (role == 'professional' && isLoggedIn !== null) {
@@ -34,8 +76,23 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
         fetchData();
     }, [role, isLoggedIn])
 
+    useEffect(() => {
+
+        const fetchNotifications = async () => {
+            if (role == 'professional') {
+                const res = await getNotifications();
+                if (res?.data.success) {
+                    const data = res.data.notifications.filter((val: INotification) =>
+                        val.readStatus === false
+                    )
+                    setNotications(data.length);
+                }
+            }
+        }
+        fetchNotifications();
+    })
+
     const [toggle, setToggle] = useState(false);
-    // const [loggedIn, setLoggedIn] = useState(isLoggedIn)
     const [image, setImage] = useState('/profile.png')
 
     const { profData, userData } = useSelector((state: state) => state.auth);
@@ -81,12 +138,8 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
     const handleNotification = () => {
         if (isLoggedIn == null) {
             toast('Please Login!')
-        } else {
-            toast('Feature will be done in week3', {
-                style: {
-                    color: 'gray'
-                }
-            })
+        } else if (role == 'professional') {
+            navigate('/professional/notifications');
         }
     }
 
@@ -106,18 +159,17 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
         }
     }
 
-    const handleSubmit = ()=>{
-        // e.preventDefault();
-
-        // const urlParams = new URLSearchParams(location.search);
-        // urlParams.set('searchTerm',searchTerm);
-        // const searchQuery = urlParams.toString();
-        navigate('/search');
+    const handleSubmit = () => {
+        if (role == 'user') {
+            navigate('/search');
+        } else {
+            navigate('/professional/search')
+        }
     }
 
     return (
         <div>
-            <nav className="bg-white border shadow-lg shadow-gray-200">
+            <nav className="bg-white border shadow">
                 <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                     <div className="relative flex h-16 items-center justify-between">
                         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -158,7 +210,8 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
                         </form>
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                             {isLoggedIn && role == 'user' && <img src='/plus.png' onClick={() => navigate('/postRequirement')} className="relative py-1 px-2 mr-2 rounded-full hover:bg-gray-100 cursor-pointer" />}
-                            {isLoggedIn && <img src="/notification.png" onClick={handleNotification} className="w-6 cursor-pointer" alt="" />}
+                            {isLoggedIn && <div><img onClick={handleNotification} src="/notification.png" className="relative w-6 cursor-pointer inline-flex " alt="" />{notifications > 0 && <span className="absolute md:right-10 right-12 inline-flex items-center justify-center w-4 h-4  text-xs font-semibold text-green-800 bg-green-300 rounded-full">{notifications}</span>}</div>
+                            }
 
                             {/* <!-- Profile dropdown --> */}
                             {isLoggedIn ? (<div className="relative ml-3">
@@ -173,6 +226,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
                                     {/* <!-- Active: "bg-gray-100", Not Active: "" --> */}
                                     <a onClick={clickProfile} className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-0">Profile</a>
                                     {role == 'user' && <a onClick={() => navigate('/chat')} className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-1">Messages</a>}
+                                    {role == 'user' && <a onClick={() => navigate('/saved')} className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-1">Saved Posts</a>}
                                     <a onClick={handleLogout} className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-2">Logout</a>
                                 </div>
                             </div>)
@@ -197,6 +251,10 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
                     </div>
                 </div>
             </nav>
+            {/* {notification && 
+            toast.success(`${notification}`)
+            
+            } */}
         </div>
     )
 }

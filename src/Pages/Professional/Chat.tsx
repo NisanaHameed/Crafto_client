@@ -6,6 +6,7 @@ import Message from "../../Components/common/Chat/Message";
 import { io, Socket } from 'socket.io-client'
 import { getMessages, getConversations, sendNewMessage } from '../../Api/professional'
 import { jwtDecode } from "jwt-decode";
+import Sidebar from "../../Components/Professional/Sidebar";
 
 interface IState {
     auth: {
@@ -29,14 +30,15 @@ const Chat = () => {
     const [user, setUSer] = useState('')
     const [profId, setProfId] = useState('');
     const socket = useRef<Socket | undefined>();
-    const { profData } = useSelector((state: IState) => state.auth);
+    // const { profData } = useSelector((state: IState) => state.auth);
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
 
         socket.current = io("ws://localhost:3000");
         console.log('its here')
-        socket.current.on('getMessage', (data) => {
+        socket.current.on('getMessage', (data: Message) => {
+            console.log(data)
             setArrivalMessage({
                 senderId: data.senderId,
                 text: data.text,
@@ -49,10 +51,10 @@ const Chat = () => {
     }, [arrivalMessage])
 
     useEffect(() => {
-        const { Id } = jwtDecode(JSON.parse(localStorage.getItem('profData') as string))
-        console.log('profidfrom token', Id)
-        setProfId(Id);
-        socket.current?.emit('addUser', Id);
+        const decoded: any = jwtDecode(JSON.parse(localStorage.getItem('profData') as string))
+        console.log('profidfrom token', decoded.Id)
+        setProfId(decoded.Id);
+        socket.current?.emit('addUser', decoded.Id);
 
     }, [])
 
@@ -103,48 +105,57 @@ const Chat = () => {
 
     return (
         <>
+        <div>
             < Navbar role={'professional'} />
-            <div className="messenger h-screen flex w-full">
-                <div className="chatMenu flex lg:w-1/4 md:w-2/6 w-1/6">
-                    <div className="chatMenuWrapper p-0 md:p-2 h-full w-full bg-[#17654c]">
-                        {/* <input placeholder="Search for friends" className="w-full px-2 border-b-gray-200 h-8  mt-4 rounded-full hidden md:block" /> */}
-                        {conversations && conversations.map((c) => (
-                            <div onClick={() => setCurrentChat(c)}>
-                                < Conversation conversation={c} currentUser={profId} role='professional' />
+            <div className="h-screen flex flex-row">
+                <div className="md:w-64 w-0">
+                    < Sidebar />
+                </div>
+                <div className="flex w-full">
+                    {/* <div className="h-screen flex w-full"> */}
+                        <div className="flex lg:w-1/4 md:w-2/6 w-1/6">
+                            <div className="p-0 md:p-2 h-full bg-[#fbfafa] w-full border-r">
+                                {/* <input placeholder="Search for friends" className="w-full px-2 border-b-gray-200 h-8  mt-4 rounded-full hidden md:block" /> */}
+                                {conversations && conversations.map((c) => (
+                                    <div onClick={() => setCurrentChat(c)}>
+                                        < Conversation conversation={c} currentUser={profId} role='professional' />
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
-                </div>
-                <div className="chatBox flex lg:w-3/4 md:w-4/6 w-full">
-                    <div className="chatBoxWrapper flex flex-col w-full justify-between relative">
-                        {currentChat ? (
-                            <>
-                                <div className="chatBoxTop h-full overflow-y-scroll pr-3">
-                                    {messages && messages.map((m, index) => (
-                                        <div key={index} ref={scrollRef}>
-                                            <Message message={m} own={m.senderId === profId} previousMessageDate={index == 0 ? null : new Date(messages[index - 1]?.createdAt)} />
+                        </div>
+                        <div className="flex lg:w-3/4 md:w-4/6 w-full">
+                            <div className="flex flex-col w-full justify-between relative">
+                                {currentChat ? (
+                                    <>
+                                        <div className="h-full overflow-y-scroll pr-3">
+                                            {messages && messages.map((m, index) => (
+                                                <div key={index} ref={scrollRef}>
+                                                    <Message message={m} own={m.senderId === profId} previousMessageDate={index == 0 ? null : new Date(messages[index - 1]?.createdAt)} />
+                                                </div>
+                                            ))}
                                         </div>
-                                    ))}
-                                </div>
-                                <div className="chatBoxBottom mt-1 flex items-center justify-between">
-                                    <textarea
-                                        className="chatMessageInput w-5/6 h-14 p-2 rounded"
-                                        placeholder="write something..."
-                                        onChange={(e) => setNewMessage(e.target.value)}
-                                        value={newMessage}
-                                    ></textarea>
-                                    <button className="chatSubmitButton w-1/6 h-14 rounded cursor-pointer bg-[#007562] text-white" onClick={handleSubmit}>
-                                        Send
-                                    </button>
-                                </div>
-                            </>
-                        ) : (
-                            <span className="noConversationText">
-                                Open a conversation to start a chat.
-                            </span>
-                        )}
-                    </div>
+                                        <div className="sticky bottom-0 w-full flex items-center justify-between">
+                                            <textarea
+                                                className="w-5/6 h-12 p-2 rounded border-none bg-[#E9E9E9]"
+                                                placeholder="write something..."
+                                                onChange={(e) => setNewMessage(e.target.value)}
+                                                value={newMessage}
+                                            ></textarea>
+                                            <button className="w-1/6 h-12 rounded cursor-pointer bg-[#007562] text-white" onClick={handleSubmit}>
+                                                Send
+                                            </button>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <span className="noConversationText">
+                                        Open a conversation to start a chat.
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    {/* </div> */}
                 </div>
+            </div>
             </div>
         </>
     )

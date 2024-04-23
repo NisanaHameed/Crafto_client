@@ -13,7 +13,6 @@ interface state {
 
 const HomeProtect = () => {
 
-
   const [data, setData] = useState(false);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();

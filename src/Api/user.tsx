@@ -60,7 +60,9 @@ export const verifyOtp = async (otp: string) => {
                 Authorization: `Bearer ${token}`
             }
         });
-        localStorage.removeItem('userotp')
+        if (res.data.success) {
+            localStorage.removeItem('userotp');
+        }
         return res;
     } catch (err) {
         console.log(err);
@@ -182,6 +184,16 @@ export const unlikePost = async (postid: string) => {
         errorHandler(err as Error);
     }
 }
+
+export const savePost = async (postId: string, save: string) => {
+    try {
+        const res = await api.patch(`${userRoutes.savePost}/${postId}/${save}`);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
 export const postComment = async (postId: string, comment: string) => {
     try {
         const res = await api.put(userRoutes.postComment, { postId, comment });

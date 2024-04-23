@@ -16,6 +16,7 @@ import RequirementForm from "../Pages/User/RequirementForm";
 import Chat from "../Pages/User/Chat";
 import Search from "../Pages/CommonPages/Search";
 import PostDetail from "../Pages/CommonPages/PostDetail";
+import SavedPosts from "../Pages/User/SavedPosts";
 
 const UserRoutes = () => {
     return (
@@ -38,7 +39,8 @@ const UserRoutes = () => {
                 <Route path='/profDetails/:id' element={<ProfDetail role={'user'} />} />
                 <Route path='/postRequirement' element={< RequirementForm />} />
                 <Route path='/chat' element={<Chat />} />
-                <Route path='/search' element={< Search role={'user'}/>} />
+                <Route path='/search' element={< Search role={'user'} />} />
+                <Route path='/saved' element={< SavedPosts />} />
             </Route>
         </Routes>
     )

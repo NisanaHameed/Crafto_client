@@ -55,7 +55,7 @@ const ConfirmationModal: React.FC<IProps>= ({onConfirm,onCancel,message}) => {
                 d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
               />
             </svg>
-            <h3 className="mb-5 text-lg font-normal text-gray-900 ">
+            <h3 className="mb-5 text-gray-800 ">
              {message}
             </h3>
             <button

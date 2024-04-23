@@ -4,6 +4,7 @@ import { getCategory } from "../../Api/admin";
 import { createPost } from "../../Api/professional";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../Components/Professional/Sidebar";
+import Navbar from "../../Components/common/Navbar";
 
 interface ICategory {
     name: string,
@@ -69,54 +70,61 @@ const CreatePost = () => {
     }
     return (
         <>
-            <Sidebar />
-            <div className="p-3 flex min-h-screen justify-center md:ml-48 mt-10">
-                <div className="lg:w-3/5 md:w-4/5 w-4/5 shadow-lg p-6 h-48 bg-[#007562] rounded">
-                    <h1 className="text-center text-gray-100 text-xl mb-6 mt-1 font-semibold">Create post</h1>
-                    <div className="flex flex-col gap-4 lg:w-2/3 mx-auto">
-                        {imagePreview ? (
-                            <div className="h-56">
-                                <img src={imagePreview} className="rounded w-full h-full object-cover" alt="" />
-                            </div>
-                        ) :
-                            (
-                                <div className="h-56 border border-dashed border-slate-300 flex rounded items-center">
-                                    <img src='/homeicon.png' className="rounded w-24 mx-auto object-cover" alt="" />
+            < Navbar role="professional" />
+            <div className="flex flex-row">
+                <div className="md:w-1/4 w-0">
+                    < Sidebar />
+                </div>
+                <div className="mt-10 md:w-3/4 w-full px-5">
+                    {/* <div className="p-3 flex justify-center md:ml-48 mt-10"> */}
+                    <div className="lg:w-3/5 md:w-4/5 w-4/5 shadow-lg p-6 h-48 bg-[#007562] rounded mt-5 ml-6">
+                        <h1 className="text-center text-gray-100 text-xl mb-6 mt-1 font-semibold">Create post</h1>
+                        <div className="flex flex-col gap-4 lg:w-2/3 mx-auto">
+                            {imagePreview ? (
+                                <div className="h-56">
+                                    <img src={imagePreview} className="rounded w-full h-full object-cover" alt="" />
                                 </div>
-                            )
-                        }
-                        <div>
-                            <textarea value={caption} onChange={(e) => setCaption(e.target.value)} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5" rows={6} required placeholder="Type caption here"></textarea>
-                        </div>
-                        <div className="w-full flex flex-row space-x-3">
-                            <div className="w-1/2">
-                                <select value={category} onChange={(e) => setCategory(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5">
-                                    <option selected>Choose a Category</option>
-                                    {categories.map((val, index) =>
-                                    (
-                                        <option key={index}>{val.name}</option>
-                                    )
-                                    )}
-                                    <option>Other</option>
-                                </select>
+                            ) :
+                                (
+                                    <div className="h-56 border border-dashed border-slate-300 flex rounded items-center">
+                                        <img src='/homeicon.png' className="rounded w-24 mx-auto object-cover" alt="" />
+                                    </div>
+                                )
+                            }
+                            <div>
+                                <textarea value={caption} onChange={(e) => setCaption(e.target.value)} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5" rows={6} required placeholder="Type caption here"></textarea>
                             </div>
-                            <div className="w-1/2">
-                                <select onChange={(e) => e.target.value == 'Yes' ? setIsPortrait(true) : setIsPortrait(false)} className="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5" >
-                                    <option selected>Save in portrait?</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
-                                </select>
+                            <div className="w-full flex flex-row space-x-3">
+                                <div className="w-1/2">
+                                    <select value={category} onChange={(e) => setCategory(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5">
+                                        <option selected>Choose a Category</option>
+                                        {categories.map((val, index) =>
+                                        (
+                                            <option key={index}>{val.name}</option>
+                                        )
+                                        )}
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                <div className="w-1/2">
+                                    <select onChange={(e) => e.target.value == 'Yes' ? setIsPortrait(true) : setIsPortrait(false)} className="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5" >
+                                        <option selected>Save in portrait?</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <input onChange={handleImageChange} type="file" className="border border-gray-30 block w-full rounded-md text-sm" accept="image/*" />
-                        </div>
-                        <div className="flex justify-center w-full">
-                            <button onClick={handleSubmit} className="bg-[#007562] hover:bg-[#0c5549] text-white font-semibold w-1/3 py-2 m-2 rounded shadow">POST</button>
+                            <div>
+                                <input onChange={handleImageChange} type="file" className="border border-gray-30 block w-full rounded-md text-sm" accept="image/*" />
+                            </div>
+                            <div className="flex justify-center w-full">
+                                <button onClick={handleSubmit} className="bg-[#007562] hover:bg-[#0c5549] text-white font-semibold w-1/3 py-2 m-2 rounded shadow">POST</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {/* </div> */}
         </>
     )
 }

@@ -5,6 +5,7 @@ import Sidebar from "../../Components/Professional/Sidebar";
 import { useEffect, useState } from "react";
 import { getPortraits, profProfile } from "../../Api/professional";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../../Components/common/Navbar";
 
 interface Prof {
     firstname: string
@@ -17,6 +18,7 @@ interface Prof {
     bio: string
     image: string
     followers: number
+    isVerified:boolean
 }
 interface IPost {
     _id?: string
@@ -53,28 +55,34 @@ const ProfilePage = () => {
 
     return (
         <>
-            < Sidebar />
-            <main className="bg-gray-100 bg-opacity-25 mt-3 relative overflow-x-auto p-4 sm:ml-64 lg:ml-0">
-                <div className="lg:w-8/12 lg:ml-96 mb-8">
+        < Navbar role='professional' />
+        <div className="flex flex-row">
+                <div className="md:w-1/4 w-0">
+                    < Sidebar />
+                </div>
+                <div className="mt-8 md:w-3/4 w-full px-5">
+            {/* <main className="bg-gray-100 bg-opacity-25 mt-3 relative overflow-x-auto p-4 sm:ml-64 lg:ml-0"> */}
+                <div className="lg:w-8/12 lg:ml-20 mb-8">
                     <header className="flex flex-wrap items-center p-4 md:py-8">
                         <div className="md:w-3/12 md:ml-16">
                             <img
                                 className="w-20 h-20 md:w-32 md:h-32 object-cover rounded-full
-               border border-[#000000] "
+               border border-gray-500 "
                                 src={data?.image}
                                 alt="profile"
                             />
                         </div>
                         <div className="w-8/12 md:w-7/12 ml-4">
                             <div className="flex flex-wrap items-center mb-4">
-                                <h2 className="text-xl lg:text-2xl inline-block md:mr-2 mb-2 sm:mb-0">
+                                <h2 className="text-lg lg:text-lg inline-block md:mr-2 mb-2 sm:mb-0">
                                     {data?.firstname} {data?.lastname}
+                                    {data?.isVerified && <img src="/verified.png" className="w-7 inline ml-2" alt="" />}
                                 </h2>
                                 <a
                                     onClick={() => navigate('/professional/editProfile')}
                                     className="border border-[#007562] px-2 py-1 ml-5
                   text-[#007562] hover:bg-[#007562] hover:text-white font-semibold text-sm rounded text-center 
-                  sm:inline-block block"
+                  sm:inline-block block cursor-pointer"
                                 >
                                     Edit Profile
                                 </a>
@@ -138,7 +146,10 @@ const ProfilePage = () => {
                         }
                     </div>
                 </div>
-            </main>
+                
+            {/* </main> */}
+            </div>
+            </div>
         </>
     )
 }

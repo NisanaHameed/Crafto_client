@@ -42,6 +42,9 @@ export const verifyOTP = async (otp: string) => {
                 Authorization: `Bearer ${token}`
             }
         });
+        if (res.data.success) {
+            localStorage.removeItem('profotp');
+        }
         return res;
     } catch (err) {
         console.log(err);
@@ -223,6 +226,16 @@ export const unlikePostbyProf = async (postid: string) => {
         errorHandler(err as Error);
     }
 }
+
+export const savePostbyProf = async (postId: string, save: string) => {
+    try {
+        const res = await api.patch(`${profRoutes.savePost}/${postId}/${save}`);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
 export const postCommentbyProf = async (postId: string, comment: string) => {
     try {
         const res = await api.put(profRoutes.postComment, { postId, comment });
@@ -272,6 +285,51 @@ export const sendNewMessage = async (text: string, conversationId: string, sende
 export const getUserById = async (id: string) => {
     try {
         const res = await api.get(`${profRoutes.getUserById}/${id}`);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const getNotifications = async () => {
+    try {
+        const res = await api.get(profRoutes.notifications);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const updateNotification = async (id: string) => {
+    try {
+        const res = await api.patch(`${profRoutes.updateNotification}/${id}`);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const getRequirements = async () => {
+    try {
+        const res = await api.get(profRoutes.requirements);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const subscribe = async (plan: string) => {
+    try {
+        const res = await api.post(`${profRoutes.subscribe}/${plan}`);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const cancelSubscription = async ()=>{
+    try {
+        const res = await api.delete(profRoutes.cancelSubscription);
         return res;
     } catch (err) {
         errorHandler(err as Error);

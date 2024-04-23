@@ -4,8 +4,15 @@ import AdminRoutes from './Routes/AdminRoutes';
 import ProfessionalRoutes from './Routes/ProfessionalRoutes';
 import { Toaster } from 'react-hot-toast';
 import ScrollToTop from './Components/common/ScrollToTop';
+import { useEffect, useRef } from 'react';
+import { Socket, io } from 'socket.io-client';
 
 const App = () => {
+    const socket = useRef<Socket | undefined>();
+    useEffect(()=>{
+        socket.current = io("ws://localhost:3000");
+    },[])
+    
     return (
         <> 
             <Toaster

@@ -40,8 +40,8 @@ const Conversation = ({ conversation, currentUser ,role}: IProps) => {
 
   return (
     <div className="conversation p-2 flex items-center cursor-pointer mt-5 hover:bg-gray-300">
-      <img src={user?.image ? user.image:'/profileicon.png'} className="w-14 h-14 rounded-full object-cover mr-3" />
-      <span className="text-gray-200 text-[17px] -tracking-tighter hidden md:block">{role==='professional'? user?.name:`${user?.firstname} ${user?.lastname}`}</span>
+      <img src={user?.image ? user.image:'/profileicon.png'} className="w-12 h-12 rounded-full object-cover mr-3 border border-gray-200" />
+      <span className="text-gray-700 text-[17px] -tracking-tighter text-sm hidden md:block">{role==='professional'? user?.name:`${user?.firstname} ${user?.lastname}`}</span>
     </div>
   )
 }

@@ -19,6 +19,12 @@ import ProfDetail from '../Pages/CommonPages/ProfDetail'
 import Chat from '../Pages/Professional/Chat'
 import Search from '../Pages/CommonPages/Search'
 import PostDetail from '../Pages/CommonPages/PostDetail'
+import SavedPosts from '../Pages/Professional/SavedPosts'
+import Notification from '../Pages/Professional/Notification'
+import Requirements from '../Pages/Professional/Requirements'
+import Subscription from '../Pages/Professional/Subscription'
+import SuccessPayment from '../Pages/Professional/SuccessPayment'
+import CancelPayment from '../Pages/Professional/CancelPayment'
 
 const ProfessionalRoutes = () => {
     return (
@@ -48,6 +54,12 @@ const ProfessionalRoutes = () => {
                 <Route path='/profDetails/:id' element={<ProfDetail role={'professional'} />} />
                 <Route path='/chat' element={< Chat />} />
                 <Route path='/search' element={< Search role={'professional'} />} />
+                <Route path='/saved' element={< SavedPosts />} />
+                <Route path='/notifications' element={< Notification />} />
+                <Route path='/requirements' element={<Requirements />} />
+                <Route path='/subscribe' element={<Subscription />} />
+                <Route path='/successPayment' element={<SuccessPayment />} />
+                <Route path='/cancelPayment' element={<CancelPayment />} />
             </Route>
 
         </Routes>

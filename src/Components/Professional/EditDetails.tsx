@@ -20,9 +20,11 @@ interface Prof {
     followers: number
 }
 const EditDetails = () => {
+
     const [jobroles, setJobroles] = useState<Jobrole[]>([])
     const [userData, setUserData] = useState<Prof>();
     const [imagePreview, setImagePreview] = useState(null);
+    const [showModal, setShowModal] = useState(false);
     const [data, setData] = useState({
         firstname: '',
         lastname: '',
@@ -43,7 +45,7 @@ const EditDetails = () => {
         const fetchJobroles = async () => {
             try {
                 const res = await getJobrole();
-                const profileResponse:any = await profProfile();
+                const profileResponse: any = await profProfile();
                 let userdata = profileResponse?.data.profdata
                 setUserData(userdata);
                 if (data) {
@@ -134,7 +136,7 @@ const EditDetails = () => {
             const response = await editEmail(data.email);
             if (response?.data?.success) {
                 navigate('/professional/editProfile/verifyOtp');
-            }else{
+            } else {
                 navigate('/professional/editProfile')
             }
         }
@@ -142,19 +144,19 @@ const EditDetails = () => {
 
     const handleEditPassword = async (e: any) => {
         e.preventDefault();
-        if(!currentPassword.trim().length){
+        if (!currentPassword.trim().length) {
             toast.error('Enter current password!');
             return;
-        }else if(!newPassword.trim().length || !confirmtPassword.trim().length){
+        } else if (!newPassword.trim().length || !confirmtPassword.trim().length) {
             toast.error('Enter valid password');
             return;
-        }else if(newPassword!==confirmtPassword){
+        } else if (newPassword !== confirmtPassword) {
             toast.error('Password is not matching!');
             return;
         }
 
-        const response = await editPassword(newPassword,currentPassword);
-        if(response?.data.success){
+        const response = await editPassword(newPassword, currentPassword);
+        if (response?.data.success) {
             toast.success('Password updated!');
         }
     }
@@ -173,7 +175,7 @@ const EditDetails = () => {
                     <input onChange={(e) => setData({ ...data, email: e.target.value })} value={data.email} type="text" className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] w-2/3 p-2.5 " required />
                     <img onClick={handleEditEmail} src="/tick.png" className="w-9 h-9 shadow-lg border inline cursor-pointer" />
                 </div>
-                <button data-modal-target="authentication-modal"
+                <button onClick={() => setShowModal(true)} data-modal-target="authentication-modal"
                     data-modal-toggle="authentication-modal" className="mt-5 mb-5 mr-5 w-2/3 py-2 px-5 font-semibold rounded border border-[#007562] hover:text-[#007562] text-white bg-[#007562] hover:bg-white cursor-pointer">Change password</button>
             </div>
             <div className="md:w-1/2 w-full space-y-4 md:space-y-3" >
@@ -199,7 +201,7 @@ const EditDetails = () => {
                         <label className="block mb-2 text-sm font-medium text-gray-500 ">Job</label>
                         <select id="countries" onChange={(e) => setData({ ...data, job: e.target.value })} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5">
                             <option selected>Choose a jobrole</option>
-                            {jobroles.map((val, index) => {
+                            {jobroles && jobroles.map((val, index) => {
                                 return (
                                     <option key={index} value="US">{val.name}</option>
                                 )
@@ -234,11 +236,11 @@ const EditDetails = () => {
 
             <>
                 {/* Main modal */}
-                <div
+                {showModal && <div
                     id="authentication-modal"
                     tabIndex={-1}
                     aria-hidden="true"
-                    className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+                    className="bg-gray-950 bg-opacity-60 my-auto fixed flex overflow-y-auto overflow-x-hidden top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
                 >
                     <div className="relative p-4 w-full max-w-md max-h-full">
                         {/* Modal content */}
@@ -248,28 +250,12 @@ const EditDetails = () => {
                                 <h3 className="text-xl font-semibold text-gray-900">
                                     Change password
                                 </h3>
-                                <button
-                                    type="button"
-                                    className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-                                    data-modal-hide="authentication-modal"
-                                >
-                                    <svg
-                                        className="w-3 h-3"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 14 14"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                                        />
-                                    </svg>
-                                    <span className="sr-only">Close modal</span>
-                                </button>
+                                    <img
+                                        onClick={() => setShowModal(false)}
+                                        src='/close.png'
+                                        className="w-5 hover:border-green cursor-pointer"
+                                    />
+                                    <span className="sr-only">Close modal</span>                                
                             </div>
                             {/* Modal body */}
                             <div className="p-4 md:p-5">
@@ -340,6 +326,7 @@ const EditDetails = () => {
                         </div>
                     </div>
                 </div>
+                }
             </>
 
 

@@ -36,7 +36,7 @@ const Chat = () => {
     useEffect(() => {
 
         socket.current = io("ws://localhost:3000");
-        console.log('indfrooooo')
+        
         socket.current.on('getMessage', (data) => {
             setArrivalMessage({
                 senderId: data.senderId,
@@ -52,10 +52,10 @@ const Chat = () => {
     }, [arrivalMessage])
 
     useEffect(() => {
-        const { Id } = jwtDecode(JSON.parse(localStorage.getItem('userData') as string))
-        console.log('userid token', Id)
-        setUserId(Id);
-        socket.current?.emit('addUser', Id);
+        const decoded:any = jwtDecode(JSON.parse(localStorage.getItem('userData') as string))
+        console.log('userid token', decoded.Id)
+        setUserId(decoded.Id);
+        socket.current?.emit('addUser', decoded.Id);
 
     }, [])
 
@@ -107,7 +107,7 @@ const Chat = () => {
     return (
         <>
             < Navbar role={'user'} />
-            <div className="messenger h-screen flex w-full">
+            <div className="messenger flex w-full">
                 <div className="chatMenu flex lg:w-1/4 md:w-2/6 w-1/6">
                     <div className="chatMenuWrapper p-0 md:p-2 h-full w-full bg-[#17654c]">
                         {/* <input placeholder="Search for friends" className="w-full px-2 border-b-gray-200 h-8  mt-4 rounded-full hidden md:block" /> */}
@@ -129,7 +129,7 @@ const Chat = () => {
                                         </div>
                                     ))}
                                 </div>
-                                <div className="chatBoxBottom mt-1 flex items-center justify-between">
+                                <div className="sticky bottom-0 mt-1 flex items-center justify-between">
                                     <textarea
                                         className="chatMessageInput w-5/6 h-14 p-2 rounded"
                                         placeholder="write something..."
