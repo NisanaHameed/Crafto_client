@@ -19,6 +19,10 @@ const userRoutes = {
     postComment:'/postComment',
     postDetails:'/postDetails',
     searchDesign:'/searchDesign',
+    forgotPassword:'/forgotPassword',
+    verifyOTP:'/verifyOtpForgotPassword',
+    changePassword:'/changePassword',
+    resendOtp:'/resendOtp',
     logout:'/logout'
 }
 

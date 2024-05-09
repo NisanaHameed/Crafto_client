@@ -5,6 +5,7 @@ import { jwtDecode } from "jwt-decode"
 import { likePostbyProf, postCommentbyProf, unlikePostbyProf } from "../../Api/professional"
 import { useNavigate, useParams } from "react-router-dom"
 import toast from "react-hot-toast"
+import {format} from 'timeago.js'
 
 interface IRole {
   role: 'user' | 'professional'
@@ -24,7 +25,7 @@ interface IDesign {
 }
 interface comment {
   user: {
-    _id?:string
+    _id?: string
     name?: string,
     firstname?: string,
     lastname?: string,
@@ -32,6 +33,7 @@ interface comment {
   },
   type: string
   text: string
+  createdAt:Date
 }
 
 const PostDetail: React.FC<IRole> = ({ role }) => {
@@ -46,11 +48,11 @@ const PostDetail: React.FC<IRole> = ({ role }) => {
 
   useEffect(() => {
     if (role == 'user') {
-      const { Id } = jwtDecode(JSON.parse(localStorage.getItem('userData') as string))
-      setUserId(Id);
+      const decoded: any = jwtDecode(JSON.parse(localStorage.getItem('userData') as string))
+      setUserId(decoded.Id);
     } else if (role == 'professional') {
-      const { Id } = jwtDecode(JSON.parse(localStorage.getItem('profData') as string))
-      setUserId(Id);
+      const decoded: any = jwtDecode(JSON.parse(localStorage.getItem('profData') as string))
+      setUserId(decoded.Id);
     }
   }, [])
 
@@ -115,13 +117,13 @@ const PostDetail: React.FC<IRole> = ({ role }) => {
       }
     }
   }
-  const profDetail = (id:string)=>{
-    if(role=='user'){
-        navigate(`/profDetails/${id}`);
-    }else{
-        navigate(`/professional/profDetails/${id}`);
+  const profDetail = (id: string) => {
+    if (role == 'user') {
+      navigate(`/profDetails/${id}`);
+    } else {
+      navigate(`/professional/profDetails/${id}`);
     }
-}
+  }
 
   return (
     <>
@@ -139,12 +141,13 @@ const PostDetail: React.FC<IRole> = ({ role }) => {
               {post?.comments && post.comments.map((val) => {
                 return (
                   <div className="py-2">
-                    <img onClick={()=>profDetail(val?.user._id as string)} src={val?.user.image} className="inline w-6 h-6 object-cover rounded-full border border-gray-400 cursor-pointer" alt="" />
+                    <img onClick={() => profDetail(val?.user._id as string)} src={val?.user.image} className="inline w-6 h-6 object-cover rounded-full border border-gray-400 cursor-pointer" alt="" />
                     {val.type == 'User' ?
-                      <h2 onClick={()=>profDetail(val?.user._id as string)} className="inline ml-2 text-sm cursor-pointer">{val?.user.name}</h2> :
-                      <h2 onClick={()=>profDetail(val?.user._id as string)} className="inline ml-2 text-sm cursor-pointer">{val?.user.firstname} {val?.user.lastname}</h2>
+                      <h2 onClick={() => profDetail(val?.user._id as string)} className="inline ml-2 text-sm cursor-pointer">{val?.user.name}</h2> :
+                      <h2 onClick={() => profDetail(val?.user._id as string)} className="inline ml-2 text-sm cursor-pointer">{val?.user.firstname} {val?.user.lastname}</h2>
                     }
                     <p className="ml-8 text-sm">{val.text}</p>
+                    <p className="ml-8 text-xs font-light">{format(val?.createdAt,'en-US')}</p>
                   </div>
                 )
               })}

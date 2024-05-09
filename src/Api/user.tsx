@@ -1,4 +1,4 @@
-import api from '../Services/axios'
+import api from '../Services/Config/axios'
 import userRoutes from '../Services/Endpoints/userEndpoints'
 import errorHandler from './errorHandler'
 
@@ -70,6 +70,23 @@ export const verifyOtp = async (otp: string) => {
     }
 }
 
+export const resendOtp = async () => {
+    try {
+        let token = localStorage.getItem('userotp')
+        const res = await api.post(userRoutes.resendOtp, {}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (res.data.success) {
+            localStorage.setItem('userotp', res.data.newToken)
+        }
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
 export const userProfile = async () => {
     try {
         let res = await api.get(userRoutes.profile);
@@ -104,9 +121,9 @@ export const getDesigns = async (category: string) => {
     }
 }
 
-export const getAllDesigns = async () => {
+export const getAllDesigns = async (page: number, limit: number) => {
     try {
-        const res = await api.get(userRoutes.getAllDesigns);
+        const res = await api.get(`${userRoutes.getAllDesigns}?page=${page}&limit=${limit}`);
         return res;
     } catch (err) {
         errorHandler(err as Error);
@@ -212,12 +229,52 @@ export const postDetail = async (postid: string) => {
     }
 }
 
-export const searchDesigns = async (searchQuery: string) => {
+export const searchDesigns = async (searchTerm: string, category: string, sort: number, currentPage: number, itemsPerPage: number) => {
     try {
-        const res = await api.get(`${userRoutes.searchDesign}?${searchQuery}`);
+        const res = await api.get(`${userRoutes.searchDesign}?searchTerm=${searchTerm}&category=${category}&sort=${sort}&page=${currentPage}&limit=${itemsPerPage}`);
         return res;
     } catch (err) {
         errorHandler(err as Error)
+    }
+}
+
+export const forgotPassword = async (email: string) => {
+    try {
+        const res = await api.post(userRoutes.forgotPassword, { email });
+        localStorage.setItem('userFPtoken', res.data.token);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+export const verifyOTP = async (otp: string) => {
+    try {
+        let token = localStorage.getItem('userFPtoken');
+        const res = await api.post(userRoutes.verifyOTP, { otp }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const changePassword = async (password: string) => {
+    try {
+        let token = localStorage.getItem('userFPtoken')
+        const res = await api.post(userRoutes.changePassword, { password }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        if (res.data.success) {
+            localStorage.removeItem('userFPtoken');
+        }
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
     }
 }
 

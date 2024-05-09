@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { signup } from '../../Api/user'
 import GoogleAuth from "../../Components/common/GoogleAuth"
+import toast from "react-hot-toast"
 
 const Signup = () => {
 
@@ -15,20 +16,21 @@ const Signup = () => {
     const mobileNumberRegex = /^[0-9]{10}$/;
 
     const handleSubmit = async (e: any) => {
-        console.log('submitting....')
+      
         e.preventDefault();
+        const namePattern = /^[a-zA-Z\s]+$/;
         try {
-            if (!name.trim().length) {
-                setErr("Enter name!");
+            if (!name.trim().length || !namePattern.test(name)) {
+                toast.error('Enter a valid name!');
                 return;
             } else if (!emailPattern.test(email)) {
-                setErr("Enter a vlaid email!");
+                toast.error('Enter a vlaid email!');
                 return
             } else if (!mobileNumberRegex.test(mobile.toString())) {
-                setErr("Enter a valid mobile number!");
+                toast.error('Enter a valid mobile number!');
                 return;
             } else if (password.trim().length < 5) {
-                setErr("Password must contain atleast 5 characters!");
+                toast.error('Password must contain atleast 5 characters!');
                 return;
             }
 
@@ -75,7 +77,7 @@ const Signup = () => {
                                 </div>
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-dark">Mobile</label>
-                                    <input type="tel" onChange={(e) => setMobile(parseInt(e.target.value))} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:placeholder-gray-500 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                    <input type="number" onChange={(e) => setMobile(parseInt(e.target.value))} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:placeholder-gray-500 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                 </div>
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-dark">Password</label>

@@ -38,8 +38,8 @@ const ProfDetail: React.FC<IRole> = ({ role }) => {
 
     useEffect(() => {
         if (role == 'user') {
-            const { Id } = jwtDecode(JSON.parse(localStorage.getItem('userData') as string))
-            setUserId(Id);
+            const decoded:any = jwtDecode(JSON.parse(localStorage.getItem('userData') as string))
+            setUserId(decoded.Id);
         }
     }, [])
     useEffect(() => {

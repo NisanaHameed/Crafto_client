@@ -162,79 +162,80 @@ const EditDetails = () => {
     }
 
     return (
-        <div className="md:w-4/6 w-5/6 p-6 space-y-4 md:space-y-6 sm:p-8 shadow-lg flex md:flex-row flex-col mx-auto mt-4">
-            <div className="md:w-1/2 w-full md:mr-7">
-                <img className="w-28 h-28 rounded-full bg-gray-300 mx-auto object-cover" src={imagePreview ? imagePreview : data.image} alt="Profile picture " />
-                <div className="mt-4 mb-3">
-                    <label className="block text-sm mt-5 font-medium text-gray-500 mr-5">Change image</label>
-                    <input onChange={handleImageChange} type="file" className="border border-gray-30 w-2/3 rounded-md mt-2" accept="image/*" />
-                    <img onClick={handleEditImage} src="/tick.png" className="w-9 h-9 shadow-lg border inline cursor-pointer" alt="" />
-                </div>
-                <div className="w-full mb-2">
-                    <label className="block mb-2 text-sm font-medium text-gray-500 ">Change email</label>
-                    <input onChange={(e) => setData({ ...data, email: e.target.value })} value={data.email} type="text" className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] w-2/3 p-2.5 " required />
-                    <img onClick={handleEditEmail} src="/tick.png" className="w-9 h-9 shadow-lg border inline cursor-pointer" />
-                </div>
-                <button onClick={() => setShowModal(true)} data-modal-target="authentication-modal"
-                    data-modal-toggle="authentication-modal" className="mt-5 mb-5 mr-5 w-2/3 py-2 px-5 font-semibold rounded border border-[#007562] hover:text-[#007562] text-white bg-[#007562] hover:bg-white cursor-pointer">Change password</button>
-            </div>
-            <div className="md:w-1/2 w-full space-y-4 md:space-y-3" >
-
-                <div className="flex">
-                    <div className="flex-1">
-                        <label className="block mb-2 text-sm font-medium text-gray-500 ">First Name</label>
-                        <input onChange={(e) => setData({ ...data, firstname: e.target.value })} value={data.firstname} type="text" className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5 " required />
+        <>
+            <div className="md:w-4/6 w-5/6 p-6 space-y-4 md:space-y-6 sm:p-8 shadow-lg flex md:flex-row flex-col mx-auto mt-4">
+                <div className="md:w-1/2 w-full md:mr-7">
+                    <img className="w-28 h-28 rounded-full bg-gray-300 mx-auto object-cover" src={imagePreview ? imagePreview : data.image} alt="Profile picture " />
+                    <div className="mt-4 mb-3">
+                        <label className="block text-sm mt-5 font-medium text-gray-500 mr-5">Change image</label>
+                        <input onChange={handleImageChange} type="file" className="border border-gray-30 w-2/3 rounded-md mt-2" accept="image/*" />
+                        <img onClick={handleEditImage} src="/tick.png" className="w-9 h-9 shadow-lg border inline cursor-pointer" alt="" />
                     </div>
-                    <div className="flex-1 ml-4">
-                        <label className="block mb-2 text-sm font-medium text-gray-500 ">Last Name</label>
-                        <input onChange={(e) => setData({ ...data, lastname: e.target.value })} value={data.lastname} type="text" className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5" required />
+                    <div className="w-full mb-2">
+                        <label className="block mb-2 text-sm font-medium text-gray-500 ">Change email</label>
+                        <input onChange={(e) => setData({ ...data, email: e.target.value })} value={data.email} type="text" className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] w-2/3 p-2.5 " required />
+                        <img onClick={handleEditEmail} src="/tick.png" className="w-9 h-9 shadow-lg border inline cursor-pointer" />
                     </div>
+                    <button onClick={() => setShowModal(true)} data-modal-target="authentication-modal"
+                        data-modal-toggle="authentication-modal" className="mt-5 mb-5 mr-5 w-2/3 py-2 px-5 font-semibold rounded border border-[#007562] hover:text-[#007562] text-white bg-[#007562] hover:bg-white cursor-pointer">Change password</button>
                 </div>
+                <div className="md:w-1/2 w-full space-y-4 md:space-y-3" >
 
-                <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-500 ">City</label>
-                    <input type="text" value={data.city} onChange={(e) => setData({ ...data, city: e.target.value })} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5" required />
-                </div>
-
-                <div className="flex">
-                    <div className="flex-1">
-                        <label className="block mb-2 text-sm font-medium text-gray-500 ">Job</label>
-                        <select id="countries" onChange={(e) => setData({ ...data, job: e.target.value })} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5">
-                            <option selected>Choose a jobrole</option>
-                            {jobroles && jobroles.map((val, index) => {
-                                return (
-                                    <option key={index} value="US">{val.name}</option>
-                                )
-                            })}
-
-                        </select>
+                    <div className="flex">
+                        <div className="flex-1">
+                            <label className="block mb-2 text-sm font-medium text-gray-500 ">First Name</label>
+                            <input onChange={(e) => setData({ ...data, firstname: e.target.value })} value={data.firstname} type="text" className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5 " required />
+                        </div>
+                        <div className="flex-1 ml-4">
+                            <label className="block mb-2 text-sm font-medium text-gray-500 ">Last Name</label>
+                            <input onChange={(e) => setData({ ...data, lastname: e.target.value })} value={data.lastname} type="text" className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5" required />
+                        </div>
                     </div>
-                    <div className="flex-1 ml-4">
-                        <label className="block mb-2 text-sm font-medium text-gray-500 ">Experience</label>
-                        <input type="number" value={data.experience} onChange={(e) => setData({ ...data, experience: parseInt(e.target.value) })} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5" required />
+
+                    <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-500 ">City</label>
+                        <input type="text" value={data.city} onChange={(e) => setData({ ...data, city: e.target.value })} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5" required />
                     </div>
+
+                    <div className="flex">
+                        <div className="flex-1">
+                            <label className="block mb-2 text-sm font-medium text-gray-500 ">Job</label>
+                            <select id="countries" onChange={(e) => setData({ ...data, job: e.target.value })} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5">
+                                <option selected>Choose a jobrole</option>
+                                {jobroles && jobroles.map((val, index) => {
+                                    return (
+                                        <option key={index} value="US">{val.name}</option>
+                                    )
+                                })}
+
+                            </select>
+                        </div>
+                        <div className="flex-1 ml-4">
+                            <label className="block mb-2 text-sm font-medium text-gray-500 ">Experience</label>
+                            <input type="number" value={data.experience} onChange={(e) => setData({ ...data, experience: parseInt(e.target.value) })} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5" required />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-500 ">Company</label>
+                        <input type="text" value={data.company} onChange={(e) => setData({ ...data, company: e.target.value })} className=" border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5" required />
+                    </div>
+                    <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-500 ">Bio</label>
+                        <textarea value={data.bio} rows={5} onChange={(e) => setData({ ...data, bio: e.target.value })} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5" required ></textarea>
+                    </div>
+
+                    <div className="mt-16">
+                        <button onClick={handleEditProfile} className="mt-5 mr-5 w-24 py-2 px-5 font-semibold rounded border border-[#007562] hover:text-[#007562] text-white bg-[#007562] hover:bg-white cursor-pointer">Edit</button>
+                        <button onClick={() => navigate('/professional/profile')} className="mt-5 w-24 py-2 px-5 font-semibold rounded border border-[#007562] text-[#007562] hover:text-white hover:bg-[#007562] cursor-pointer">Cancel</button>
+                    </div>
+
+                    <p className="text-sm font-light text-gray-700 dark:text-gray-400">
+
+                    </p>
                 </div>
 
-                <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-500 ">Company</label>
-                    <input type="text" value={data.company} onChange={(e) => setData({ ...data, company: e.target.value })} className=" border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5" required />
-                </div>
-                <div>
-                    <label className="block mb-2 text-sm font-medium text-gray-500 ">Bio</label>
-                    <textarea value={data.bio} rows={5} onChange={(e) => setData({ ...data, bio: e.target.value })} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-full p-2.5" required ></textarea>
-                </div>
 
-                <div className="mt-16">
-                    <button onClick={handleEditProfile} className="mt-5 mr-5 w-24 py-2 px-5 font-semibold rounded border border-[#007562] hover:text-[#007562] text-white bg-[#007562] hover:bg-white cursor-pointer">Edit</button>
-                    <button onClick={() => navigate('/professional/profile')} className="mt-5 w-24 py-2 px-5 font-semibold rounded border border-[#007562] text-[#007562] hover:text-white hover:bg-[#007562] cursor-pointer">Cancel</button>
-                </div>
-
-                <p className="text-sm font-light text-gray-700 dark:text-gray-400">
-
-                </p>
-            </div>
-
-            <>
                 {/* Main modal */}
                 {showModal && <div
                     id="authentication-modal"
@@ -250,12 +251,12 @@ const EditDetails = () => {
                                 <h3 className="text-xl font-semibold text-gray-900">
                                     Change password
                                 </h3>
-                                    <img
-                                        onClick={() => setShowModal(false)}
-                                        src='/close.png'
-                                        className="w-5 hover:border-green cursor-pointer"
-                                    />
-                                    <span className="sr-only">Close modal</span>                                
+                                <img
+                                    onClick={() => setShowModal(false)}
+                                    src='/close.png'
+                                    className="w-5 hover:border-green cursor-pointer"
+                                />
+                                <span className="sr-only">Close modal</span>
                             </div>
                             {/* Modal body */}
                             <div className="p-4 md:p-5">
@@ -327,10 +328,11 @@ const EditDetails = () => {
                     </div>
                 </div>
                 }
-            </>
 
 
-        </div>
+
+            </div>
+        </>
     )
 }
 

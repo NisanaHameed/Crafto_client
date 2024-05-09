@@ -96,7 +96,7 @@ const Jobrole = () => {
 
                         <div className="relative overflow-x-auto shadow-md sm:rounded-sm">
                             <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                                <thead className="text-xs text-green-700 uppercase bg-[#f3edd988] ">
+                                <thead className="text-xs text-green-700 uppercase bg-[#f3edd988]">
                                     <tr>
                                         <th scope="col" className="px-6 py-3">
                                             Jobrole

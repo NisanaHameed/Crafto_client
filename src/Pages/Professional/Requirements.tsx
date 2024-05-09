@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import Sidebar from "../../Components/Professional/Sidebar"
-import { getRequirements } from "../../Api/professional"
+import { getRequirements, profProfile } from "../../Api/professional"
 import Navbar from "../../Components/common/Navbar"
+import { useNavigate } from "react-router-dom"
 
 interface IRequirement {
     _id:string,
@@ -19,6 +20,20 @@ interface IRequirement {
 const Requirements = () => {
 
     const [requirements,setRequirements] = useState<IRequirement[]>([])
+    const [isVerified,setIsVerified] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        const fetchProfile = async()=>{
+
+            let res:any = await profProfile();
+            if(res.data.success){
+                setIsVerified(res.data.profdata.isVerified);
+                // setRequirements(res.data.profdata.requirements)
+            }
+        }
+        fetchProfile();
+    },[])
 
     useEffect(()=>{
         const fetchdata = async()=>{
@@ -37,13 +52,20 @@ const Requirements = () => {
         <>
         < Navbar role='professional' />
         <div className="flex flex-row">
-            <div className="md:w-1/4">
+            <div className="md:w-1/4 w-0">
                 < Sidebar />
             </div>
-            <div className="mt-10 md:w-3/4 w-full px-3">
-            <h2 className="text-lg mb-5 text-amber-950 font-semibold md:ml-10 lg:ml-0">Available Requirements</h2>
+            <div className="mt-12 md:w-3/4 w-full px-3 ml-6 md:ml-0">
+            {isVerified && <h2 className="text-lg mb-5 text-amber-950 font-semibold md:ml-10 lg:ml-0">Available Requirements</h2>}
+            {isVerified===false &&
+            <>
+            <img src="/empty.jpg" className="w-72" alt="" />
+            <p className="text-[#1d714a] font-thin">Subscribe to get requirements posted by home owners!</p>
+            <button onClick={() =>navigate('/professional/subscribe') } className="bg-[#2e9474] px-4 py-2 text-white font-thin tracking-wide mt-6 ">Go to Subscription</button>
+            </>
+            }
             <div className="max-w-4xl grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2">
-            {requirements && requirements.map((val, index) =>
+            {isVerified===true && requirements && requirements.map((val, index) =>
                     <div key={index} className="flex flex-col max-w-xs p-6 my-4 border rounded shadow-md">
                         <div className="flex flex-col flex-grow">
                         <h5 className="mb-2 text-md text-[#1f6357] font-semibold">

@@ -61,14 +61,15 @@ const FillProfile = () => {
 
 
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        console.log('submitting....')
+  
         e.preventDefault();
+        const namePattern = /^[a-zA-Z]+$/
         try {
-            if (!data.firstname.trim().length) {
-                toast.error("Enter firstname!");
+            if (!data.firstname.trim().length || !namePattern.test(data.firstname)) {
+                toast.error("Enter a valid firstname!");
                 return
-            } else if (!data.lastname.trim().length) {
-                toast.error("Enter lastname!");
+            } else if (!data.lastname.trim().length || !namePattern.test(data.lastname)) {
+                toast.error("Enter a valid lastname!");
                 return;
             } else if (!data.city.trim().length) {
                 toast.error("Select city!!");

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
 import { profLogout, userLogout } from "../../Store/Slice/AuthSlice"
 import { profProfile, logout, getNotifications } from "../../Api/professional"
@@ -34,6 +34,11 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
     const [notifications, setNotications] = useState(0);
     const socket = useRef<Socket | undefined>();
 
+    const { profData, userData } = useSelector((state: state) => state.auth);
+
+    const location = useLocation();
+    const url = location.pathname.split('/').pop();
+
     useEffect(() => {
         socket.current = io("ws://localhost:3000");
 
@@ -56,8 +61,8 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
     }, [])
 
     useEffect(() => {
-        if (role == 'professional') {
-            const decoded: any = jwtDecode(JSON.parse(localStorage.getItem('profData') as string))
+        if (role == 'professional' && profData) {
+            const decoded: any = jwtDecode(profData)
             console.log('profidfrom token', decoded.Id)
             socket.current?.emit('addUser', decoded.Id);
         }
@@ -90,12 +95,11 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
             }
         }
         fetchNotifications();
-    })
+    },[])
 
     const [toggle, setToggle] = useState(false);
     const [image, setImage] = useState('/profile.png')
 
-    const { profData, userData } = useSelector((state: state) => state.auth);
     useEffect(() => {
         if (role == 'user') {
             setIsLoggedIn(userData);
@@ -160,10 +164,19 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
     }
 
     const handleSubmit = () => {
-        if (role == 'user') {
-            navigate('/search');
+        console.log(url)
+        if (url == 'professionals') {
+            if (role == 'user') {
+                navigate('/searchProfessionals');
+            } else {
+                navigate('/professional/searchProfessionals')
+            }
         } else {
-            navigate('/professional/search')
+            if (role == 'user') {
+                navigate('/search');
+            } else {
+                navigate('/professional/search')
+            }
         }
     }
 
@@ -187,7 +200,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
                         </div>
                         <div className="flex flex-1 items-center justify-center sm:justify-start">
                             <div className="flex flex-shrink-0 items-center">
-                                <img onClick={() => navigate('/')} className="w-36 h-auto cursor-pointer" src="/craftoLogo2.png" alt="CRAFTO" />
+                                <img onClick={() => navigate('/')} className="w-36 h-auto cursor-pointer object-cover" src="/craftoLogo2.png" alt="CRAFTO" />
                             </div>
                             <div className="hidden sm:ml-6 sm:block">
                                 <div className="flex space-x-4">
@@ -219,7 +232,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
                                     <button type="button" onClick={() => setToggle(toggle => !toggle)} className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                         <span className="absolute -inset-1.5"></span>
                                         <span className="sr-only">Open user menu</span>
-                                        <img className="h-8 w-8 rounded-full" src={image} alt="" />
+                                        <img className="h-8 w-8 rounded-full object-cover" src={image} alt="" />
                                     </button >
                                 </div>
                                 <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden " role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" style={{ display: toggle ? 'block' : 'none' }}>

@@ -21,6 +21,8 @@ const UserLoggedIn = () => {
                 const res:any = await userProfile();
                 if (res?.response?.data?.message == "User is blocked by admin!") {
                     setData(true);
+                }else if(res?.response?.data?.message == 'Session has expired, please log in again.'){
+                    setData(true)
                 }
             } catch (err) {
                 console.log(err);

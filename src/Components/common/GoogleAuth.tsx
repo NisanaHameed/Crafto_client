@@ -29,16 +29,30 @@ const GoogleAuth = ({ Login, user }: gauthProps) => {
         if (user) {
             if (!Login) {
                 const res = await gsignup(data.name, data.email, data.password);
-                if (res.data?.success) {
-                    toast.success("Successfully registered!");
+                if (res?.data?.success) {
+                    toast((t) => (
+                        <span className="text-[#2e695e]">
+                          Successfully registered!
+                          <button className="pl-4" onClick={() => toast.dismiss(t.id)}>
+                          <img src="/close.png" alt="" />
+                          </button>
+                        </span>
+                      ))
                     dispatch(setUserCredential(res.data.token));
                     navigate('/')
                 }
             } else {
                 const res = await login(data.email, data.password);
 
-                if (res.data.success) {
-                    toast.success("successfully logged in!");
+                if (res?.data.success) {
+                    toast((t) => (
+                        <span className="text-[#2e695e]">
+                          Successfully logged in!
+                          <button className="pl-4" onClick={() => toast.dismiss(t.id)}>
+                          <img src="/close.png" alt="" />
+                          </button>
+                        </span>
+                      ))
                     dispatch(setUserCredential(res.data.token));
                     navigate('/')
                 }
@@ -47,14 +61,21 @@ const GoogleAuth = ({ Login, user }: gauthProps) => {
             if (!Login) {
                 const res = await profGsignup(data.name, data.email, data.password);
 
-                if (res.data.success) {
+                if (res?.data.success) {
                     navigate('/professional/fillProfile')
                 }
             } else {
                 const res = await profLogin(data.email, data.password);
 
-                if (res.data.success) {
-                    toast.success("successfully logged in!");
+                if (res?.data.success) {
+                    toast((t) => (
+                        <span className="text-[#2e695e]">
+                          Successfully logged in!
+                          <button className="pl-4" onClick={() => toast.dismiss(t.id)}>
+                          <img src="/close.png" alt="" />
+                          </button>
+                        </span>
+                      ))
                     dispatch(setProfCredential(res.data.token));
                     navigate('/professional')
                 }

@@ -21,7 +21,7 @@ const Message: React.FC<IProps> = ({ message, own, previousMessageDate }) => {
 
                 <div className="flex">
                     {/* <img src="/hicon3.png" className="messageImg w-8 h-8 rounded-full object-cover mr-2" alt="" /> */}
-                    <p className={`${own ? 'bg-gray-200 text-gray-700' : 'bg-[#959595] text-white ml-3 text-start'} messageText px-3 py-1 rounded-lg text-sm max-w-96`}>{message?.text}</p>
+                    <p className={`${own ? 'bg-gray-200 text-gray-700' : 'bg-[#959595] text-white ml-3 text-start'} messageText px-3 py-[6px] rounded-lg text-sm max-w-96`}>{message?.text}</p>
                 </div>
                 <div className="text-xs mt-1 ml-4 mr-2">{new Date(message?.createdAt).toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}</div>
             </div>

@@ -10,6 +10,9 @@ const adminRoutes = {
     addJobrole:'/admin/addJobrole',
     deleteJobrole:'/admin/deleteJobrole',
     editJobrole:'/admin/editJobrole',
+    getSubscriptions:'/admin/subscriptions',
+    subscriptionDetails:'/admin/subscriptionDetails',
+    getDashboardDetails:'/admin/dashboard',
     logout:'/admin/logout'
 }
 

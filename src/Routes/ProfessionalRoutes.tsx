@@ -25,10 +25,18 @@ import Requirements from '../Pages/Professional/Requirements'
 import Subscription from '../Pages/Professional/Subscription'
 import SuccessPayment from '../Pages/Professional/SuccessPayment'
 import CancelPayment from '../Pages/Professional/CancelPayment'
+import SearchProfessionals from '../Pages/CommonPages/SearchProfessionals'
+import ForgotPassword from '../Pages/CommonPages/ForgotPassword'
+import OTP from '../Pages/CommonPages/OTP'
+import ChangePassword from '../Pages/CommonPages/ChangePassword'
 
 const ProfessionalRoutes = () => {
     return (
         <Routes>
+            <Route path='/forgotPassword' element={<ForgotPassword role="professional" />} />
+            <Route path='/forgotPasswordOTP' element={<OTP role='professional' />} />
+            <Route path='/changePassword' element={<ChangePassword role='professional' />} />
+            
             <Route path='' element={< HomeProtect />} >
                 <Route path='' element={<Home />} />
             </Route>
@@ -54,6 +62,7 @@ const ProfessionalRoutes = () => {
                 <Route path='/profDetails/:id' element={<ProfDetail role={'professional'} />} />
                 <Route path='/chat' element={< Chat />} />
                 <Route path='/search' element={< Search role={'professional'} />} />
+                <Route path="/searchProfessionals" element={<SearchProfessionals role={'professional'} />} />
                 <Route path='/saved' element={< SavedPosts />} />
                 <Route path='/notifications' element={< Notification />} />
                 <Route path='/requirements' element={<Requirements />} />

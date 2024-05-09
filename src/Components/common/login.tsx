@@ -76,18 +76,24 @@ const Login = () => {
         }
     }
 
+    const handleForgotPassword = ()=>{
+        console.log('role....',role)
+        if(role){
+            navigate('/forgotPassword')
+        }else{
+            navigate('/professional/forgotPassword')
+        }
+    }
+
     return (
         <section className="bg-white white:bg-white-900 h-screen flex items-center justify-center">
-
             <div className="flex flex-wrap justify-center ">
-
                 {/* Image Section */}
                 <div className="w-full md:w-1/2 mb-4 md:mb-0 hidden sm:block pr-5">
                     <img src="../../craftoLogo.png" className="w-44 h-auto dark:900 mb-0 p-0" alt="Crafto Logo" />
                     <h1 className="text-brown-100 m-0 p-0">Connect with trusted professionals for your perfect space!</h1>
                     <img src="../../signupic.svg" className="w-60 h-auto align-middle" alt="Beach House" />
                 </div>
-
                 {/* Signup Section */}
                 <div className="w-full md:w-1/2 flex items-center justify-center">
                     <div className="w-full bg-white md:mt-0 sm:max-w-md xl:p-0 dark:bg-white">
@@ -98,26 +104,18 @@ const Login = () => {
                             <p className="font-normal text-sm">Click below to login as <span className="ms-1 text-sm font-medium text-gray-900 ">{role == true ? 'Professional' : 'User'}</span></p>
                             <label className="inline-flex items-center cursor-pointer mb-5">
                                 <input type="checkbox" value="" className="sr-only peer" />
-
                                 <div onClick={() => setRole(!role)} className={`relative w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-gray-600 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px]  after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all peer-checked:bg-[#007562]`}>
-
                                 </div>
-
-
                             </label>
-
                             <form className="space-y-4 md:space-y-3" action="#">
-
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-dark">Email</label>
                                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:placeholder-gray-500 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                 </div>
-
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-dark">Password</label>
                                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className=" border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                 </div>
-
                                 <div className="mt-16">
                                     <p>{err}</p>
                                     <button type="button" onClick={handleSubmit} className="w-full mt-2 text-white bg-[#007562] hover:bg-[#2a5b53] focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-md text-sm px-5 py-2.5 text-center ">Login</button>
@@ -126,11 +124,10 @@ const Login = () => {
                                         <GoogleAuth Login={true} user={role} />
                                         </div>
                                 </div>
-                                <p className="font-semibold text-sm text-[#3f8377] cursor-pointer">Forgot your password?</p>
+                                <p onClick={handleForgotPassword} className="font-semibold text-sm text-[#3f8377] cursor-pointer">Forgot your password?</p>
                                 <p className="text-sm font-normal text-gray-800">
                                     Don't have an account yet? <a onClick={handleNavigate} className="font-medium text-primary-600 hover:underline text-[#007562] cursor-pointer">Join Now</a>
                                 </p>
-
                             </form>
                         </div>
                     </div>

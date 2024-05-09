@@ -1,4 +1,4 @@
-import api from '../Services/axios'
+import api from '../Services/Config/axios'
 import profRoutes from '../Services/Endpoints/profEndpoints'
 import errorHandler from './errorHandler'
 
@@ -42,12 +42,29 @@ export const verifyOTP = async (otp: string) => {
                 Authorization: `Bearer ${token}`
             }
         });
-        if (res.data.success) {
-            localStorage.removeItem('profotp');
-        }
+        // if (res.data.success) {
+        //     localStorage.removeItem('profotp');
+        // }
         return res;
     } catch (err) {
         console.log(err);
+        errorHandler(err as Error);
+    }
+}
+
+export const resendOtpProf = async () => {
+    try {
+        let token = localStorage.getItem('profotp')
+        const res = await api.post(profRoutes.resendOtp, {}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if(res.data.success){
+            localStorage.setItem('profotp',res.data.newToken)
+        }
+        return res;
+    } catch (err) {
         errorHandler(err as Error);
     }
 }
@@ -335,6 +352,48 @@ export const cancelSubscription = async ()=>{
         errorHandler(err as Error);
     }
 }
+
+export const forgotPasswordProf = async (email: string) => {
+    try {
+        const res = await api.post(profRoutes.forgotPassword, { email });
+        localStorage.setItem('profFPtoken', res.data.token);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const verifyOtpProf = async (otp: string) => {
+    try {
+        let token = localStorage.getItem('profFPtoken');
+        const res = await api.post(profRoutes.verifyOTP, { otp }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const changePasswordProf = async (password: string) => {
+    try {
+        let token = localStorage.getItem('profFPtoken')
+        const res = await api.post(profRoutes.changePassword, { password }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        if (res.data.success) {
+            localStorage.removeItem('profFPtoken');
+        }
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
 
 export const logout = async () => {
     try {

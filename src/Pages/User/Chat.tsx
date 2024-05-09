@@ -1,36 +1,34 @@
 import { useEffect, useRef, useState } from "react"
 import Conversation from "../../Components/common/Chat/Conversation"
 import Navbar from "../../Components/common/Navbar"
-import { useSelector } from "react-redux";
 import Message from "../../Components/common/Chat/Message";
 import { io, Socket } from 'socket.io-client'
 import { getMessages, sendNewMessage } from '../../Api/professional'
 import { getConversations } from "../../Api/user";
 import { jwtDecode } from "jwt-decode";
 
-interface IState {
-    auth: {
-        userData: string
-    }
-}
 interface Message {
     senderId: string,
     text: string,
     conversationId: string
     createdAt: Date
 }
+interface IConversation{
+    _id:string
+    members:[string]
+}
 const Chat = () => {
 
     const [conversations, setConversations] = useState([]);
-    const [currentChat, setCurrentChat] = useState(null);
+    const [currentChat, setCurrentChat] = useState<IConversation>();
     const [messages, setMessages] = useState<Message[]>([]);
     const [newMessage, setNewMessage] = useState('');
     const [arrivalMessage, setArrivalMessage] = useState<Message | null>(null);
     // const [onlineUsers, setOnlineUsers] = useState([]);
-    const [user, setUSer] = useState('')
+    // const [user, setUSer] = useState('')
     const [userId, setUserId] = useState('');
     const socket = useRef<Socket | undefined>();
-    const { userData } = useSelector((state: IState) => state.auth);
+    // const { userData } = useSelector((state: IState) => state.auth);
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -41,13 +39,14 @@ const Chat = () => {
             setArrivalMessage({
                 senderId: data.senderId,
                 text: data.text,
+                createdAt:data.createdAt
             } as Message)
-        })
+        });
         console.log(arrivalMessage)
     }, [])
 
     useEffect(() => {
-        arrivalMessage && setMessages(prev => [...prev, arrivalMessage] as Message[])
+        arrivalMessage && currentChat?.members.includes(arrivalMessage.senderId) && setMessages(prev => [...prev, arrivalMessage] as Message[])
         console.log(arrivalMessage)
     }, [arrivalMessage])
 
@@ -59,7 +58,6 @@ const Chat = () => {
 
     }, [])
 
-
     useEffect(() => {
         const getConversation = async () => {
             try {
@@ -70,13 +68,15 @@ const Chat = () => {
             }
         }
         getConversation();
-    }, [])
+    }, [arrivalMessage])
 
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const res: any = await getMessages(currentChat?._id);
-                setMessages(res?.data?.messages);
+                if(currentChat){
+                    const res: any = await getMessages(currentChat?._id);
+                    setMessages(res?.data?.messages);
+                }
             } catch (err) {
                 console.log(err);
             }
@@ -92,37 +92,39 @@ const Chat = () => {
         e.preventDefault();
 
         const receiverId = currentChat?.members.find(
-            (member) => member !== user._id
+            (member) => member !== userId
         );
 
-        const res = await sendNewMessage(newMessage, currentChat?._id, userId);
+        const res = await sendNewMessage(newMessage, currentChat?._id as string, userId);
         socket.current?.emit('sendMessage', {
             senderId: userId,
             receiverId,
-            text: newMessage
+            text: newMessage,
+            createdAt:Date.now()
         })
+        setMessages((prev)=>[...prev,res?.data.message])
         setNewMessage('')
     }
 
     return (
         <>
             < Navbar role={'user'} />
-            <div className="messenger flex w-full">
-                <div className="chatMenu flex lg:w-1/4 md:w-2/6 w-1/6">
-                    <div className="chatMenuWrapper p-0 md:p-2 h-full w-full bg-[#17654c]">
+            <div className="h-screen flex w-full">
+                <div className="flex lg:w-1/4 md:w-2/6 w-1/6">
+                    <div className="p-0 md:p-2 h-full w-full bg-[#17654c]">
                         {/* <input placeholder="Search for friends" className="w-full px-2 border-b-gray-200 h-8  mt-4 rounded-full hidden md:block" /> */}
-                        {conversations && conversations.map((c) => (
-                            <div onClick={() => setCurrentChat(c)}>
+                        {conversations && conversations.map((c:IConversation) => (
+                            <div key={c._id} onClick={() => setCurrentChat(c)}>
                                 < Conversation conversation={c} currentUser={userId} role={'user'} />
                             </div>
                         ))}
                     </div>
                 </div>
-                <div className="chatBox flex lg:w-3/4 md:w-4/6 w-full">
-                    <div className="chatBoxWrapper flex flex-col w-full justify-between relative">
+                <div className="flex lg:w-3/4 md:w-4/6 w-full">
+                    <div className="flex flex-col w-full justify-between relative">
                         {currentChat ? (
                             <>
-                                <div className="chatBoxTop h-full overflow-y-scroll pr-3">
+                                <div className="h-full overflow-y-scroll pr-3">
                                     {messages && messages.map((m, index) => (
                                         <div key={index} ref={scrollRef}>
                                             <Message message={m} own={m.senderId === userId} previousMessageDate={index == 0 ? null : new Date(messages[index - 1]?.createdAt)} />

@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import { signup } from '../../Api/professional'
 import GoogleAuth from "../../Components/common/GoogleAuth"
+import toast from "react-hot-toast"
 
 const Signup = () => {
 
@@ -17,13 +18,13 @@ const Signup = () => {
         e.preventDefault();
         try {
             if (!emailPattern.test(email)) {
-                setErr("Enter a valid email!");
+                toast.error('Enter a valid email!');
                 return
             } else if (password.trim().length < 5) {
-                setErr("Password must contain atleast 5 characters!");
+                toast.error('Password must contain atleast 5 characters!');
                 return;
             } else if(password!==pass){
-                setErr("Password doesn't match!");
+                toast.error("Password doesn't match!");
                 return err;
             }
 

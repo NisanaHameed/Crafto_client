@@ -41,11 +41,19 @@ const Notification = () => {
         <>
             < Navbar role='professional' />
             <div className="flex flex-row">
-                <div className="md:w-1/4">
+                <div className="md:w-1/4 w-0">
                     < Sidebar />
                 </div>
-                <div className="mt-10 md:w-3/4 w-full px-3">
+                <div className="mt-12 md:w-3/4 w-full px-3 ml-6 md:ml-0">
+                    {notifications.length ? 
                     <h2 className="text-lg mb-5 text-amber-950 font-semibold md:ml-10 lg:ml-0">Notifications</h2>
+                    :
+                    <>
+                    <h2 className="font-medium text-sm mb-2 text-[#032e0e99]">NO NOTIFICATIONS</h2>
+                    <p className="text-sm font-thin">We will notify you once we have something for you</p>
+                    </>
+                }
+                    
                     {notifications && notifications.map((val) =>
                     (
                         <div onClick={()=>handleClick(val._id,val.category,val.readStatus)} key={val._id} className="relative flex flex-row py-5 w-full md:w-3/4 lg:w-2/4 md:ml-10 lg:ml-0 border mb-3 rounded-md px-4 cursor-pointer">

@@ -7,6 +7,8 @@ import AdminLoggedOut from '../Components/Admin/AdminLoggedOut'
 import AdminLoggedIn from '../Components/Admin/AdminLoggedIn'
 import CategoryPage from '../Pages/Admin/CategoryPage'
 import JobrolePage from '../Pages/Admin/JobrolePage'
+import Subscription from '../Pages/Admin/Subscription'
+import SubscriptionDetail from '../Pages/Admin/SubscriptionDetail'
 
 const AdminRoutes = () => {
     return (
@@ -15,11 +17,13 @@ const AdminRoutes = () => {
                 <Route path='login' element={<Login />} />
             </Route>
             <Route path='' element={<AdminLoggedIn />}>
-                <Route path='dashboard' element={<Dashboard />} />
-                <Route path='users' element={<Users />} />
-                <Route path='professionals' element={<Professionals />} />
-                <Route path='category' element={<CategoryPage />} />
-                <Route path='jobrole' element={<JobrolePage />} />
+                <Route path='/dashboard' element={<Dashboard />} />
+                <Route path='/users' element={<Users />} />
+                <Route path='/professionals' element={<Professionals />} />
+                <Route path='/category' element={<CategoryPage />} />
+                <Route path='/jobrole' element={<JobrolePage />} />
+                <Route path='/subscriptions' element={<Subscription />} />
+                <Route path='/subscriptionDetails/:id' element={<SubscriptionDetail />} />
             </Route>
         </Routes>
     )

@@ -26,7 +26,7 @@ const Login = ()=>{
             }
                 
                 let res = await login(email, password);
-                if (res.data.success) {
+                if (res?.data.success) {
                     console.log('success')
                     dispatch(setAdminCredential(res.data.token));
                     navigate('/admin')

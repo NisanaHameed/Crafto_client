@@ -186,7 +186,7 @@ const Category = () => {
             <div className="relative overflow-x-auto">
 
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 mt-7">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-100">
+                    <thead className="text-xs text-gray-700 uppercase bg-[#f3edd988]">
                         <tr>
                             <th scope="col" className="px-6 py-3">
                                 image
@@ -213,7 +213,7 @@ const Category = () => {
                                     </td>
                                     <td>
                                         <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-700 rounded-md group bg-gradient-to-br from-green-500 to-gray-400 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-700 ">
-                                            <span className="relative px-5 py-1.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+                                            <span className="relative px-5 py-1.5 transition-all ease-in duration-75 bg-white rounded group-hover:bg-opacity-0">
                                                 Edit
                                             </span>
                                         </button>

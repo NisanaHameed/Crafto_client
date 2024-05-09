@@ -17,10 +17,17 @@ import Chat from "../Pages/User/Chat";
 import Search from "../Pages/CommonPages/Search";
 import PostDetail from "../Pages/CommonPages/PostDetail";
 import SavedPosts from "../Pages/User/SavedPosts";
+import SearchProfessionals from "../Pages/CommonPages/SearchProfessionals";
+import ForgotPassword from "../Pages/CommonPages/ForgotPassword";
+import OTP from "../Pages/CommonPages/OTP";
+import ChangePassword from "../Pages/CommonPages/ChangePassword";
 
 const UserRoutes = () => {
     return (
         <Routes>
+            <Route path='/forgotPassword' element={<ForgotPassword role="user" />} />
+            <Route path='/forgotPasswordOTP' element={<OTP role='user' />} />
+            <Route path='/changePassword' element={<ChangePassword role='user' />} />
             <Route path='' element={<HomeProtect />} >
                 <Route path="" element={<Home />} />
             </Route>
@@ -40,6 +47,7 @@ const UserRoutes = () => {
                 <Route path='/postRequirement' element={< RequirementForm />} />
                 <Route path='/chat' element={<Chat />} />
                 <Route path='/search' element={< Search role={'user'} />} />
+                <Route path="/searchProfessionals" element={<SearchProfessionals role={'user'} />} />
                 <Route path='/saved' element={< SavedPosts />} />
             </Route>
         </Routes>

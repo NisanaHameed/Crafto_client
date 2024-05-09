@@ -22,6 +22,8 @@ const ProfLoggedIn = () => {
                 const res:any = await profProfile();
                 if (res?.response?.data?.message == "Professional is blocked by admin!") {
                     setData(true);
+                }else if(res?.response?.data?.message == 'Session has expired, please log in again.'){
+                    setData(true);
                 }
             } catch (err) {
                 console.log(err);

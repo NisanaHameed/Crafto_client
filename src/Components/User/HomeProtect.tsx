@@ -19,9 +19,11 @@ const HomeProtect = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res:any = await userProfile();
+        const res: any = await userProfile();
         if (res?.response?.data?.message == "User is blocked by admin!") {
           setData(true);
+        } else if (res?.response?.data?.message == 'Session has expired, please log in again.') {
+          setData(true)
         }
       } catch (err) {
         console.log(err);
@@ -37,7 +39,7 @@ const HomeProtect = () => {
   } else if (loading == false && data) {
     dispatch(userLogout());
     return < Navigate to='/login' />
-  } else if(loading==false){
+  } else if (loading == false) {
     return <Outlet />
   }
 }

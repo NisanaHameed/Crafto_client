@@ -30,6 +30,10 @@ const profRoutes = {
     newConversation: '/chat/newConversation',
     newMessage: '/chat/newMessage',
     messages: '/chat/messages',
+    forgotPassword:'/professional/forgotPassword',
+    verifyOTP:'/professional/verifyOtpForgotPassword',
+    changePassword:'/professional/changePassword',
+    resendOtp:'/professional/resendOtp',
     logout: '/professional/logout'
 }
 

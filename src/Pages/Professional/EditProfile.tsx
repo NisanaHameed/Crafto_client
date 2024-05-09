@@ -4,10 +4,10 @@ import Navbar from "../../Components/common/Navbar"
 const EditProfile = () => {
 
   return (
-    <div className="h-screen">
-    <Navbar role={'professional'} />
+  <>
+    < Navbar role={'professional'} />
     < EditDetails />
-    </div>
+    </>
   )
 }
 

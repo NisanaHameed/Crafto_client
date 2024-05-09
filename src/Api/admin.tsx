@@ -1,4 +1,4 @@
-import api from '../Services/axios'
+import api from '../Services/Config/axios'
 import adminRoutes from '../Services/Endpoints/adminEndpoints';
 import errorHandler from './errorHandler';
 
@@ -6,7 +6,6 @@ export const login = async (email: string, password: string) => {
     try {
         console.log('In admin api')
         let res = await api.post(adminRoutes.login, { email, password });
-        console.log(res)
         return res;
     } catch (err) {
         console.log(err);
@@ -19,8 +18,8 @@ export const getUsers = async () => {
         let res = await api.get(adminRoutes.getUsers);
         return res;
     } catch (err) {
-        console.log(err);
         errorHandler(err as Error);
+        return err;
     }
 }
 
@@ -105,6 +104,33 @@ export const deleteJobrole = async (id: string) => {
 export const editJobrole = async (id: string, name: string) => {
     try {
         const res = await api.put(adminRoutes.editJobrole, { id: id, name: name });
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const getSubscriptions = async () => {
+    try {
+        const res = await api.get(adminRoutes.getSubscriptions);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const subscriptionDetails = async (id: string) => {
+    try {
+        const res = await api.get(`${adminRoutes.subscriptionDetails}/${id}`);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const getDashboardDetails = async () => {
+    try {
+        const res = await api.get(adminRoutes.getDashboardDetails);
         return res;
     } catch (err) {
         errorHandler(err as Error);

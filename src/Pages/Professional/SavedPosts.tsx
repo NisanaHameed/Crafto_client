@@ -31,7 +31,7 @@ const SavedPosts = () => {
 
     const designDetail = (id: string) => {
 
-        navigate(`/postDetail/${id}`);
+        navigate(`/professional/postDetail/${id}`);
     }
     return (
         <>

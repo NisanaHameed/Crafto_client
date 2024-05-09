@@ -17,6 +17,14 @@ const HeroSection: React.FC<IRole> = ({ role }) => {
         }
     }
 
+    const browseProfs = () => {
+        if (role == 'user') {
+            navigate('/professionals');
+        } else if (role == 'professional') {
+            navigate('/professional/professionals');
+        }
+    }
+
     return (
         <>
             <div className='relative flex justify-center overflow-hidden '>
@@ -43,7 +51,7 @@ const HeroSection: React.FC<IRole> = ({ role }) => {
                                     </h3>
                                 </div>
                             </article>
-                            <article className="relative mx-auto w-full h-16 lg:h-20 bg-cover bg-center group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl  transition duration-300 ease-in-out cursor-pointer">
+                            <article onClick={browseProfs} className="relative mx-auto w-full h-16 lg:h-20 bg-cover bg-center group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl  transition duration-300 ease-in-out cursor-pointer">
                                 <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:opacity-75 transition duration-300 ease-in-out"></div>
                                 <div className="relative w-full h-full px-4 sm:px-6 lg:px-4 flex justify-center items-center">
                                     <img src="/icons8-professional.png" alt="" />

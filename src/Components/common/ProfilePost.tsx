@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { getPosts, getPostsById } from "../../Api/professional"
+import { useNavigate } from "react-router-dom"
 
 interface IPost {
     _id?: string
@@ -34,13 +35,20 @@ const ProfilePost: React.FC<IProf> = ({ professional, id, postCount }) => {
     }, [])
 
     const [posts, setPosts] = useState<IPost[]>([]);
+    const navigate = useNavigate();
+
+    const designDetail = (id: string) => {
+
+        navigate(`/professional/postDetail/${id}`);
+    }
+
     return (
         <>
             <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-2">
                 {posts && posts.map((val, index) =>
                 (
-                    <div key={index}>
-                        <img className="h-40 md:h-48 w-full object-cover rounded" src={val.image} alt="" />
+                    <div onClick={() => designDetail(val?._id as string)} key={index}>
+                        <img className="h-40 md:h-48 w-full object-cover rounded cursor-pointer" src={val.image} alt="" />
                     </div>
                 )
                 )}

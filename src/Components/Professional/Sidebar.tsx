@@ -57,13 +57,13 @@ const Sidebar = () => {
                         </li>
                         <li>
                             <a onClick={() => navigate('/professional/requirements')} className="flex items-center font-normal p-2 pb-4 cursor-pointer text-gray-200 rounded-lg hover:bg-[#133819] group">
-                                <img src="/savewhite.png" className="w-7" alt="" />
+                                <img src="/requirementwhite.png" className="w-6 h-6" alt="" />
                                 <span className="flex-1 ms-3 whitespace-nowrap">Requirements</span>
                             </a>
                         </li>
                         <li>
                             <a onClick={()=>navigate('/professional/subscribe')} className="flex items-center font-normal p-2 pb-4 cursor-pointer text-gray-200 rounded-lg hover:bg-[#133819] group">
-                                <img src="/logouticon.png" className="w-6" alt="" />
+                                <img src="/verifiedwhite.png" className="w-6" alt="" />
                                 <span className="flex-1 ms-3 whitespace-nowrap">Subscription</span>
                             </a>
                         </li>
