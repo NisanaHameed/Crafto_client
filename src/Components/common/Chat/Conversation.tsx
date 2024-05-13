@@ -2,7 +2,9 @@ import { useEffect, useState } from "react"
 import { getUserById,profDetails } from "../../../Api/professional";
 
 interface IProps {
-  conversation: Object,
+  conversation: {
+    members:[string]
+  },
   currentUser: string
   role:'user' | 'professional'
 }
@@ -23,11 +25,11 @@ const Conversation = ({ conversation, currentUser ,role}: IProps) => {
     const getUser = async () => {
       try {
         if(role=='professional'){
-        const res = await getUserById(friendId);
+        const res = await getUserById(friendId as string);
         console.log(res)
         setUser(res?.data?.user)
         }else if(role=='user'){
-          const res = await profDetails(friendId);
+          const res = await profDetails(friendId as string);
           console.log(res);
           setUser(res?.data?.profdata);
         }

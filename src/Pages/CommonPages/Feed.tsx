@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import Navbar from "../../Components/common/Navbar"
 import { getAllDesigns, likePost, savePost, unlikePost } from "../../Api/user"
 import { jwtDecode } from "jwt-decode"
 import { likePostbyProf, savePostbyProf, unlikePostbyProf } from "../../Api/professional"
 import { useNavigate } from "react-router-dom"
 import toast from "react-hot-toast"
-import ConfirmationModal from "../../Components/common/ConfirmationModal"
 
 interface IRole {
   role: 'user' | 'professional'
@@ -39,16 +38,13 @@ interface ILikes {
 const Feed: React.FC<IRole> = ({ role }) => {
 
   const [posts, setPosts] = useState<IDesign[]>([])
-  const [rerender, setRerender] = useState(false);
+  // const [rerender, setRerender] = useState(false);
   const [userId, setUserId] = useState('');
-  const [showModal, setShowModal] = useState(false);
   const [showLikes, setShowLikes] = useState(false);
   const [likes, setLikes] = useState<ILikes[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const handleLikeRef = useRef();
-  const handleUnlikeRef = useRef();
 
   useEffect(() => {
     if (role == 'user') {
@@ -58,18 +54,26 @@ const Feed: React.FC<IRole> = ({ role }) => {
       const decoded: any = jwtDecode(JSON.parse(localStorage.getItem('profData') as string))
       setUserId(decoded.Id);
     }
-  }, [])
+  }, [role, posts])
   const limit = 4;
 
   useEffect(() => {
+    console.log('page...', page, limit)
     const fetchPosts = async () => {
-      const res = await getAllDesigns(page,limit);
+      const res = await getAllDesigns(page, limit);
       console.log(res)
-      setPosts((prev) => [...prev, ...res?.data?.posts]);
       setLoading(false);
+      if (res?.data?.posts) {
+        setPosts(prev => {
+          // Ensure no duplicates, this is simplistic; consider more robust checks based on your data
+          const existingIds = new Set(prev.map(p => p._id));
+          const newPosts = res.data.posts.filter((post: IDesign) => !existingIds.has(post._id));
+          return [...prev, ...newPosts];
+        });
+      }
     }
     fetchPosts();
-  }, [rerender, page])
+  }, [page])
 
   const handleInfiniteScroll = async () => {
     if (window.innerHeight + document.documentElement.scrollTop + 1 >=
@@ -83,51 +87,61 @@ const Feed: React.FC<IRole> = ({ role }) => {
     return () => window.removeEventListener('scroll', handleInfiniteScroll)
   }, [])
 
-  useEffect(() => {
-    const handleLike = async (id:string) => {
-      if (role === 'user') {
-        const res = await likePost(id);
-        if (res?.data?.success) {
-          setRerender(!rerender);
-        }
-      } else {
-        const res = await likePostbyProf(id);
-        if (res?.data?.success) {
-          setRerender(!rerender);
-        }
-      }
-    };
-    
-    // Store the function in a ref so it can be used consistently in callbacks
-    handleLikeRef.current = handleLike;
-  }, [role, rerender]);
-
   const handleLike = async (id: string) => {
-    if (role == 'user') {
+    console.log('submitting like')
+    if (role === 'user') {
       const res = await likePost(id)
       if (res?.data?.success) {
-        setRerender(!rerender);
+        setPosts((currentPosts) =>
+          currentPosts.map((post: any) =>
+            post._id === id
+              ? { ...post, likes: [...post.likes, { user: { _id: userId } }] } // Example structure
+              : post
+          )
+        );
       }
     } else {
       const res = await likePostbyProf(id);
       if (res?.data?.success) {
-        setRerender(!rerender);
+        setPosts((currentPosts) =>
+          currentPosts.map((post: any) =>
+            post._id === id
+              ? { ...post, likes: [...post.likes, { user: { _id: userId } }] } // Example structure
+              : post
+          )
+        );
       }
     }
+    console.log('userId', userId)
   }
 
   const handleUnlike = async (id: string) => {
-    if (role == 'user') {
+    console.log('submitting unlike')
+    if (role === 'user') {
       const res = await unlikePost(id);
+      // console.log(res)
       if (res?.data?.success) {
-        setRerender(!rerender);
+        setPosts(currentPosts =>
+          currentPosts.map(post =>
+            post._id === id
+              ? { ...post, likes: post.likes.filter(like => like.user._id !== userId) }
+              : post
+          )
+        );
       }
     } else {
       const res = await unlikePostbyProf(id);
       if (res?.data?.success) {
-        setRerender(!rerender);
+        setPosts(currentPosts =>
+          currentPosts.map(post =>
+            post._id === id
+              ? { ...post, likes: post.likes.filter(like => like.user._id !== userId) }
+              : post
+          )
+        );
       }
     }
+    console.log('userId', userId)
   }
 
   const handleComment = (id: string) => {
@@ -150,12 +164,24 @@ const Feed: React.FC<IRole> = ({ role }) => {
     if (role == 'user') {
       const res = await savePost(id, 'false');
       if (res?.data.success) {
-        setRerender(!rerender);
+        setPosts(currentPosts =>
+          currentPosts.map((post: any) =>
+            post._id === id
+              ? { ...post, saved: post.saved.filter((val: any) => val !== userId) }
+              : post
+          )
+        );
       }
     } else {
       const res = await savePostbyProf(id, 'false');
       if (res?.data.success) {
-        setRerender(!rerender);
+        setPosts(currentPosts =>
+          currentPosts.map((post: any) =>
+            post._id === id
+              ? { ...post, saved: post.saved.filter((val: any) => val !== userId) }
+              : post
+          )
+        );
       }
     }
   }
@@ -164,23 +190,28 @@ const Feed: React.FC<IRole> = ({ role }) => {
     if (role == 'user') {
       const res = await savePost(id, 'true');
       if (res?.data.success) {
-        setRerender(!rerender);
+        setPosts((currentPosts) =>
+          currentPosts.map((post: any) =>
+            post._id === id
+              ? { ...post, saved: [...post.saved, userId] } // Example structure
+              : post
+          )
+        );
         toast.success('Post saved')
       }
     } else {
       const res = await savePostbyProf(id, 'true');
       if (res?.data.success) {
-        setRerender(!rerender);
+        setPosts((currentPosts) =>
+          currentPosts.map((post: any) =>
+            post._id === id
+              ? { ...post, saved: [...post.saved, userId] } // Example structure
+              : post
+          )
+        );
         toast.success('Post saved')
       }
     }
-  }
-
-  const onConfirm = () => {
-
-  }
-  const onCancel = () => {
-    setShowModal(false);
   }
 
   const handleShowLikes = (likes: any) => {
@@ -193,9 +224,9 @@ const Feed: React.FC<IRole> = ({ role }) => {
     <>
       <Navbar role={role} />
       <div className="w-full max-w-md md:max-w-xl mt-10 bg-white mx-auto">
-        {posts && posts.map((val, index) =>
+        {posts && posts.map((val) =>
         (
-          <div key={index} className="border-b border-gray-200 mt-5">
+          <div key={val._id} className="border-b border-gray-200 mt-5">
             <img onClick={() => profDetail(val?.profId._id as string)} src={val.profId.image} className="inline w-7 h-7 object-cover rounded-full cursor-pointer" alt="" />
             <h2 onClick={() => profDetail(val?.profId._id as string)} className="inline ml-3 cursor-pointer text-sm font-semibold text-gray-600">{val.profId.firstname} {val.profId.lastname}</h2>
             {val.profId.isVerified && <img src="/verified.png" className="w-5 inline ml-[2px]" alt="" />}
@@ -221,32 +252,31 @@ const Feed: React.FC<IRole> = ({ role }) => {
           </div>
         )
         )}
-        {loading && 
-        
-        <div role="status" className="flex w-full justify-center">
-          <svg
-            aria-hidden="true"
-            className="w-8 h-8 text-gray-200 animate-spin fill-green-700"
-            viewBox="0 0 100 101"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-              fill="currentColor"
-            />
-            <path
-              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-              fill="currentFill"
-            />
-          </svg>
-          <span className="sr-only">Loading...</span>
-        </div>
-     
-      
+        {loading &&
+
+          <div role="status" className="flex w-full justify-center">
+            <svg
+              aria-hidden="true"
+              className="w-8 h-8 text-gray-200 animate-spin fill-green-700"
+              viewBox="0 0 100 101"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                fill="currentColor"
+              />
+              <path
+                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                fill="currentFill"
+              />
+            </svg>
+            <span className="sr-only">Loading...</span>
+          </div>
+
+
         }
       </div>
-      {showModal && <ConfirmationModal onConfirm={onConfirm} onCancel={onCancel} message="Do you want to repost it?" />}
 
       {showLikes &&
         <div

@@ -55,11 +55,8 @@ const Search: React.FC<IProps> = ({ role }) => {
       const res = await searchDesigns(sidebarData.searchTerm, sidebarData.category, sidebarData.sort, currentPage, itemsPerPage)
 
       if (res?.data?.success) {
-        console.log(res.data.data.posts)
         setDesign(res.data.data.posts);
-        console.log('design', design)
         setTotalItems(Math.ceil(res.data.data.total / itemsPerPage));
-        console.log('totalItems', totalItems)
       }
     };
     fetchPosts();
@@ -164,9 +161,10 @@ const Search: React.FC<IProps> = ({ role }) => {
                     </div>
                   </div>
                 ))
-
               }
             </div>
+          </div>
+          <div className="py-5 flex justify-center">
             <nav aria-label="Page navigation example">
               <ul className="flex items-center -space-x-px h-8 text-sm">
                 <li>
@@ -231,6 +229,7 @@ const Search: React.FC<IProps> = ({ role }) => {
               </ul>
             </nav>
           </div>
+
         </div>
       </div>
     </>

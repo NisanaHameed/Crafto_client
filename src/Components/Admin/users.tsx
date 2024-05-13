@@ -17,12 +17,9 @@ const User = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await getUsers();
-                const res = response;
-                console.log(res);
-                if (res) {
-                    setUsers(res.data.users);
-                    console.log('users' + users)
+                let response:any = await getUsers();
+                if (response) {
+                    setUsers(response?.data?.users);
                 }
             } catch (error) {
                 console.log(error);
@@ -42,7 +39,6 @@ const User = () => {
     return (
 
         <div className="p-4 sm:ml-64">
-
             <div className="relative overflow-x-auto">
                 <h2 className="font-semibold text-[#236627] text-xl ml-5">Users</h2>
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 mt-7">
@@ -86,11 +82,8 @@ const User = () => {
                             )
                         })}
                     </tbody>
-
-
                 </table>
             </div>
-
         </div>
     )
 }

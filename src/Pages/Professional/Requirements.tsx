@@ -14,7 +14,8 @@ interface IRequirement {
     type?: string,
     scope?: string,
     plan?: string,
-    status: string
+    status: string,
+    mobile:string
 }
 
 const Requirements = () => {
@@ -66,7 +67,7 @@ const Requirements = () => {
             }
             <div className="max-w-4xl grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2">
             {isVerified===true && requirements && requirements.map((val, index) =>
-                    <div key={index} className="flex flex-col max-w-xs p-6 my-4 border rounded shadow-md">
+                    <div key={index} className="flex flex-col max-w-xs p-6 my-4 rounded shadow-md bg-[#fdfde599]">
                         <div className="flex flex-col flex-grow">
                         <h5 className="mb-2 text-md text-[#1f6357] font-semibold">
                             {val.service}
@@ -81,6 +82,7 @@ const Requirements = () => {
                             <p className="text-sm text-gray-700">{val.workPeriod}</p>
                             <p className="text-sm text-gray-700">Budget: {val.budget == 'Yes' ? 'Fixed budget' : val.budget}</p>
                             <p className="text-sm text-gray-700">Location:Calicut,Kerala</p>
+                            <p className="text-sm text-gray-700">Mobile: {val.mobile}</p>
                         </div>
                         </div>
                        

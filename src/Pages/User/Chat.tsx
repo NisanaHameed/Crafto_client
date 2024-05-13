@@ -111,7 +111,7 @@ const Chat = () => {
             < Navbar role={'user'} />
             <div className="h-screen flex w-full">
                 <div className="flex lg:w-1/4 md:w-2/6 w-1/6">
-                    <div className="p-0 md:p-2 h-full w-full bg-[#17654c]">
+                    <div className="p-0 md:p-2 h-full w-full bg-[#fbfafa]  border-r">
                         {/* <input placeholder="Search for friends" className="w-full px-2 border-b-gray-200 h-8  mt-4 rounded-full hidden md:block" /> */}
                         {conversations && conversations.map((c:IConversation) => (
                             <div key={c._id} onClick={() => setCurrentChat(c)}>

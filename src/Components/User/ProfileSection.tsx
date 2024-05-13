@@ -6,7 +6,7 @@ interface Userdata{
     name:string
     email:string
     city:string
-    mobile:number
+    mobile:string
     image:string
 }
 

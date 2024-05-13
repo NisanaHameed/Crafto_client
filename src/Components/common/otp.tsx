@@ -4,7 +4,6 @@ import { resendOtp, verifyOtp } from "../../Api/user"
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from "react-redux"
 import { setUserCredential } from "../../Store/Slice/AuthSlice"
-import Navbar from "./Navbar"
 import toast from "react-hot-toast"
 
 interface OtpProps {
@@ -53,8 +52,6 @@ const Otp: React.FC<OtpProps> = ({ role, signup }) => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
         let { name, value } = event.target;
-
-        // if (/[a-z]/gi.test(value)) return;
         value = value.replace(/\D/g, '');
 
         setOtp(prev => ({

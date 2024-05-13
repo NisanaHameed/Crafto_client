@@ -11,7 +11,8 @@ interface IRequirement {
         type?: string,
         scope?: string,
         plan?: string,
-        status?: string
+        status?: string,
+        mobile:string
     }
 }
 const RequirementModal: React.FC<IRequirement> = ({ requirement }) => {
@@ -42,28 +43,13 @@ const RequirementModal: React.FC<IRequirement> = ({ requirement }) => {
                     <p className="text-gray-400">{requirement.workPeriod}</p>
                     <p className="text-gray-400">Budget: {requirement.budget == 'Yes' ? 'Fixed budget' : requirement.budget}</p>
                     <p className="text-gray-400">Location:Calicut,Kerala</p>
+                    <p className="text-gray-400">Mobile: {requirement.mobile}</p>
                 </div>
                 <a
                     onClick={handleSubmit}
                     className={`inline-flex items-center px-3 py-2 mt-5 text-sm font-medium text-center text-gray-200 bg-[#044733] rounded hover:bg-[#757575] cursor-pointer`}
                 >
                     Go Home
-                    {/* {requirement.status == 'active' && <svg
-                                className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 14 10"
-                            >
-                                <path
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M1 5h12m0 0L9 1m4 4L9 9"
-                                />
-                            </svg>
-                            } */}
                 </a>
             </div >
         </div>

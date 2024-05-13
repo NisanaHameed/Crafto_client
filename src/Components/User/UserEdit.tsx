@@ -5,7 +5,7 @@ interface Userdata {
     name: string
     email: string
     city: string
-    mobile: number
+    mobile: string
     image: string
 }
 interface Prop {
@@ -19,7 +19,7 @@ const UserEdit: React.FC<Prop> = ({ setShowEdit, userdata }) => {
     const [name, setName] = useState(userdata?.name || '');
     const [email, setEmail] = useState(userdata?.email || '');
     const [city, setCity] = useState(userdata?.city || '');
-    const [mobile, setMobile] = useState(userdata?.mobile || 0);
+    const [mobile, setMobile] = useState(userdata?.mobile || '');
     const [image, setImage] = useState(userdata?.image || null);
 
     const handleImageChange = (e: any) => {
@@ -41,7 +41,7 @@ const UserEdit: React.FC<Prop> = ({ setShowEdit, userdata }) => {
             formData.append('name', name);
             formData.append('email', email);
             formData.append('city', city);
-            formData.append('mobile', mobile.toString());
+            formData.append('mobile', mobile);
             if (image) {
                 formData.append('image', image);
             }
@@ -82,7 +82,7 @@ const UserEdit: React.FC<Prop> = ({ setShowEdit, userdata }) => {
                     </div>
                     <div className="w-full">
                         <label className="text-sm text-gray-500">Mobile</label>
-                        <input type="number" onChange={(e) => setMobile(parseInt(e.target.value))} value={mobile} className="w-full border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562]  p-2.5" />
+                        <input type="number" onChange={(e) => setMobile(e.target.value)} value={mobile} className="w-full border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-[#007562] focus:border-[#007562]  p-2.5" />
                     </div>
                     <div className="w-full mx-auto">
                         <button onClick={handleSubmit} className="mt-5 mr-5 w-24 py-2 px-5 font-semibold rounded border border-[#007562] hover:text-[#007562] text-white bg-[#007562] hover:bg-white cursor-pointer">Edit</button>

@@ -13,10 +13,10 @@ interface IRequirement {
     plan?: string
 }
 
-export const signup = async (name: string, email: string, mobile: number, password: string) => {
+export const signup = async (name: string, email: string, password: string) => {
     try {
         console.log('in signup api')
-        const res = await api.post(userRoutes.signup, { name, email, mobile, password })
+        const res = await api.post(userRoutes.signup, { name, email, password })
         const token = res.data.token;
         localStorage.setItem('userotp', token)
         console.log(res)

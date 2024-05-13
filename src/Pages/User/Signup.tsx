@@ -8,12 +8,11 @@ const Signup = () => {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [mobile, setMobile] = useState(0);
     const [password, setPassword] = useState('');
     const [err, setErr] = useState('');
     const navigate = useNavigate();
     const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const mobileNumberRegex = /^[0-9]{10}$/;
+    // const mobileNumberRegex = /^[0-9]{10}$/;
 
     const handleSubmit = async (e: any) => {
       
@@ -26,15 +25,17 @@ const Signup = () => {
             } else if (!emailPattern.test(email)) {
                 toast.error('Enter a vlaid email!');
                 return
-            } else if (!mobileNumberRegex.test(mobile.toString())) {
-                toast.error('Enter a valid mobile number!');
-                return;
-            } else if (password.trim().length < 5) {
+            }
+            //  else if (!mobileNumberRegex.test(mobile.toString())) {
+            //     toast.error('Enter a valid mobile number!');
+            //     return;
+            // } 
+            else if (password.trim().length < 5) {
                 toast.error('Password must contain atleast 5 characters!');
                 return;
             }
 
-            let res = await signup(name, email, mobile, password);
+            let res = await signup(name, email, password);
             if (res?.data.success) {
                 console.log('success')
                 navigate('/verifyOtp')
@@ -75,10 +76,10 @@ const Signup = () => {
                                     <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-dark">Email</label>
                                     <input type="email" onChange={(e) => setEmail(e.target.value)} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:placeholder-gray-500 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                 </div>
-                                <div>
+                                {/* <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-dark">Mobile</label>
                                     <input type="number" onChange={(e) => setMobile(parseInt(e.target.value))} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:placeholder-gray-500 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                                </div>
+                                </div> */}
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-dark">Password</label>
                                     <input type="password" onChange={(e) => setPassword(e.target.value)} className=" border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required />

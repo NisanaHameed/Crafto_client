@@ -13,7 +13,8 @@ interface IRequirement {
     type?: string,
     scope?: string,
     plan?: string,
-    status: string
+    status: string,
+    mobile:string
 }
 const ShowRequirements = () => {
 
@@ -65,6 +66,7 @@ const ShowRequirements = () => {
                             <p className="text-gray-400">{val.workPeriod}</p>
                             <p className="text-gray-400">Budget: {val.budget == 'Yes' ? 'Fixed budget' : val.budget}</p>
                             <p className="text-gray-400">Location:Calicut,Kerala</p>
+                            <p className="text-gray-400">Mobile: {val.mobile}</p>
                         </div>
                         </div>
                         <a

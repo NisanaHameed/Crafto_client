@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../../Components/Admin/Sidebar";
 import { getDashboardDetails } from "../../Api/admin";
-import { PieChart, Pie, Tooltip, ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Legend, Line, BarChart, Bar } from "recharts";
+import { PieChart, Pie, Tooltip, ResponsiveContainer, CartesianGrid, XAxis, YAxis, Legend, BarChart, Bar } from "recharts";
 
 interface IData {
     unblockedUsers: number;
@@ -12,6 +12,10 @@ interface IData {
     cancelledSubscriptions: number;
     totalRevenue: number
 }
+interface IChartdata {
+    date: string;
+    revenue: number;
+}
 
 const Dashboard = () => {
 
@@ -20,27 +24,24 @@ const Dashboard = () => {
         { name: 'Active', value: 0 },
         { name: 'Cancelled', value: 0 },
     ]);
-    const [chartData, setChartData] = useState();
+    const [chartData, setChartData] = useState<IChartdata[]>([]);
 
     useEffect(() => {
 
         const fetchData = async () => {
             const res = await getDashboardDetails();
-            console.log(res?.data.data);
             setData(res?.data.data);
             setData01([
                 { name: 'Active', value: res?.data.data.activeSubscriptions },
                 { name: 'Cancelled', value: res?.data.data.cancelledSubscriptions }
             ])
             const revenueByDate = res?.data.data.revenueByDate
-            const chartdata = Object.keys(revenueByDate).map(date => ({
+            const chartdata: Array<IChartdata> = Object.keys(revenueByDate).map(date => ({
                 date,
                 revenue: revenueByDate[date]
             }))
-            chartdata.sort((a: any, b: any) => new Date(a.date) - new Date(b.date));
-            console.log('chartdata', chartdata)
+            chartdata.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
             setChartData(chartdata)
-            console.log('chartData', chartData)
         }
         fetchData();
     }, [])
@@ -146,7 +147,7 @@ const Dashboard = () => {
                                         <YAxis />
                                         <Tooltip />
                                         <Legend />
-                                        <Bar dataKey="revenue" fill="#82ca9d" barSize={30} />                                       
+                                        <Bar dataKey="revenue" fill="#82ca9d" barSize={30} />
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>
