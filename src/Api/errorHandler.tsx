@@ -19,12 +19,10 @@ const errorHandler = async (error: Error | AxiosError) => {
         // } else if(errorResponse.message === 'Session has expired, please log in again.'){
         //     toast.error(errorResponse.message);
         // }else {
+            if(errorResponse.message!=="Internal server error!" && errorResponse.message!== 'Unauthorized')
             toast.error(errorResponse.message);
         // }
-    } else {
-        toast.error('Something went wrong. Please try again!');
     }
-
 }
 
 export default errorHandler

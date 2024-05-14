@@ -9,6 +9,7 @@ import CategoryPage from '../Pages/Admin/CategoryPage'
 import JobrolePage from '../Pages/Admin/JobrolePage'
 import Subscription from '../Pages/Admin/Subscription'
 import SubscriptionDetail from '../Pages/Admin/SubscriptionDetail'
+import ErrorPage from '../Pages/CommonPages/ErrorPage'
 
 const AdminRoutes = () => {
     return (
@@ -25,6 +26,7 @@ const AdminRoutes = () => {
                 <Route path='/subscriptions' element={<Subscription />} />
                 <Route path='/subscriptionDetails/:id' element={<SubscriptionDetail />} />
             </Route>
+            <Route path='*' element={<ErrorPage />} />
         </Routes>
     )
 }

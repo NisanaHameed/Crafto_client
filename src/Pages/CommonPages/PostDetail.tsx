@@ -2,13 +2,14 @@ import { useEffect, useState } from "react"
 import Navbar from "../../Components/common/Navbar"
 import { likePost, postComment, postDetail, unlikePost } from "../../Api/user"
 import { jwtDecode } from "jwt-decode"
-import { likePostbyProf, postCommentbyProf, unlikePostbyProf } from "../../Api/professional"
+import { deletePost, likePostbyProf, postCommentbyProf, unlikePostbyProf } from "../../Api/professional"
 import { useNavigate, useParams } from "react-router-dom"
 import toast from "react-hot-toast"
-import {format} from 'timeago.js'
+import { format } from 'timeago.js'
 
 interface IRole {
   role: 'user' | 'professional'
+  feedPage: boolean
 }
 interface IDesign {
   _id: string
@@ -33,10 +34,10 @@ interface comment {
   },
   type: string
   text: string
-  createdAt:Date
+  createdAt: Date
 }
 
-const PostDetail: React.FC<IRole> = ({ role }) => {
+const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
 
   const [post, setPost] = useState<IDesign | null>(null)
   const [rerender, setRerender] = useState(false);
@@ -125,10 +126,17 @@ const PostDetail: React.FC<IRole> = ({ role }) => {
     }
   }
 
+  const handleDelete = async()=>{
+    let res = await deletePost(post?._id as string);
+    if(res?.data.success){
+      navigate('/professional/profile');
+    }
+  }
+
   return (
     <>
       <Navbar role={role} />
-      <div className="max-w-6xl h-screen justify-center mt-24 mx-auto ">
+      <div className="max-w-6xl h-screen flex flex-col justify-center mx-auto ">
         <div className="w-full flex flex-row gap-4 bg-white">
           <div className="w-3/5 flex hidden md:block"><img src={post?.image} alt="" className="w-full object-contain" /></div>
           <div className="md:w-2/5 w-full mx-6 md:mx-0 flex flex-col border border-b-4 ">
@@ -147,7 +155,7 @@ const PostDetail: React.FC<IRole> = ({ role }) => {
                       <h2 onClick={() => profDetail(val?.user._id as string)} className="inline ml-2 text-sm cursor-pointer">{val?.user.firstname} {val?.user.lastname}</h2>
                     }
                     <p className="ml-8 text-sm">{val.text}</p>
-                    <p className="ml-8 text-xs font-light">{format(val?.createdAt,'en-US')}</p>
+                    <p className="ml-8 text-xs font-light">{format(val?.createdAt, 'en-US')}</p>
                   </div>
                 )
               })}
@@ -170,6 +178,7 @@ const PostDetail: React.FC<IRole> = ({ role }) => {
             </div>
           </div>
         </div>
+        {!feedPage && <button onClick={handleDelete} className="w-1/2 mx-auto border border-[#2e9474] px-4 py-2 hover:bg-[#2e9474] hover:text-white tracking-wide mt-10">Delete Post</button>}
       </div>
     </>
   )

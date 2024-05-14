@@ -11,6 +11,7 @@ const profRoutes = {
     verifyEmailOtp: '/professional/verifyEmailOtp',
     editPassword: '/professional/editPassword',
     createPost: '/professional/createPost',
+    deletePost:'/professional/deletePost',
     getPosts: '/professional/getPosts',
     getPortraits: '/professional/portraits',
     getProfessionals: '/professional/professionals',

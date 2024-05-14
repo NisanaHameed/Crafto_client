@@ -39,7 +39,7 @@ const ProfilePost: React.FC<IProf> = ({ professional, id, postCount }) => {
 
     const designDetail = (id: string) => {
 
-        navigate(`/professional/postDetail/${id}`);
+        navigate(`/professional/postDetails/${id}`);
     }
 
     return (

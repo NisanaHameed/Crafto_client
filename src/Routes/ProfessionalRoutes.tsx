@@ -29,6 +29,7 @@ import SearchProfessionals from '../Pages/CommonPages/SearchProfessionals'
 import ForgotPassword from '../Pages/CommonPages/ForgotPassword'
 import OTP from '../Pages/CommonPages/OTP'
 import ChangePassword from '../Pages/CommonPages/ChangePassword'
+import ErrorPage from '../Pages/CommonPages/ErrorPage'
 
 const ProfessionalRoutes = () => {
     return (
@@ -57,7 +58,8 @@ const ProfessionalRoutes = () => {
                 <Route path='/designs/:category' element={<Designs role={'professional'} />} />
                 <Route path='/allDesigns' element={<AllDesigns role={'professional'} />} />
                 <Route path='/feed' element={<Feed role='professional' />} />
-                <Route path="/postDetail/:id" element={<PostDetail role={'professional'} />} />
+                <Route path="/postDetail/:id" element={<PostDetail role={'professional'} feedPage={true} />} />
+                <Route path="/postDetails/:id" element={<PostDetail role={'professional'} feedPage={false} />} />
                 <Route path='/professionals' element={<Professionals role={'professional'} />} />
                 <Route path='/profDetails/:id' element={<ProfDetail role={'professional'} />} />
                 <Route path='/chat' element={< Chat />} />
@@ -70,7 +72,7 @@ const ProfessionalRoutes = () => {
                 <Route path='/successPayment' element={<SuccessPayment />} />
                 <Route path='/cancelPayment' element={<CancelPayment />} />
             </Route>
-
+            <Route path='*' element={<ErrorPage />} />
         </Routes>
     )
 }

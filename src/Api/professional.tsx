@@ -60,8 +60,8 @@ export const resendOtpProf = async () => {
                 Authorization: `Bearer ${token}`
             }
         });
-        if(res.data.success){
-            localStorage.setItem('profotp',res.data.newToken)
+        if (res.data.success) {
+            localStorage.setItem('profotp', res.data.newToken)
         }
         return res;
     } catch (err) {
@@ -175,6 +175,15 @@ export const createPost = async (formdata: FormData) => {
             'Content-Type': 'multipart/form-data'
         }
         const res = await api.post(profRoutes.createPost, formdata, { headers });
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
+export const deletePost = async (id: string) => {
+    try {
+        const res = await api.delete(`${profRoutes.deletePost}/${id}`);
         return res;
     } catch (err) {
         errorHandler(err as Error);
@@ -344,7 +353,7 @@ export const subscribe = async (plan: string) => {
     }
 }
 
-export const cancelSubscription = async ()=>{
+export const cancelSubscription = async () => {
     try {
         const res = await api.delete(profRoutes.cancelSubscription);
         return res;
