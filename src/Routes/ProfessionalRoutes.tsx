@@ -69,8 +69,8 @@ const ProfessionalRoutes = () => {
                 <Route path='/notifications' element={< Notification />} />
                 <Route path='/requirements' element={<Requirements />} />
                 <Route path='/subscribe' element={<Subscription />} />
-                <Route path='/successPayment' element={<SuccessPayment />} />
-                <Route path='/cancelPayment' element={<CancelPayment />} />
+                <Route path='/successPayment/:id' element={<SuccessPayment />} />
+                <Route path='/cancelPayment/:id' element={<CancelPayment />} />
             </Route>
             <Route path='*' element={<ErrorPage />} />
         </Routes>
