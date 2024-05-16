@@ -55,8 +55,8 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
   const [rerender, setRerender] = useState(false);
   const [userId, setUserId] = useState('');
   const [comment, setComment] = useState('');
-  // const [showLikes, setShowLikes] = useState(false);
-  // const [likes, setLikes] = useState<ILikes[]>([]);
+  const [showLikes, setShowLikes] = useState(false);
+  const [likes, setLikes] = useState<ILikes[]>([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const navigate = useNavigate();
 
@@ -154,6 +154,11 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
     }
   }
 
+  const handleShowLikes = (likes: any) => {
+    setLikes(likes);
+    setShowLikes(true);
+  }
+
   return (
     <>
       <Navbar role={role} />
@@ -191,7 +196,7 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
               }
 
               {/* <img onClick={() => navigate('/postDetail')} src="/comment.png" className="w-6 inline mt-2 ml-2 cursor-pointer" alt="" /> */}
-              <p className="text-sm">{post?.likes.length} likes</p>
+              <p  onClick={() => handleShowLikes(post?.likes)} className="text-sm cursor-pointer">{post?.likes.length} likes</p>
               <div className="flex justify-between border-t border-slate-200 my-2">
                 <input value={comment} onChange={(e) => setComment(e.target.value)} className=" w-2/3 h-8 border border-transparent appearance-none focus:outline-none" placeholder="Add a comment" />
                 <a onClick={handleComment} className="mt-1 mr-2 cursor-pointer text-green-700">Post</a>
@@ -201,6 +206,60 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
         </div>
         {!feedPage && <button onClick={handleDelete} className="w-1/2 mx-auto border border-[#2e9474] px-4 py-2 hover:bg-[#2e9474] hover:text-white tracking-wide mt-10">Delete Post</button>}
       </div>
+      {showLikes &&
+        <div
+          id="popup-modal"
+          tabIndex={-1}
+          className=" bg-gray-950 bg-opacity-60 my-auto fixed flex top-0 right-0 left-0 z-50 justify-center items-center w-full inset-0 max-h-full"
+        >
+          <div className="relative p-4 w-full max-w-md max-h-full">
+            <div className="relative bg-white rounded shadow mb-5">
+              <button
+                onClick={() => setShowLikes(false)}
+                type="button"
+                className="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded text-sm w-6 h-6 ms-auto inline-flex justify-center items-center "
+                data-modal-hide="popup-modal"
+              >
+                <svg
+                  className="w-3 h-3"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 14"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                  />
+                </svg>
+                <span className="sr-only">Close modal</span>
+              </button>
+              <div className="text-center mt-10">
+                <h2 className="font-medium py-2 rounded-t bg-gray-200 text-green-900">{likes.length ? 'Likes' : 'No Likes'}</h2>
+                <ul className="p-4 md:p-5 my-4 space-y-3 overflow-y-auto max-h-52">
+                  {likes.map((like, ind) =>
+                  (
+                    <li key={ind}>
+                      <a className="flex items-center p-1 font-medium text-sm text-gray-900 rounded-lg hover:bg-gray-100 group hover:shadow">
+                        <img className="w-9 h-9 rounded-full border border-gray-400" src={like.user.image} alt="" />
+                        {like.type === 'User' ?
+                          <span className="flex-1 ms-3 whitespace-nowrap">{like.user.name}</span>
+                          :
+                          <span className="flex-1 ms-3 whitespace-nowrap">{like.user.firstname} {like.user.lastname}</span>
+                        }
+                      </a>
+                    </li>
+                  )
+                  )}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
       {showConfirmation && <ConfirmationModal onConfirm={onConfirm} onCancel={onCancel} message="Are you sure you want to delete this post?" />}
     </>
   )
