@@ -55,8 +55,8 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
   const [rerender, setRerender] = useState(false);
   const [userId, setUserId] = useState('');
   const [comment, setComment] = useState('');
-  const [showLikes, setShowLikes] = useState(false);
-  const [likes, setLikes] = useState<ILikes[]>([]);
+  // const [showLikes, setShowLikes] = useState(false);
+  // const [likes, setLikes] = useState<ILikes[]>([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const navigate = useNavigate();
 
