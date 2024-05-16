@@ -7,6 +7,7 @@ import { logout as userLogoutapi, userProfile } from "../../Api/user"
 import toast from "react-hot-toast"
 import { io, Socket } from "socket.io-client"
 import { jwtDecode } from "jwt-decode"
+import { initFlowbite } from 'flowbite';
 
 interface NavbarProps {
     role: 'user' | 'professional',
@@ -27,11 +28,14 @@ interface INotification {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ role }) => {
-
+    useEffect(() => {
+        initFlowbite()
+    }, [])
     const [isLoggedIn, setIsLoggedIn] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     // const [notification, setNotification] = useState('');
     const [notifications, setNotications] = useState(0);
+    const [isOpen, setIsOpen] = useState(false);
     const socket = useRef<Socket | undefined>();
 
     const { profData, userData } = useSelector((state: state) => state.auth);
@@ -95,7 +99,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
             }
         }
         fetchNotifications();
-    },[])
+    }, [])
 
     const [toggle, setToggle] = useState(false);
     const [image, setImage] = useState('/profile.png')
@@ -180,6 +184,10 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
         }
     }
 
+    const handleCreatePost = () => {
+        navigate('/professional/createPost')
+    }
+
     return (
         <div>
             <nav className="bg-white border shadow">
@@ -187,7 +195,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
                     <div className="relative flex h-16 items-center justify-between">
                         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                             {/* <!-- Mobile menu button--> */}
-                            <button type="button" className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                            <button onClick={() => setIsOpen(!isOpen)} type="button" className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
                                 <span className="absolute -inset-0.5"></span>
                                 <span className="sr-only">Open main menu</span>
                                 <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
@@ -207,6 +215,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
                                     {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
                                     <a onClick={handleFeed} className="text-gray-700 hover:bg-gray-200 rounded-md px-3 py-2 text-md font-medium cursor-pointer">FEEDS</a>
                                     <a onClick={handleProfs} className="text-gray-700 hover:bg-gray-200 rounded-md px-3 py-2 text-md font-medium cursor-pointer">PROFESSIONALS</a>
+                                    {role === 'professional' && <a onClick={handleCreatePost} className="text-gray-700 hover:bg-gray-200 rounded-md px-3 py-2 text-md font-medium cursor-pointer">CREATE POST</a>}
                                     {/* <a href="#" className="text-gray-800 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-md font-medium">Projects</a>
             <a href="#" className="text-gray-800 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-md font-medium">Calendar</a> */}
                                 </div>
@@ -229,7 +238,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
                             {/* <!-- Profile dropdown --> */}
                             {isLoggedIn ? (<div className="relative ml-3">
                                 <div>
-                                    <button type="button" onClick={() => setToggle(toggle => !toggle)} className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                    <button type="button" onClick={() => setToggle(toggle => !toggle)} className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 border border-gray-500 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                         <span className="absolute -inset-1.5"></span>
                                         <span className="sr-only">Open user menu</span>
                                         <img className="h-8 w-8 rounded-full object-cover" src={image} alt="" />
@@ -254,15 +263,16 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
                 </div>
 
                 {/* <!-- Mobile menu, show/hide based on menu state. --> */}
-                <div className="sm:hidden" id="mobile-menu">
+                {isOpen && <div className="" id="mobile-menu">
                     <div className="space-y-2 px-2 pb-3 pt-2">
                         {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
-                        <a href="#" className="bg-gray-100 text-gray-100 block px-3 py-1 text-base font-medium" aria-current="page">Dashboard</a>
-                        <a href="#" className="text-gray-700 hover:bg-gray-200 block rounded-md px-3 py-2 text-base font-medium">FEEDS</a>
-                        <a href="#" className="text-gray-700 hover:bg-gray-200 block rounded-md px-3 py-2 text-base font-medium">PROFESSIONALS</a>
-                        {/* <a href="#" className="text-gray-700 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Calendar</a> */}
+                        <a  className="bg-gray-100 text-gray-100 block px-3 py-1 text-base font-medium" aria-current="page">Dashboard</a>
+                        <a onClick={handleFeed} className="text-gray-700 hover:bg-gray-200 block rounded-md px-3 py-2 text-base font-medium">FEEDS</a>
+                        <a onClick={handleProfs} className="text-gray-700 hover:bg-gray-200 block rounded-md px-3 py-2 text-base font-medium">PROFESSIONALS</a>
+                        {role === 'professional' && <a onClick={handleCreatePost} className="text-gray-700 hover:bg-gray-200 rounded-md px-3 py-2 text-md font-medium cursor-pointer">CREATE POST</a>}
                     </div>
                 </div>
+                }
             </nav>
             {/* {notification && 
             toast.success(`${notification}`)

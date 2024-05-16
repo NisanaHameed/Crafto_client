@@ -142,15 +142,15 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
   }
 
   const handleDelete = async () => {
-      setShowConfirmation(true);
+    setShowConfirmation(true);
   }
-  const onCancel = ()=>{
+  const onCancel = () => {
     setShowConfirmation(false);
   }
-  const onConfirm = async ()=>{
+  const onConfirm = async () => {
     let res = await deletePost(post?._id as string);
     if (res?.data.success) {
-      navigate('/professional/profile'); 
+      navigate('/professional/profile');
     }
   }
 
@@ -194,9 +194,7 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
                 :
                 <img onClick={() => handleLike(post?._id as string)} src="/like.png" className="w-5 inline mt-2 cursor-pointer" alt="" />
               }
-
-              {/* <img onClick={() => navigate('/postDetail')} src="/comment.png" className="w-6 inline mt-2 ml-2 cursor-pointer" alt="" /> */}
-              <p  onClick={() => handleShowLikes(post?.likes)} className="text-sm cursor-pointer">{post?.likes.length} likes</p>
+              <p onClick={() => handleShowLikes(post?.likes)} className="text-sm cursor-pointer">{post?.likes.length} likes</p>
               <div className="flex justify-between border-t border-slate-200 my-2">
                 <input value={comment} onChange={(e) => setComment(e.target.value)} className=" w-2/3 h-8 border border-transparent appearance-none focus:outline-none" placeholder="Add a comment" />
                 <a onClick={handleComment} className="mt-1 mr-2 cursor-pointer text-green-700">Post</a>

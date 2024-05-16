@@ -29,12 +29,11 @@ const HeroSection: React.FC<IRole> = ({ role }) => {
         <>
             <div className='relative flex justify-center overflow-hidden '>
                 <div className='absolute px-4 bg-[#0e3014] h-1/2 lg:h-80'>
-                    <h2 className=' text-gray-400 mt-28 lg:mt-52 text-xl lg:text-3xl font-sans'>Find professionals for<br />your perfect space</h2>
+                    <h2 className=' text-gray-400 mt-24 md:mt-28 lg:mt-52 text-xl lg:text-3xl font-sans'>Find professionals for<br />your perfect space</h2>
                 </div>
-                <img src="/sofa.jpg" className='p-0 lg:h-[550px] w-full object-cover' alt="" />
+                <img src="/sofa.jpg" className='p-0 h-[350px] lg:h-[550px] w-full object-cover' alt="" />
             </div>
             <div>
-
                 <section className="max-w-7xl mx-auto px-3 pt-14 sm:px-16 lg:px-4 mb-12">
                     <article>
                         <h2 className="text-xl lg:text-2xl py-3 font-semibold text-center text-gray-800">Here's what you can do on CRAFTO</h2>

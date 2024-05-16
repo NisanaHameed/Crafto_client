@@ -2,6 +2,8 @@ import { useDispatch } from "react-redux"
 import { adminLogout } from "../../Store/Slice/AuthSlice";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../Api/admin";
+import { initFlowbite } from "flowbite";
+import { useEffect } from "react";
 
 const Sidebar = () => {
     const dispatch = useDispatch();
@@ -11,6 +13,10 @@ const Sidebar = () => {
         dispatch(adminLogout());
         navigate('/admin/login');
     }
+    useEffect(() => {
+        initFlowbite()
+
+    }, [])
     return (
         <>
             <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" >
@@ -20,9 +26,9 @@ const Sidebar = () => {
                 </svg>
             </button>
 
-            <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 pr-4 w-64 rounded h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+            <aside id="logo-sidebar" className="fixed top-5 left-0 z-40 pr-4 w-64 rounded h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
                 <div className="h-full px-3 py-4 overflow-y-auto bg-white shadow-md">
-                    <a href="https://flowbite.com/" className="flex items-center pt-4 pb-6">
+                    <a className="flex items-center pt-4 pb-6">
                         <img src="/craftoLogo.png" className="w-48 rounded-lg h-14 me-3  object-cover" alt="Flowbite Logo" />
 
                     </a>
