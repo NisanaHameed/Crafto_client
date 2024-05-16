@@ -6,6 +6,7 @@ import { deletePost, likePostbyProf, postCommentbyProf, unlikePostbyProf } from 
 import { useNavigate, useParams } from "react-router-dom"
 import toast from "react-hot-toast"
 import { format } from 'timeago.js'
+import ConfirmationModal from "../../Components/common/ConfirmationModal"
 
 interface IRole {
   role: 'user' | 'professional'
@@ -20,8 +21,9 @@ interface IDesign {
     lastname: string
     company: string
     image: string
+    isVerified: boolean
   }
-  likes: [string],
+  likes: Array<ILikes>,
   comments: Array<comment>
 }
 interface comment {
@@ -36,6 +38,16 @@ interface comment {
   text: string
   createdAt: Date
 }
+interface ILikes {
+  user: {
+    _id?: string
+    name?: string,
+    firstname?: string,
+    lastname?: string,
+    image: string,
+  },
+  type: string
+}
 
 const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
 
@@ -43,6 +55,9 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
   const [rerender, setRerender] = useState(false);
   const [userId, setUserId] = useState('');
   const [comment, setComment] = useState('');
+  const [showLikes, setShowLikes] = useState(false);
+  const [likes, setLikes] = useState<ILikes[]>([]);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -126,10 +141,16 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
     }
   }
 
-  const handleDelete = async()=>{
+  const handleDelete = async () => {
+      setShowConfirmation(true);
+  }
+  const onCancel = ()=>{
+    setShowConfirmation(false);
+  }
+  const onConfirm = async ()=>{
     let res = await deletePost(post?._id as string);
-    if(res?.data.success){
-      navigate('/professional/profile');
+    if (res?.data.success) {
+      navigate('/professional/profile'); 
     }
   }
 
@@ -163,7 +184,7 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
             </div>
             <div className="botttom-0 left-0 pl-2 border-t border-gray-200 sticky z-10">
               <img className=" rounded" src='' />
-              {post?.likes.includes(userId) ?
+              {post?.likes.some(like => like?.user?._id === userId) ?
                 <img onClick={() => handleUnlike(post?._id)} src="/liked.png" className="w-5 inline mt-2 cursor-pointer" alt="" />
                 :
                 <img onClick={() => handleLike(post?._id as string)} src="/like.png" className="w-5 inline mt-2 cursor-pointer" alt="" />
@@ -180,6 +201,7 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
         </div>
         {!feedPage && <button onClick={handleDelete} className="w-1/2 mx-auto border border-[#2e9474] px-4 py-2 hover:bg-[#2e9474] hover:text-white tracking-wide mt-10">Delete Post</button>}
       </div>
+      {showConfirmation && <ConfirmationModal onConfirm={onConfirm} onCancel={onCancel} message="Are you sure you want to delete this post?" />}
     </>
   )
 }
