@@ -18,14 +18,18 @@ const Professional = () => {
 
     const [profs, setProfs] = useState<Professional[]>([])
     const [blocked,setBlocked] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalItems, setTotalItems] = useState(0);
+    const limit = 6;
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await getProfessionals();
+                const response = await getProfessionals(currentPage, limit);
                 const res = response;
                 if (res) {
                     setProfs(res.data.profs);
+                    setTotalItems(Math.ceil(res?.data.total / limit));
                 }
             } catch (error) {
                 console.log(error);
@@ -33,7 +37,7 @@ const Professional = () => {
         };
 
         fetchUsers();
-    }, [blocked])
+    }, [blocked,currentPage > 1, limit])
 
     const hadleBlocking = async (id:string)=>{
         let res:any = await blockProfessional(id);
@@ -42,6 +46,11 @@ const Professional = () => {
         }
         
     }
+    const lastPage = Math.ceil(totalItems / limit);
+
+    const changePage = (pageNumber: number) => {
+        setCurrentPage(pageNumber);
+    };
 
     return (
 
@@ -118,6 +127,71 @@ const Professional = () => {
 
                 </table>
             </div>
+            <div className="py-5 flex justify-center">
+                        <nav aria-label="Page navigation example">
+                            <ul className="flex items-center -space-x-px h-8 text-sm">
+                                <li>
+                                    <button
+                                        onClick={() => changePage(currentPage - 1)}
+                                        disabled={currentPage === 1}
+                                        className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
+                                    >
+                                        <span className="sr-only">Previous</span>
+                                        <svg
+                                            className="w-2.5 h-2.5 rtl:rotate-180"
+                                            aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 6 10"
+                                        >
+                                            <path
+                                                stroke="currentColor"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M5 1 1 5l4 4"
+                                            />
+                                        </svg>
+                                    </button>
+                                </li>
+                                {Array.from({ length: totalItems }, (_, index) => index + 1).map((page) => (
+                                    <li key={page} >
+                                        <a
+                                            onClick={() => changePage(page)}
+                                            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
+                                        >
+                                            {page}
+                                        </a>
+                                    </li>
+                                ))}
+
+                                <li>
+                                    <button
+                                        onClick={() => changePage(currentPage + 1)}
+                                        aria-disabled={currentPage === lastPage}
+                                        className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 "
+                                    >
+                                        <span className="sr-only">Next</span>
+                                        <svg
+                                            className="w-2.5 h-2.5 rtl:rotate-180"
+                                            aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 6 10"
+                                        >
+                                            <path
+                                                stroke="currentColor"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="m1 9 4-4-4-4"
+                                            />
+                                        </svg>
+                                    </button>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
 
         </div>
     )

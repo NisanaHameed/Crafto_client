@@ -21,7 +21,7 @@ const Otp: React.FC<OtpProps> = ({ role, signup }) => {
         digitThree: "",
         digitFour: ""
     });
-    const [timeLeft, setTimeLeft] = useState(30);
+    const [timeLeft, setTimeLeft] = useState(60);
     const [showResend, setShowResend] = useState(false);
 
     useEffect(() => {

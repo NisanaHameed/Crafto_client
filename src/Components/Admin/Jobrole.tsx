@@ -40,6 +40,7 @@ const Jobrole = () => {
         }
         console.log(name)
         const res = await addJobrole(name);
+        console.log('res...',res)
         if (res?.data.success) {
             toast.success('Jobrole added!');
             setRerender(!rerender);

@@ -167,6 +167,14 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
         }
     }
 
+    const handleMessages = ()=>{
+        if(role=='user'){
+            navigate('/chat')
+        }else{
+            navigate('/professional/chat')
+        }
+    }
+
     const handleSubmit = () => {
         console.log(url)
         if (url == 'professionals') {
@@ -247,7 +255,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
                                 <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden " role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" style={{ display: toggle ? 'block' : 'none' }}>
                                     {/* <!-- Active: "bg-gray-100", Not Active: "" --> */}
                                     <a onClick={clickProfile} className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-0">Profile</a>
-                                    {role == 'user' && <a onClick={() => navigate('/chat')} className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-1">Messages</a>}
+                                    <a onClick={handleMessages} className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-1">Messages</a>
                                     {role == 'user' && <a onClick={() => navigate('/saved')} className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-1">Saved Posts</a>}
                                     <a onClick={handleLogout} className="block px-4 py-2 text-sm text-gray-700 cursor-pointer" role="menuitem" id="user-menu-item-2">Logout</a>
                                 </div>

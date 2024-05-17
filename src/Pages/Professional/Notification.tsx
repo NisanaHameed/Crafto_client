@@ -41,7 +41,7 @@ const Notification = () => {
         <>
             < Navbar role='professional' />
             <div className="flex flex-row">
-                <div className="md:w-1/4 w-0">
+                <div className="md:w-1/4 w-0 z-10">
                     < Sidebar />
                 </div>
                 <div className="mt-12 md:w-3/4 w-full px-3 ml-6 md:ml-0">

@@ -13,9 +13,9 @@ export const login = async (email: string, password: string) => {
     }
 }
 
-export const getUsers = async () => {
+export const getUsers = async (page: number, limit: number) => {
     try {
-        let res = await api.get(adminRoutes.getUsers);
+        let res = await api.get(`${adminRoutes.getUsers}?page=${page}&limit=${limit}`);
         return res;
     } catch (err) {
         errorHandler(err as Error);
@@ -23,9 +23,9 @@ export const getUsers = async () => {
     }
 }
 
-export const getProfessionals = async () => {
+export const getProfessionals = async (page: number, limit: number) => {
     try {
-        let res = await api.get(adminRoutes.getProfessionals);
+        let res = await api.get(`${adminRoutes.getProfessionals}?page=${page}&limit=${limit}`);
         return res;
     } catch (err) {
         console.log(err);
@@ -71,6 +71,16 @@ export const addCategory = async (data: FormData) => {
     }
 }
 
+export const editCategory = async (data: FormData) => {
+    console.log(data)
+    try {
+        const res = await api.put(adminRoutes.editCategory, data);
+        return res;
+    } catch (err) {
+        errorHandler(err as Error);
+    }
+}
+
 export const getJobrole = async () => {
     try {
         const res = await api.get(adminRoutes.jobrole);
@@ -84,7 +94,7 @@ export const getJobrole = async () => {
 export const addJobrole = async (name: string) => {
     try {
         console.log(name)
-        const res = await api.post(adminRoutes.addJobrole, { name });
+        const res = await api.post(adminRoutes.addJobrole, { name: name });
         return res;
     } catch (err) {
         errorHandler(err as Error);

@@ -116,7 +116,7 @@ const Chat = () => {
             <div>
                 < Navbar role={'professional'} />
                 <div className="h-screen flex flex-row">
-                    <div className="md:w-64 w-0">
+                    <div className="md:w-64 w-0 z-10">
                         < Sidebar />
                     </div>
                     <div className="flex w-full">

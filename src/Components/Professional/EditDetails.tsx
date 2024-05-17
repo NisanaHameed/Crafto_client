@@ -158,6 +158,7 @@ const EditDetails = () => {
         const response = await editPassword(newPassword, currentPassword);
         if (response?.data.success) {
             toast.success('Password updated!');
+            setShowModal(false);
         }
     }
 

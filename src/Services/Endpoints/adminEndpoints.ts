@@ -6,6 +6,7 @@ const adminRoutes = {
     blockProfessional:"/admin/blockProfessional",
     category:'/admin/category',
     addCategory:'/admin/addCategory',
+    editCategory:'/admin/editCategory',
     jobrole:'/admin/jobrole',
     addJobrole:'/admin/addJobrole',
     deleteJobrole:'/admin/deleteJobrole',
