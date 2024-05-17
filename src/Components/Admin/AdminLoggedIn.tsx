@@ -19,7 +19,7 @@ const AdminLoggedIn = () => {
         const fetchData = async () => {
             try {
                 console.log('data fetching')
-                const res: any = await getUsers();
+                const res: any = await getUsers(1,30);
                 console.log('res',res)
                 if (res?.response?.data?.message == 'Session has expired, please log in again.') {
                     setData(true)

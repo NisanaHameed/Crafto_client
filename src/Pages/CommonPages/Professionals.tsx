@@ -27,7 +27,7 @@ const Professionals: React.FC<IRole> = ({ role }) => {
     useEffect(() => {
         const fetchProf = async () => {
             if (role == 'user') {
-                const res = await getProfessionals();
+                const res = await getProfessionals(1,20);
                 setProfs(res?.data?.profs);
             } else {
                 const res = await getProfs();

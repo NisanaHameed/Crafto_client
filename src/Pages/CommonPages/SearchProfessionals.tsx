@@ -48,7 +48,7 @@ const SearchProfessionals:React.FC<IProps> = ({role}) => {
     
       useEffect(() => {
         const fetchProfessionals = async () => {
-          const res = await getProfessionals();
+          const res = await getProfessionals(1,20);
           if (res?.data.success) {
             setProfs(res.data.profs);
             setFilterData(res.data.profs)
