@@ -44,10 +44,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
     const url = location.pathname.split('/').pop();
 
     useEffect(() => {
-        socket.current = io("https://www.crafto.live", {
-            withCredentials: true,
-            transports: ['websocket', 'polling'],
-        });
+        socket.current = io("https://www.crafto.live");
 
         socket.current.on('getNotification', (data) => {
             console.log(data);
@@ -170,10 +167,10 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
         }
     }
 
-    const handleMessages = () => {
-        if (role == 'user') {
+    const handleMessages = ()=>{
+        if(role=='user'){
             navigate('/chat')
-        } else {
+        }else{
             navigate('/professional/chat')
         }
     }
@@ -277,7 +274,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
                 {isOpen && <div className="" id="mobile-menu">
                     <div className="space-y-2 px-2 pb-3 pt-2">
                         {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
-                        <a className="bg-gray-100 text-gray-100 block px-3 py-1 text-base font-medium" aria-current="page">Dashboard</a>
+                        <a  className="bg-gray-100 text-gray-100 block px-3 py-1 text-base font-medium" aria-current="page">Dashboard</a>
                         <a onClick={handleFeed} className="text-gray-700 hover:bg-gray-200 block rounded-md px-3 py-2 text-base font-medium">FEEDS</a>
                         <a onClick={handleProfs} className="text-gray-700 hover:bg-gray-200 block rounded-md px-3 py-2 text-base font-medium">PROFESSIONALS</a>
                         {role === 'professional' && <a onClick={handleCreatePost} className="text-gray-700 hover:bg-gray-200 rounded-md px-3 py-2 text-md font-medium cursor-pointer">CREATE POST</a>}
