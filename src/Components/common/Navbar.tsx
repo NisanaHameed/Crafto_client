@@ -44,7 +44,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
     const url = location.pathname.split('/').pop();
 
     useEffect(() => {
-        socket.current = io("ws://localhost:3000");
+        socket.current = io("https://www.crafto.live");
 
         socket.current.on('getNotification', (data) => {
             console.log(data);

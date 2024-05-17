@@ -33,7 +33,7 @@ const Chat = () => {
 
     useEffect(() => {
 
-        socket.current = io("ws://localhost:3000");
+        socket.current = io("https://www.crafto.live");
         
         socket.current.on('getMessage', (data) => {
             setArrivalMessage({
