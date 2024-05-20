@@ -50,7 +50,7 @@ const ShowRequirements = () => {
     }
     return (
         <>
-            {reqs ?
+            {reqs.length ?
                 reqs.map((val, index) =>
                     <div key={index} className="flex flex-col max-w-xs p-6 my-4 bg-[#007562] border rounded shadow">
                         <div className="flex flex-col flex-grow">
@@ -101,7 +101,7 @@ const ShowRequirements = () => {
                     </div >
                 )
                 :
-                <h2>You dont have any requirements yet.<br/> Create a new requirement</h2>
+                <h2 className="mt-5 text-gray-700">You dont have any requirements yet.<br/> Create a new requirement</h2>
             }
             {showConfirmationModal && < ConfirmationModal onConfirm={deactivate} onCancel={handleCloseConfirmationModal} message="Are you sure you want to deactivate?" />}
         </>

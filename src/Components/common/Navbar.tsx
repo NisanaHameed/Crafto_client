@@ -102,7 +102,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
     }, [])
 
     const [toggle, setToggle] = useState(false);
-    const [image, setImage] = useState('/profile.png')
+    const [image, setImage] = useState('/profilepage.png')
 
     useEffect(() => {
         if (role == 'user') {
