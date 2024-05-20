@@ -102,7 +102,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
     }, [])
 
     const [toggle, setToggle] = useState(false);
-    const [image, setImage] = useState('/profilepage.png')
+    const [image, setImage] = useState(null)
 
     useEffect(() => {
         if (role == 'user') {
@@ -249,7 +249,7 @@ const Navbar: React.FC<NavbarProps> = ({ role }) => {
                                     <button type="button" onClick={() => setToggle(toggle => !toggle)} className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 border border-gray-500 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                         <span className="absolute -inset-1.5"></span>
                                         <span className="sr-only">Open user menu</span>
-                                        <img className="h-8 w-8 rounded-full object-cover" src={image} alt="" />
+                                        <img className="h-8 w-8 rounded-full object-cover" src={image? image:'/profilepage.png'} alt="" />
                                     </button >
                                 </div>
                                 <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden " role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" style={{ display: toggle ? 'block' : 'none' }}>
