@@ -17,6 +17,8 @@ interface IProf {
 
 const ProfilePost: React.FC<IProf> = ({ professional, id, postCount }) => {
 
+    const [posts, setPosts] = useState<IPost[]>([]);
+
     useEffect(() => {
         const fetchPost = async () => {
             if (professional) {
@@ -24,17 +26,18 @@ const ProfilePost: React.FC<IProf> = ({ professional, id, postCount }) => {
                 console.log(res)
                 if (res?.data.posts) {
                     setPosts(res.data.posts);
+                    postCount(res.data.posts.length);
                 }
             } else {
                 const res = await getPostsById(id);
                 setPosts(res?.data?.posts);
+                postCount(res?.data.posts.length);
             }
         }
-        fetchPost();
-        postCount(posts.length);
+        console.log(posts.length)
+        fetchPost();  
     }, [])
-
-    const [posts, setPosts] = useState<IPost[]>([]);
+ 
     const navigate = useNavigate();
 
     const designDetail = (id: string) => {

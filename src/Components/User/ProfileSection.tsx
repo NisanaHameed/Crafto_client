@@ -26,7 +26,7 @@ const ProfileSection = () => {
                 <div className="w-full max-w-sm md:max-w-lg mt-16 bg-white shadow-lg py-8 rounded mx-auto">
 
                     <div className="flex flex-col items-center pb-10 ">
-                        <img className="w-24 h-24 mb-3 rounded-full shadow-lg object-cover" src={userdata?.image} alt="Bonnie image" />
+                        <img className="w-24 h-24 mb-3 rounded-full shadow-lg object-cover" src={`${userdata?.image} ? ${userdata?.image}: '/profilepage.png'`} alt="Bonnie image" />
                         <h5 className="mb-1 text-xl font-medium text-gray-900">{userdata?.name}</h5>
                         <span className="text-sm text-gray-500">{userdata?.email}</span>
                         <span className="text-sm text-gray-500">{userdata?.city}</span>
