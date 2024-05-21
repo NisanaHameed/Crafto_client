@@ -21,6 +21,7 @@ interface Prof {
     bio: string
     image: string
     followers: Array<string>
+    isVerified: boolean
 }
 
 interface IRole {
@@ -96,6 +97,7 @@ const ProfDetail: React.FC<IRole> = ({ role }) => {
                             <div className="flex flex-wrap items-center mb-4">
                                 <h2 className="text-xl lg:text-2xl inline-block md:mr-2 mb-2 sm:mb-0">
                                     {data?.firstname} {data?.lastname}
+                                    {data?.isVerified && <img src="/verified.png" className="w-7 inline ml-2" alt="" />}
                                 </h2>
                                 {role == 'user' &&
                                     <><a
@@ -163,7 +165,7 @@ const ProfDetail: React.FC<IRole> = ({ role }) => {
                                 </a>
                             </li>
                         </ul>
-                        {tab == 'post' && < ProfilePost professional={false} id={id as string} postCount={setPostCount} />}
+                        {tab == 'post' && < ProfilePost professional={false} id={id as string} postCount={setPostCount} role={role} />}
                         {tab == 'details' && < ProfileAbout bio={data?.bio} company={data?.company} city={data?.city} />}
                     </div>
                 </div>

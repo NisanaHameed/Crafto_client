@@ -135,7 +135,7 @@ const ProfilePage = () => {
                                     </a>
                                 </li>
                             </ul>
-                            {tab == 'post' && < ProfilePost professional={true} id={''} postCount={setPostCount} />}
+                            {tab == 'post' && < ProfilePost professional={true} id={''} postCount={setPostCount} role='professional' />}
 
                             {tab == 'details' && < ProfileAbout bio={data?.bio} company={data?.company} city={data?.city} />}
                             {tab == 'portrait' &&

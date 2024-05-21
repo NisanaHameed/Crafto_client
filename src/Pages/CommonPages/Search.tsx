@@ -158,6 +158,7 @@ const Search: React.FC<IProps> = ({ role }) => {
                       <a>
                         <h5 className="lg:text-base md:text-sm text-sm font-normal tracking-tight text-gray-900 cursor-pointer"><img src={val.profId.image} className="w-4 h-4 rounded-full inline object-cover mr-2" />{val.profId?.company}</h5>
                       </a>
+                      <h2 className='text-sm font-thin ml-6'>{val.category}</h2>
                     </div>
                   </div>
                 ))

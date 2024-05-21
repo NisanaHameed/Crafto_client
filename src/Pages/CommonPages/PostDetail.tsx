@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import Navbar from "../../Components/common/Navbar"
-import { likePost, postComment, postDetail, unlikePost } from "../../Api/user"
+import { likePost, postComment, postDetail, savePost, unlikePost } from "../../Api/user"
 import { jwtDecode } from "jwt-decode"
-import { deletePost, likePostbyProf, postCommentbyProf, unlikePostbyProf } from "../../Api/professional"
+import { deletePost, likePostbyProf, postCommentbyProf, savePostbyProf, unlikePostbyProf } from "../../Api/professional"
 import { useNavigate, useParams } from "react-router-dom"
 import toast from "react-hot-toast"
 import { format } from 'timeago.js'
@@ -25,6 +25,7 @@ interface IDesign {
   }
   likes: Array<ILikes>,
   comments: Array<comment>
+  saved: [string]
 }
 interface comment {
   user: {
@@ -159,6 +160,37 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
     setShowLikes(true);
   }
 
+  const handleUnsave = async (id: string) => {
+    console.log('clicked save button')
+    if (role === 'user') {
+      const res = await savePost(id, 'false');
+      if (res?.data?.success) {
+        setRerender(!rerender);
+      }
+    } else {
+      const res = await savePostbyProf(id, 'false')
+      if (res?.data?.success) {
+        setRerender(!rerender);
+      }
+    }
+  }
+
+  const handleSave = async (id: string) => {
+    console.log('clicked save button')
+    if (role == 'user') {
+      const res = await savePost(id, 'true');
+      if (res?.data?.success) {
+        setRerender(!rerender);
+      }
+    } else {
+      const res = await savePostbyProf(id, 'true')
+      if (res?.data?.success) {
+        setRerender(!rerender);
+      }
+    }
+
+  }
+
   return (
     <>
       <Navbar role={role} />
@@ -174,7 +206,7 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
             <div className="overflow-y-scroll ml-2 h-56 flex-grow">
               {post?.comments && post.comments.map((val) => {
                 return (
-                  <div className="py-2">
+                  <div key={val?.user._id} className="py-2">
                     <img onClick={() => profDetail(val?.user._id as string)} src={val?.user.image} className="inline w-6 h-6 object-cover rounded-full border border-gray-400 cursor-pointer" alt="" />
                     {val.type == 'User' ?
                       <h2 onClick={() => profDetail(val?.user._id as string)} className="inline ml-2 text-sm cursor-pointer">{val?.user.name}</h2> :
@@ -189,11 +221,18 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
             </div>
             <div className="botttom-0 left-0 pl-2 border-t border-gray-200 sticky z-10">
               <img className=" rounded" src='' />
-              {post?.likes.some(like => like?.user?._id === userId) ?
-                <img onClick={() => handleUnlike(post?._id)} src="/liked.png" className="w-5 inline mt-2 cursor-pointer" alt="" />
-                :
-                <img onClick={() => handleLike(post?._id as string)} src="/like.png" className="w-5 inline mt-2 cursor-pointer" alt="" />
-              }
+                <div className="flex flex-row justify-between">
+                  {post?.likes.some(like => like?.user?._id === userId) ?
+                    <img onClick={() => handleUnlike(post?._id)} src="/liked.png" className="w-6 inline mt-2 cursor-pointer" alt="" />
+                    :
+                    <img onClick={() => handleLike(post?._id as string)} src="/like.png" className="w-6 inline mt-2 cursor-pointer" alt="" />
+                  }
+                  {post?.saved.includes(userId) ?
+                    <img onClick={() => handleUnsave(post?._id as string)} src="/saved.png" className="w-5 h-5 mr-2 mt-3 cursor-pointer justify-end" />
+                    :
+                    <img onClick={() => handleSave(post?._id as string)} src="/save.png" className="w-5 h-5 mr-2 mt-3 cursor-pointer justify-end" />
+                  }
+                </div>
               <p onClick={() => handleShowLikes(post?.likes)} className="text-sm cursor-pointer">{post?.likes.length} likes</p>
               <div className="flex justify-between border-t border-slate-200 my-2">
                 <input value={comment} onChange={(e) => setComment(e.target.value)} className=" w-2/3 h-8 border border-transparent appearance-none focus:outline-none" placeholder="Add a comment" />

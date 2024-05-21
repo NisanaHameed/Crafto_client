@@ -13,9 +13,10 @@ interface IProf {
     professional: Boolean
     id: string
     postCount: Function
+    role: 'user' | 'professional'
 }
 
-const ProfilePost: React.FC<IProf> = ({ professional, id, postCount }) => {
+const ProfilePost: React.FC<IProf> = ({ professional, id, postCount, role }) => {
 
     const [posts, setPosts] = useState<IPost[]>([]);
 
@@ -35,14 +36,19 @@ const ProfilePost: React.FC<IProf> = ({ professional, id, postCount }) => {
             }
         }
         console.log(posts.length)
-        fetchPost();  
+        fetchPost();
     }, [])
- 
+
     const navigate = useNavigate();
 
     const designDetail = (id: string) => {
-
-        navigate(`/professional/postDetails/${id}`);
+        if (role === 'user') {
+            navigate(`/postDetail/${id}`)
+        } else if (role === 'professional' && professional) {
+            navigate(`/professional/postDetails/${id}`);
+        } else {
+            navigate(`/professional/postDetail/${id}`)
+        }
     }
 
     return (

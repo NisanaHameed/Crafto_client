@@ -65,7 +65,6 @@ const Feed: React.FC<IRole> = ({ role }) => {
       setLoading(false);
       if (res?.data?.posts) {
         setPosts(prev => {
-          // Ensure no duplicates, this is simplistic; consider more robust checks based on your data
           const existingIds = new Set(prev.map(p => p._id));
           const newPosts = res.data.posts.filter((post: IDesign) => !existingIds.has(post._id));
           return [...prev, ...newPosts];
@@ -95,7 +94,7 @@ const Feed: React.FC<IRole> = ({ role }) => {
         setPosts((currentPosts) =>
           currentPosts.map((post: any) =>
             post._id === id
-              ? { ...post, likes: [...post.likes, { user: { _id: userId } }] } // Example structure
+              ? { ...post, likes: [...post.likes, { user: { _id: userId } }] } 
               : post
           )
         );
@@ -106,7 +105,7 @@ const Feed: React.FC<IRole> = ({ role }) => {
         setPosts((currentPosts) =>
           currentPosts.map((post: any) =>
             post._id === id
-              ? { ...post, likes: [...post.likes, { user: { _id: userId } }] } // Example structure
+              ? { ...post, likes: [...post.likes, { user: { _id: userId } }] } 
               : post
           )
         );
@@ -193,7 +192,7 @@ const Feed: React.FC<IRole> = ({ role }) => {
         setPosts((currentPosts) =>
           currentPosts.map((post: any) =>
             post._id === id
-              ? { ...post, saved: [...post.saved, userId] } // Example structure
+              ? { ...post, saved: [...post.saved, userId] } 
               : post
           )
         );
@@ -205,7 +204,7 @@ const Feed: React.FC<IRole> = ({ role }) => {
         setPosts((currentPosts) =>
           currentPosts.map((post: any) =>
             post._id === id
-              ? { ...post, saved: [...post.saved, userId] } // Example structure
+              ? { ...post, saved: [...post.saved, userId] }
               : post
           )
         );
@@ -239,7 +238,6 @@ const Feed: React.FC<IRole> = ({ role }) => {
                   <img onClick={() => handleLike(val?._id)} src="/like.png" className="w-[22px] h-[22px] mt-[10px] cursor-pointer" alt="" />
                 }
                 <img onClick={() => handleComment(val?._id)} src="/comment.png" className="w-[26px] inline mt-2 ml-2 cursor-pointer" alt="" />
-                {/* {role == 'professional' && <img src="/repost.png" className="w-6 mt-[10px] ml-2 cursor-pointer" />} */}
               </div>
               {val.saved.includes(userId) ?
                 <img onClick={() => handleUnsave(val?._id)} src="/saved.png" className="w-5 h-5  mt-3 cursor-pointer justify-end" />
