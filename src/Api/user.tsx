@@ -40,6 +40,7 @@ export const gsignup = async (name: string, email: string, password: string) => 
 
 export const login = async (email: string, password: string) => {
     try {
+        console.log('in user login api')
         let res = await api.post(userRoutes.login, { email, password });
         console.log(res)
         return res;
