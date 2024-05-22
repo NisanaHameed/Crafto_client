@@ -87,6 +87,9 @@ const Chat = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+        if(!newMessage.trim().length){
+            return;
+        }
 
         const receiverId = currentChat?.members.find(
             (member) => member !== userId
@@ -129,18 +132,18 @@ const Chat = () => {
                                 </div>
                                 <div className="sticky bottom-0 mt-1 flex items-center justify-between">
                                     <textarea
-                                        className="chatMessageInput w-5/6 h-14 p-2 rounded"
+                                        className="w-5/6 h-14 p-2 rounded"
                                         placeholder="write something..."
                                         onChange={(e) => setNewMessage(e.target.value)}
                                         value={newMessage}
                                     ></textarea>
-                                    <button className="chatSubmitButton w-1/6 h-14 rounded cursor-pointer bg-[#007562] text-white" onClick={handleSubmit}>
+                                    <button className="w-1/6 h-14 rounded cursor-pointer bg-[#007562] text-white" onClick={handleSubmit}>
                                         Send
                                     </button>
                                 </div>
                             </>
                         ) : (
-                            <span className="noConversationText">
+                            <span className="p-3 mx-auto">
                                 Open a conversation to start a chat.
                             </span>
                         )}

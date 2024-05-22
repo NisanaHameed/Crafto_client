@@ -86,6 +86,9 @@ const Chat = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+        if (!newMessage.trim().length) {
+            return;
+        }
 
         const receiverId = currentChat?.members.find(
             (member) => member !== profId
