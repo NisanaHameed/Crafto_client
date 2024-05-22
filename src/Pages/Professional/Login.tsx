@@ -1,6 +1,6 @@
 import Logincomp from "../../Components/common/login";
 
-const Login = ()=>{
+const Login = () => {
     return (
         <Logincomp />
     )

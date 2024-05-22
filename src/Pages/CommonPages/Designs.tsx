@@ -11,10 +11,10 @@ interface IDesign {
         image: string
     }
 }
-interface IRole{
-    role:'user' | 'professional'
+interface IRole {
+    role: 'user' | 'professional'
 }
-const Designs:React.FC<IRole> = ({role}) => {
+const Designs: React.FC<IRole> = ({ role }) => {
 
     const { category } = useParams();
     const [design, setDesign] = useState<IDesign[]>([])
@@ -27,36 +27,44 @@ const Designs:React.FC<IRole> = ({role}) => {
         }
         fetchPost();
     }, [])
-    
-    const designDetail = (id:string)=>{
-        if(role=='user'){
-          navigate(`/postDetail/${id}`);
-        }else{
-          navigate(`/professional/postDetail/${id}`);
+
+    const designDetail = (id: string) => {
+        if (role == 'user') {
+            navigate(`/postDetail/${id}`);
+        } else {
+            navigate(`/professional/postDetail/${id}`);
         }
-      }
+    }
     return (
         <>
-        <Navbar role={role} />
-        <div className="h-screen w-full">
-            <div className=" mt-[70px]">
-                <h2 className="ml-5 mb-5 text-xl font-semibold text-[#007562] md:ml-14">{category}</h2>
-                <div className="max-w-8xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:px-5 gap-4 mx-auto">
-                    {design.map((val, index) => (
-                        <div onClick={()=>designDetail(val?._id)} key={index} className="max-w-full bg-white rounded-md">
-                            <a>
-                                <img className="rounded h-52 lg:h-80 w-full object-cover filter hover:brightness-75 cursor-pointer" src={val.image} alt="" />
-                            </a>
-                            <div className="py-2">
+            <Navbar role={role} />
+            <div className="h-screen w-full">
+                <div className=" mt-[70px]">
+                    <h2 className="ml-5 mb-5 text-xl font-semibold text-[#007562] md:ml-14">{category}</h2>
+                    <div className="max-w-8xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:px-5 gap-4 mx-auto">
+                        {design.length ? design.map((val, index) => (
+                            <div onClick={() => designDetail(val?._id)} key={index} className="max-w-full bg-white rounded-md">
                                 <a>
-                                    <h5 className="lg:text-base md:text-sm text-sm font-normal tracking-tight text-gray-900 cursor-pointer"><img src={val.profId.image} className="w-4 h-4 rounded-full inline object-cover mr-2" />{val.profId?.company}</h5>
+                                    <img className="rounded h-52 lg:h-80 w-full object-cover filter hover:brightness-75 cursor-pointer" src={val.image} alt="" />
                                 </a>
+                                <div className="py-2">
+                                    <a>
+                                        <h5 className="lg:text-base md:text-sm text-sm font-normal tracking-tight text-gray-900 cursor-pointer"><img src={val.profId.image} className="w-4 h-4 rounded-full inline object-cover mr-2" />{val.profId?.company}</h5>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                            :
+                            <>
+                                <div className='flex flex-col items-center justify-center w-full'>
+                                    <img className='w-28' src="/emptybox.png" alt="" />
+                                    <h2 className='py-3 text-green-600'>No Data!</h2>
+                                </div>
+                            </>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
         </>
     )
 }

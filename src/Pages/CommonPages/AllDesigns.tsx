@@ -53,7 +53,7 @@ const AllDesigns: React.FC<IRole> = ({ role }) => {
                 <div className=" mt-[70px]">
                     <h2 className="ml-5 mb-5 text-xl font-semibold text-[#007562] md:ml-14">All Designs</h2>
                     <div className="max-w-8xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:px-5 gap-4 mx-auto">
-                        {design.map((val, index) => (
+                        {design.length ? design.map((val, index) => (
                             <div onClick={() => designDetail(val?._id)} key={index} className="max-w-full bg-white rounded-md">
                                 <a>
                                     <img className="rounded h-52 lg:h-80 w-full object-cover filter hover:brightness-75 cursor-pointer" src={val.image} alt="" />
@@ -64,7 +64,13 @@ const AllDesigns: React.FC<IRole> = ({ role }) => {
                                     </a>
                                 </div>
                             </div>
-                        ))}
+                        ))
+                            :
+                            <div className='flex flex-col items-center justify-center w-full'>
+                                <img className='w-28' src="/emptybox.png" alt="" />
+                                <h2 className='py-3 text-green-600'>No Data!</h2>
+                            </div>
+                        }
 
                     </div>
                     <div className="py-5 flex justify-center">

@@ -12,10 +12,8 @@ const Signup = () => {
     const [err, setErr] = useState('');
     const navigate = useNavigate();
     const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    // const mobileNumberRegex = /^[0-9]{10}$/;
-
     const handleSubmit = async (e: any) => {
-      
+
         e.preventDefault();
         const namePattern = /^[a-zA-Z\s]+$/;
         try {
@@ -26,10 +24,7 @@ const Signup = () => {
                 toast.error('Enter a vlaid email!');
                 return
             }
-            //  else if (!mobileNumberRegex.test(mobile.toString())) {
-            //     toast.error('Enter a valid mobile number!');
-            //     return;
-            // } 
+
             else if (password.trim().length < 5) {
                 toast.error('Password must contain atleast 5 characters!');
                 return;
@@ -76,10 +71,6 @@ const Signup = () => {
                                     <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-dark">Email</label>
                                     <input type="email" onChange={(e) => setEmail(e.target.value)} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:placeholder-gray-500 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                                 </div>
-                                {/* <div>
-                                    <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-dark">Mobile</label>
-                                    <input type="number" onChange={(e) => setMobile(parseInt(e.target.value))} className="border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:placeholder-gray-500 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                                </div> */}
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-dark">Password</label>
                                     <input type="password" onChange={(e) => setPassword(e.target.value)} className=" border border-gray-300 text-gray-800 sm:text-sm rounded-md focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-white dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
@@ -87,14 +78,13 @@ const Signup = () => {
                                 <div className="mt-16">
                                     <p>{err}</p>
                                     <button type="button" onClick={handleSubmit} className="w-full mt-2 text-white bg-[#007562] hover:bg-[#2a5b53] focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-md text-sm px-5 py-2.5 text-center ">SignUp</button>
-                                    {/* <button type="button" className="w-full mt-2 hover:text-white hover:bg-zinc-500 bg-white text-black border border-[#007562] focus:ring-4 focus:outline-none  font-medium rounded-md text-sm text-center "><GoogleAuth Login={false} user={true} /></button> */}
                                     <div className="btn-wrapper mt-3 text-center">
                                         <GoogleAuth Login={false} user={true} />
-                                        </div>
+                                    </div>
 
                                 </div>
                                 <p className="text-sm font-light text-gray-800" >
-                                    Already have an account? <a onClick={()=>navigate('/login')} className="font-medium text-primary-600 hover:underline text-[#007562] cursor-pointer">Login here</a>
+                                    Already have an account? <a onClick={() => navigate('/login')} className="font-medium text-primary-600 hover:underline text-[#007562] cursor-pointer">Login here</a>
                                 </p>
                             </form>
                         </div>

@@ -122,9 +122,6 @@ const RequirementForm1: React.FC<IState> = ({ setState }) => {
                         <option>In 6 months</option>
                         <option>In 1 year</option>
                     </select>
-                    {/* <select value='' className="bg-gray-50 text-gray-500 border border-gray-300 text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-4/5 mx-auto p-2.5">
-                    <option selected className="">Select your site location</option>
-                    </select> */}
                     <div className="flex justify-center pt-7 space-x-1">
                         <button onClick={handleSubmit} className="bg-[#2e9474] px-4 py-2 text-white font-thin tracking-wide">Submit</button>
                         <button onClick={() => setState('Form')} className="bg-[#2e9474] px-4 py-2 text-white font-thin tracking-wide">Back</button>

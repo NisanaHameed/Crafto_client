@@ -25,12 +25,9 @@ const Sidebar = () => {
                     <path clipRule="evenodd" fillRule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                 </svg>
             </button>
-            
-                <aside id="logo-sidebar" className="w-64 rounded h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+
+            <aside id="logo-sidebar" className="w-64 rounded h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
                 <div className="h-full z-50 bg-[#0a250f] px-3 py-4 overflow-y-auto shadow-md">
-                    {/* <a onClick={() => navigate('/professional')} className="flex items-center pt-4 pb-6 ">
-                        <img src="/craftoLogo.png" className="w-48 bg-white rounded-lg h-14 me-3  object-cover" alt="Crafto Logo" />
-                    </a> */}
                     <ul className="space-y-2 font-medium">
                         <li>
                             <a onClick={() => navigate('/professional/profile')} className="flex items-center font-normal p-2 pb-4 text-gray-200 rounded-lg hover:bg-[#133819] group cursor-pointer">
@@ -83,7 +80,7 @@ const Sidebar = () => {
                     </ul>
                 </div>
             </aside>
-            
+
         </>
     )
 }

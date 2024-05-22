@@ -4,7 +4,7 @@ import { login } from '../../Api/admin'
 import { useDispatch } from "react-redux"
 import { setAdminCredential } from "../../Store/Slice/AuthSlice"
 
-const Login = ()=>{
+const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -24,13 +24,13 @@ const Login = ()=>{
                 setErr("Password must contain atleast 5 characters!");
                 return;
             }
-                
-                let res = await login(email, password);
-                if (res?.data.success) {
-                    console.log('success')
-                    dispatch(setAdminCredential(res.data.token));
-                    navigate('/admin')
-                } 
+
+            let res = await login(email, password);
+            if (res?.data.success) {
+                console.log('success')
+                dispatch(setAdminCredential(res.data.token));
+                navigate('/admin')
+            }
 
         } catch (err) {
             console.log(err);
@@ -52,11 +52,11 @@ const Login = ()=>{
                 {/* Signup Section */}
                 <div className="w-full md:w-1/2 flex items-center justify-center">
                     <div className="w-full bg-white md:mt-0 sm:max-w-md xl:p-0 dark:bg-white">
-                    <h1 className="ml-7 text-xl font-normal leading-tight tracking-tight text-gray-900 md:text-2xl">
-                                Admin Login
-                            </h1>
+                        <h1 className="ml-7 text-xl font-normal leading-tight tracking-tight text-gray-900 md:text-2xl">
+                            Admin Login
+                        </h1>
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                           
+
                             <form className="space-y-4 md:space-y-3" action="#">
 
                                 <div>
@@ -72,10 +72,10 @@ const Login = ()=>{
                                 <div className="mt-16">
                                     <p>{err}</p>
                                     <button type="button" onClick={handleSubmit} className="w-full mt-2 text-white bg-[#007562] hover:bg-[#2a5b53] focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-md text-sm px-5 py-2.5 text-center ">Login</button>
-                                    
+
                                 </div>
                                 <p className="text-sm font-light text-gray-700 dark:text-gray-400">
-                                    
+
                                 </p>
                             </form>
                         </div>

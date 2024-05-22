@@ -66,7 +66,6 @@ const CreatePost = () => {
             toast.success('Post added successfully!');
             navigate('/professional/profile');
         }
-
     }
     return (
         <>
@@ -76,7 +75,6 @@ const CreatePost = () => {
                     < Sidebar />
                 </div>
                 <div className="mt-10 md:w-3/4 w-full px-5">
-                    {/* <div className="p-3 flex justify-center md:ml-48 mt-10"> */}
                     <div className="lg:w-3/5 md:w-4/5 w-4/5 shadow-lg p-6 h-48 bg-[#007562] rounded mt-5 ml-6">
                         <h1 className="text-center text-gray-100 text-xl mb-6 mt-1 font-semibold">Create post</h1>
                         <div className="flex flex-col gap-4 lg:w-2/3 mx-auto">
@@ -124,7 +122,6 @@ const CreatePost = () => {
                     </div>
                 </div>
             </div>
-            {/* </div> */}
         </>
     )
 }

@@ -114,11 +114,6 @@ const RequirementForm2: React.FC<IState> = ({ setState }) => {
                         <option>In 6 months</option>
                         <option>In 1 year</option>
                     </select>
-                    {/* <select value='' className="bg-gray-50 text-gray-500 border border-gray-300 text-sm rounded-md focus:ring-[#007562] focus:border-[#007562] block w-4/5 mx-auto p-2.5">
-                <option selected className="">Select your site location</option>
-                <option>fgjhj</option>
-                <option>Other</option>
-            </select> */}
                     <div className="flex justify-center pt-7 space-x-1">
                         <button onClick={handleSubmit} className="w-[150px] inline text-white bg-[#007562] hover:bg-white hover:border border-[#007562] hover:text-[#007562] focus:ring-2 focus:outline-none focus:ring-green-700  font-medium rounded-md text-sm px-5 py-2.5 text-center ">Submit</button>
                         <button onClick={() => setState('Form')} className="w-[150px] inline hover:text-white hover:bg-[#007562] border border-[#007562] text-[#007562] focus:ring-2 focus:outline-none focus:ring-green-700 font-medium rounded-md text-sm px-5 py-2.5 text-center ">Back</button>

@@ -8,7 +8,7 @@ interface IRole {
     role: 'user' | 'professional'
 }
 interface IProfs {
-    _id:string
+    _id: string
     firstname: string
     lastname: string
     email: string
@@ -19,7 +19,7 @@ interface IProfs {
     bio: string
     image: string
     followers: number
-    isVerified:boolean
+    isVerified: boolean
 }
 
 const Professionals: React.FC<IRole> = ({ role }) => {
@@ -27,7 +27,7 @@ const Professionals: React.FC<IRole> = ({ role }) => {
     useEffect(() => {
         const fetchProf = async () => {
             if (role == 'user') {
-                const res = await getProfessionals(1,20);
+                const res = await getProfessionals(1, 20);
                 setProfs(res?.data?.profs);
             } else {
                 const res = await getProfs();
@@ -38,10 +38,10 @@ const Professionals: React.FC<IRole> = ({ role }) => {
     }, [])
     const navigate = useNavigate();
 
-    const handleClick = (id:string)=>{
-        if(role=='user'){
+    const handleClick = (id: string) => {
+        if (role == 'user') {
             navigate(`/profDetails/${id}`);
-        }else{
+        } else {
             navigate(`/professional/profDetails/${id}`);
         }
     }
@@ -50,19 +50,18 @@ const Professionals: React.FC<IRole> = ({ role }) => {
             <Navbar role={role} />
             <div className="w-full space-y-3 max-w-md md:max-w-2xl mt-10 bg-white mx-auto">
                 {profs && profs.map((val, index) => (
-                    <div onClick={()=>handleClick(val._id)} key={index} className="grid grid-cols-3 border border-gray-200 py-4 rounded cursor-pointer">
+                    <div onClick={() => handleClick(val._id)} key={index} className="grid grid-cols-3 border border-gray-200 py-4 rounded cursor-pointer">
                         <div className="col-span-1 mx-auto"><img src={val.image} className="rounded-full w-20 h-20 object-cover" alt="" /></div>
                         <div className="col-span-2">
-                        
+
                             <h2 className="font-semibold inline">
                                 {val.firstname} {val.lastname}
                                 {val?.isVerified && <img src="/verified.png" className="w-6 inline ml-2" alt="" />}
-                                </h2>
-                            {/* <button className="border border-[#3f8377] text-[#3f8377] hover:text-white hover:bg-[#3f8377] inline ml-6 px-4 py-[2px] rounded">Message</button> */}
+                            </h2>
                             <h2 className="text-sm mt-2">{val.job} | {val.experience} years</h2>
                         </div>
                     </div>
-                ))} 
+                ))}
             </div>
         </>
     )

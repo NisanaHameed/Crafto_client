@@ -44,16 +44,16 @@ const Login = () => {
                     dispatch(setUserCredential(res.data.token));
                     toast((t) => (
                         <span className="text-[#2e695e]">
-                          Successfully logged in!
-                          <button className="pl-4" onClick={() => toast.dismiss(t.id)}>
-                          <img src="/close.png" alt="" />
-                          </button>
+                            Successfully logged in!
+                            <button className="pl-4" onClick={() => toast.dismiss(t.id)}>
+                                <img src="/close.png" alt="" />
+                            </button>
                         </span>
-                      ))
-               
+                    ))
+
                     navigate('/')
 
-                } 
+                }
             } else {
                 console.log('professional login')
                 let res = await profLogin(email, password);
@@ -61,12 +61,12 @@ const Login = () => {
                     dispatch(setProfCredential(res.data.token));
                     toast((t) => (
                         <span className="text-[#2e695e]">
-                          Successfully logged in!
-                          <button className="pl-4" onClick={() => toast.dismiss(t.id)}>
-                          <img src="/close.png" alt="" />
-                          </button>
+                            Successfully logged in!
+                            <button className="pl-4" onClick={() => toast.dismiss(t.id)}>
+                                <img src="/close.png" alt="" />
+                            </button>
                         </span>
-                      ))
+                    ))
                     navigate('/professional')
                 }
             }
@@ -76,11 +76,11 @@ const Login = () => {
         }
     }
 
-    const handleForgotPassword = ()=>{
-        console.log('role....',role)
-        if(role){
+    const handleForgotPassword = () => {
+        console.log('role....', role)
+        if (role) {
             navigate('/forgotPassword')
-        }else{
+        } else {
             navigate('/professional/forgotPassword')
         }
     }
@@ -88,15 +88,14 @@ const Login = () => {
     return (
         <section className="bg-white white:bg-white-900 h-screen flex items-center justify-center">
             <div className="flex flex-wrap justify-center ">
-                {/* Image Section */}
                 <div className="w-full md:w-1/2 mb-4 md:mb-0 hidden sm:block pr-5">
-                    <img src="../../craftoLogo.png" className="w-44 h-auto dark:900 mb-0 p-0" alt="Crafto Logo" />
+                    <img onClick={() => navigate('/')} src="../../craftoLogo.png" className="w-44 h-auto dark:900 mb-0 p-0 cursor-pointer" alt="Crafto Logo" />
                     <h1 className="text-brown-100 m-0 p-0">Connect with trusted professionals for your perfect space!</h1>
                     <img src="../../signupic.svg" className="w-60 h-auto align-middle" alt="Beach House" />
                 </div>
-                {/* Signup Section */}
                 <div className="w-full md:w-1/2 flex items-center justify-center">
                     <div className="w-full bg-white md:mt-0 sm:max-w-md xl:p-0 dark:bg-white">
+                        <img onClick={() => navigate('/')} src="../../craftoLogo.png" className="w-32 dark:900 mb-0 p-0 md:hidden cursor-pointer" alt="Crafto Logo" />
                         <h1 className="ml-7 text-xl font-normal leading-tight tracking-tight text-gray-900 md:text-2xl">
                             Login
                         </h1>
@@ -119,10 +118,9 @@ const Login = () => {
                                 <div className="mt-16">
                                     <p>{err}</p>
                                     <button type="button" onClick={handleSubmit} className="w-full mt-2 text-white bg-[#007562] hover:bg-[#2a5b53] focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-md text-sm px-5 py-2.5 text-center ">Login</button>
-                                    {/* <button type="button" className="w-full mt-2 hover:text-white hover:bg-zinc-500 bg-white text-black border border-[#007562] focus:ring-4 focus:outline-none  font-medium rounded-md text-sm px-5 py-2.5 text-center ">Sign In with Google</button> */}
                                     <div className="btn-wrapper mt-3 text-center">
                                         <GoogleAuth Login={true} user={role} />
-                                        </div>
+                                    </div>
                                 </div>
                                 <p onClick={handleForgotPassword} className="font-semibold text-sm text-[#3f8377] cursor-pointer">Forgot your password?</p>
                                 <p className="text-sm font-normal text-gray-800">

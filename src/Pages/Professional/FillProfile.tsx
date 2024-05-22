@@ -61,7 +61,7 @@ const FillProfile = () => {
 
 
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-  
+
         e.preventDefault();
         const namePattern = /^[a-zA-Z]+$/
         try {

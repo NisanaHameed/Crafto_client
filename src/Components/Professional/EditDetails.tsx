@@ -329,9 +329,6 @@ const EditDetails = () => {
                     </div>
                 </div>
                 }
-
-
-
             </div>
         </>
     )

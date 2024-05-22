@@ -37,7 +37,7 @@ const ProfessionalRoutes = () => {
             <Route path='/forgotPassword' element={<ForgotPassword role="professional" />} />
             <Route path='/forgotPasswordOTP' element={<OTP role='professional' />} />
             <Route path='/changePassword' element={<ChangePassword role='professional' />} />
-            
+
             <Route path='' element={< HomeProtect />} >
                 <Route path='' element={<Home />} />
             </Route>

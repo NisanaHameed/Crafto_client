@@ -29,7 +29,7 @@ const SavedPosts = () => {
     }, [])
 
     const designDetail = (id: string) => {
-       
+
         navigate(`/postDetail/${id}`);
     }
 

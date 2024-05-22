@@ -4,12 +4,12 @@ import DesignCards from '../../Components/User/DesignCards';
 import Footer from '../../Components/common/Footer';
 
 const Home = () => {
-   
+
     return (
         <>
-            <Navbar role={'professional'} />
+            < Navbar role={'professional'} />
             < HeroSection role={'professional'} />
-            < DesignCards role={'professional'}/>
+            < DesignCards role={'professional'} />
             < Footer />
         </>
     )

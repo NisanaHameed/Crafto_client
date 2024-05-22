@@ -80,7 +80,6 @@ const OTP: React.FC<IRole> = ({ role }) => {
     }
 
     return (
-
         <section className=" h-screen flex items-center justify-center">
 
             <div className="flex p-10 flex-wrap items-center justify-center border shadow-lg rounded">
@@ -93,7 +92,6 @@ const OTP: React.FC<IRole> = ({ role }) => {
                 </form>
             </div>
         </section>
-
     )
 }
 

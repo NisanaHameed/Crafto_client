@@ -38,7 +38,6 @@ interface ILikes {
 const Feed: React.FC<IRole> = ({ role }) => {
 
   const [posts, setPosts] = useState<IDesign[]>([])
-  // const [rerender, setRerender] = useState(false);
   const [userId, setUserId] = useState('');
   const [showLikes, setShowLikes] = useState(false);
   const [likes, setLikes] = useState<ILikes[]>([]);
@@ -94,7 +93,7 @@ const Feed: React.FC<IRole> = ({ role }) => {
         setPosts((currentPosts) =>
           currentPosts.map((post: any) =>
             post._id === id
-              ? { ...post, likes: [...post.likes, { user: { _id: userId } }] } 
+              ? { ...post, likes: [...post.likes, { user: { _id: userId } }] }
               : post
           )
         );
@@ -105,7 +104,7 @@ const Feed: React.FC<IRole> = ({ role }) => {
         setPosts((currentPosts) =>
           currentPosts.map((post: any) =>
             post._id === id
-              ? { ...post, likes: [...post.likes, { user: { _id: userId } }] } 
+              ? { ...post, likes: [...post.likes, { user: { _id: userId } }] }
               : post
           )
         );
@@ -118,7 +117,6 @@ const Feed: React.FC<IRole> = ({ role }) => {
     console.log('submitting unlike')
     if (role === 'user') {
       const res = await unlikePost(id);
-      // console.log(res)
       if (res?.data?.success) {
         setPosts(currentPosts =>
           currentPosts.map(post =>
@@ -192,7 +190,7 @@ const Feed: React.FC<IRole> = ({ role }) => {
         setPosts((currentPosts) =>
           currentPosts.map((post: any) =>
             post._id === id
-              ? { ...post, saved: [...post.saved, userId] } 
+              ? { ...post, saved: [...post.saved, userId] }
               : post
           )
         );

@@ -149,7 +149,7 @@ const Search: React.FC<IProps> = ({ role }) => {
           <div className='p-7 flex flex-wrap gap-4'>
             <div className="max-w-8xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:px-5 gap-4 mx-auto">
               {
-                design && design.map((val, index) => (
+                design.length ? design.map((val, index) => (
                   <div onClick={() => designDetail(val?._id)} key={index} className="max-w-full bg-white rounded-md">
                     <a>
                       <img className="rounded h-52 lg:h-80 w-full object-cover filter hover:brightness-75 cursor-pointer" src={val.image} alt="" />
@@ -162,6 +162,11 @@ const Search: React.FC<IProps> = ({ role }) => {
                     </div>
                   </div>
                 ))
+                  :
+                  <div className='flex flex-col items-center justify-center w-full'>
+                    <img className='w-28' src="/emptybox.png" alt="" />
+                    <h2 className='py-3 text-green-600'>No Data!</h2>
+                  </div>
               }
             </div>
           </div>
@@ -230,7 +235,6 @@ const Search: React.FC<IProps> = ({ role }) => {
               </ul>
             </nav>
           </div>
-
         </div>
       </div>
     </>

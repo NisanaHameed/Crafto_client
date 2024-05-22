@@ -13,9 +13,9 @@ interface Message {
     conversationId: string
     createdAt: Date
 }
-interface IConversation{
-    _id:string
-    members:[string]
+interface IConversation {
+    _id: string
+    members: [string]
 }
 const Chat = () => {
 
@@ -24,22 +24,19 @@ const Chat = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [newMessage, setNewMessage] = useState('');
     const [arrivalMessage, setArrivalMessage] = useState<Message | null>(null);
-    // const [onlineUsers, setOnlineUsers] = useState([]);
-    // const [user, setUSer] = useState('')
     const [userId, setUserId] = useState('');
     const socket = useRef<Socket | undefined>();
-    // const { userData } = useSelector((state: IState) => state.auth);
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
 
         socket.current = io("https://www.crafto.live");
-        
+
         socket.current.on('getMessage', (data) => {
             setArrivalMessage({
                 senderId: data.senderId,
                 text: data.text,
-                createdAt:data.createdAt
+                createdAt: data.createdAt
             } as Message)
         });
         console.log(arrivalMessage)
@@ -51,7 +48,7 @@ const Chat = () => {
     }, [arrivalMessage])
 
     useEffect(() => {
-        const decoded:any = jwtDecode(JSON.parse(localStorage.getItem('userData') as string))
+        const decoded: any = jwtDecode(JSON.parse(localStorage.getItem('userData') as string))
         console.log('userid token', decoded.Id)
         setUserId(decoded.Id);
         socket.current?.emit('addUser', decoded.Id);
@@ -73,7 +70,7 @@ const Chat = () => {
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                if(currentChat){
+                if (currentChat) {
                     const res: any = await getMessages(currentChat?._id);
                     setMessages(res?.data?.messages);
                 }
@@ -100,9 +97,9 @@ const Chat = () => {
             senderId: userId,
             receiverId,
             text: newMessage,
-            createdAt:Date.now()
+            createdAt: Date.now()
         })
-        setMessages((prev)=>[...prev,res?.data.message])
+        setMessages((prev) => [...prev, res?.data.message])
         setNewMessage('')
     }
 
@@ -112,8 +109,7 @@ const Chat = () => {
             <div className="h-screen flex w-full">
                 <div className="flex lg:w-1/4 md:w-2/6 w-1/6">
                     <div className="p-0 md:p-2 h-full w-full bg-[#fbfafa]  border-r">
-                        {/* <input placeholder="Search for friends" className="w-full px-2 border-b-gray-200 h-8  mt-4 rounded-full hidden md:block" /> */}
-                        {conversations && conversations.map((c:IConversation) => (
+                        {conversations && conversations.map((c: IConversation) => (
                             <div key={c._id} onClick={() => setCurrentChat(c)}>
                                 < Conversation conversation={c} currentUser={userId} role={'user'} />
                             </div>

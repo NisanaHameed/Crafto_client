@@ -4,9 +4,9 @@ import Navbar from "../../Components/common/Navbar"
 const EditProfile = () => {
 
   return (
-  <>
-    < Navbar role={'professional'} />
-    < EditDetails />
+    <>
+      < Navbar role={'professional'} />
+      < EditDetails />
     </>
   )
 }

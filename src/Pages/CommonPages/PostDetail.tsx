@@ -221,18 +221,18 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
             </div>
             <div className="botttom-0 left-0 pl-2 border-t border-gray-200 sticky z-10">
               <img className=" rounded" src='' />
-                <div className="flex flex-row justify-between">
-                  {post?.likes.some(like => like?.user?._id === userId) ?
-                    <img onClick={() => handleUnlike(post?._id)} src="/liked.png" className="w-6 inline mt-2 cursor-pointer" alt="" />
-                    :
-                    <img onClick={() => handleLike(post?._id as string)} src="/like.png" className="w-6 inline mt-2 cursor-pointer" alt="" />
-                  }
-                  {post?.saved.includes(userId) ?
-                    <img onClick={() => handleUnsave(post?._id as string)} src="/saved.png" className="w-5 h-5 mr-2 mt-3 cursor-pointer justify-end" />
-                    :
-                    <img onClick={() => handleSave(post?._id as string)} src="/save.png" className="w-5 h-5 mr-2 mt-3 cursor-pointer justify-end" />
-                  }
-                </div>
+              <div className="flex flex-row justify-between">
+                {post?.likes.some(like => like?.user?._id === userId) ?
+                  <img onClick={() => handleUnlike(post?._id)} src="/liked.png" className="w-6 inline mt-2 cursor-pointer" alt="" />
+                  :
+                  <img onClick={() => handleLike(post?._id as string)} src="/like.png" className="w-6 inline mt-2 cursor-pointer" alt="" />
+                }
+                {post?.saved.includes(userId) ?
+                  <img onClick={() => handleUnsave(post?._id as string)} src="/saved.png" className="w-5 h-5 mr-2 mt-3 cursor-pointer justify-end" />
+                  :
+                  <img onClick={() => handleSave(post?._id as string)} src="/save.png" className="w-5 h-5 mr-2 mt-3 cursor-pointer justify-end" />
+                }
+              </div>
               <p onClick={() => handleShowLikes(post?.likes)} className="text-sm cursor-pointer">{post?.likes.length} likes</p>
               <div className="flex justify-between border-t border-slate-200 my-2">
                 <input value={comment} onChange={(e) => setComment(e.target.value)} className=" w-2/3 h-8 border border-transparent appearance-none focus:outline-none" placeholder="Add a comment" />

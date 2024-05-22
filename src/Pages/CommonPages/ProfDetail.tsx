@@ -39,7 +39,7 @@ const ProfDetail: React.FC<IRole> = ({ role }) => {
 
     useEffect(() => {
         if (role == 'user') {
-            const decoded:any = jwtDecode(JSON.parse(localStorage.getItem('userData') as string))
+            const decoded: any = jwtDecode(JSON.parse(localStorage.getItem('userData') as string))
             setUserId(decoded.Id);
         }
     }, [])
@@ -136,10 +136,6 @@ const ProfDetail: React.FC<IRole> = ({ role }) => {
                                     <span className="font-semibold">{postCount} </span>
                                     posts
                                 </li>
-                                {/* <li>
-                                    <span className="font-semibold">40.5k </span>
-                                    followers
-                                </li> */}
                             </ul>
                             <div className="block">
                                 <span>{data?.job} | {data?.experience} years</span>

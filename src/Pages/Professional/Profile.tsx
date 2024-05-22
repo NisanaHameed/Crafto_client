@@ -66,7 +66,6 @@ const ProfilePage = () => {
                     < Sidebar />
                 </div>
                 <div className="mt-8 md:w-3/4 w-full px-5">
-                    {/* <main className="bg-gray-100 bg-opacity-25 mt-3 relative overflow-x-auto p-4 sm:ml-64 lg:ml-0"> */}
                     <div className="lg:w-8/12 lg:ml-20 mb-8">
                         <header className="flex flex-wrap items-center p-4 md:py-8">
                             <div className="md:w-3/12 md:ml-16">
@@ -97,10 +96,6 @@ const ProfilePage = () => {
                                         <span className="font-semibold">{postCount} </span>
                                         posts
                                     </li>
-                                    {/* <li>
-                                    <span className="font-semibold">40.5k </span>
-                                    followers
-                                </li> */}
                                 </ul>
                                 <div className="hidden md:block">
                                     <span>{data?.job} | {data?.experience} years</span>
@@ -151,8 +146,6 @@ const ProfilePage = () => {
                             }
                         </div>
                     </div>
-
-                    {/* </main> */}
                 </div>
             </div>
         </>

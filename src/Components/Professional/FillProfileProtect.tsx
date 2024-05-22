@@ -1,10 +1,8 @@
-import { Outlet,Navigate } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 
-const FillProfileProtect = ()=>{   
+const FillProfileProtect = () => {
 
     let profotp = localStorage.getItem('profotp')
-    
-console.log('In FillProfileProtect'+profotp);
 
     return (
 

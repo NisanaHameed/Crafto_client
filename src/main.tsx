@@ -10,7 +10,7 @@ import store from './Store/Store'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
     <React.StrictMode>
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_REACT_APP_Client_id } >
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_REACT_APP_Client_id} >
         <App />
       </GoogleOAuthProvider>
     </React.StrictMode>

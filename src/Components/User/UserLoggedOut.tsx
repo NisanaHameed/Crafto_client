@@ -1,26 +1,21 @@
 import { useSelector } from "react-redux"
 import { Navigate, Outlet } from "react-router-dom";
 
-interface state{
-    auth:{
-        userData:string,
-        profData:string
+interface state {
+    auth: {
+        userData: string,
+        profData: string
     }
 }
 
-const UserLoggedOut = ()=>{
+const UserLoggedOut = () => {
 
-    const {userData,profData} = useSelector((state:state)=>state.auth);
-    console.log(userData)
-    console.log('token checking...')
-    // return (
-    //     userData ? <Navigate to='/' /> : <Outlet />
-    // )
-    if(userData){
+    const { userData, profData } = useSelector((state: state) => state.auth);
+    if (userData) {
         return <Navigate to='/' />
-    }else if(profData){
+    } else if (profData) {
         return <Navigate to='/professional' />
-    }else{
+    } else {
         return <Outlet />
     }
 

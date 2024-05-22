@@ -15,7 +15,7 @@ const ErrorPage = () => {
                     <p className="mb-8">
                         But dont worry, you can find plenty of other things on our homepage.
                     </p>
-                    <button onClick={() => navigate('/')} className="px-4 inline py-2 text-sm font-medium leading-5 shadow text-white transition-colors duration-150 border border-transparent rounded-lg focus:outline-none focus:shadow-outline-blue bg-green-500 active:bg-blue-600 hover:bg-blue-700">
+                    <button onClick={() => navigate('/')} className="px-4 inline py-2 text-sm font-medium leading-5 shadow text-white transition-colors duration-150 border border-transparent rounded-lg focus:outline-none focus:shadow-outline-blue bg-green-500 hover:bg-green-700">
                         back to homepage
                     </button>
                 </div>
