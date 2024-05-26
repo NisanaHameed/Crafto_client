@@ -199,7 +199,7 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
           <div className="w-3/5 flex hidden md:block"><img src={post?.image} alt="" className="w-full object-contain" /></div>
           <div className="md:w-2/5 w-full mx-6 md:mx-0 flex flex-col border border-b-4 ">
             <div className="top-0 left-0 bg-white w-full sticky pl-2 z-10 border-b py-2 border-gray-200">
-              <img src={post?.profId.image} className="inline w-6 h-6 object-cover rounded-full" alt="" />
+              <img src={post?.profId.image} className="inline w-6 h-6 object-cover rounded-full border border-gray-200" alt="" />
               <h2 className="inline ml-2">{post?.profId.firstname} {post?.profId.lastname}</h2>
               <p className=" ml-8 text-sm ">{post?.caption}</p>
             </div>
@@ -281,7 +281,7 @@ const PostDetail: React.FC<IRole> = ({ role, feedPage }) => {
                   (
                     <li key={ind}>
                       <a className="flex items-center p-1 font-medium text-sm text-gray-900 rounded-lg hover:bg-gray-100 group hover:shadow">
-                        <img className="w-9 h-9 rounded-full border border-gray-400" src={like.user.image} alt="" />
+                        <img className="w-9 h-9 rounded-full border border-gray-400 object-cover" src={like.user.image} alt="" />
                         {like.type === 'User' ?
                           <span className="flex-1 ms-3 whitespace-nowrap">{like.user.name}</span>
                           :

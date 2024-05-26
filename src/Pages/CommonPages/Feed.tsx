@@ -312,7 +312,7 @@ const Feed: React.FC<IRole> = ({ role }) => {
                   (
                     <li key={ind}>
                       <a className="flex items-center p-1 font-medium text-sm text-gray-900 rounded-lg hover:bg-gray-100 group hover:shadow">
-                        <img className="w-9 h-9 rounded-full border border-gray-400 object" src={like.user.image} alt="" />
+                        <img className="w-9 h-9 rounded-full border border-gray-400 object-cover" src={like.user.image} alt="" />
                         {like.type === 'User' ?
                           <span className="flex-1 ms-3 whitespace-nowrap">{like.user.name}</span>
                           :
