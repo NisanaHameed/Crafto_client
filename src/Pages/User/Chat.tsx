@@ -87,7 +87,7 @@ const Chat = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        if(!newMessage.trim().length){
+        if (!newMessage.trim().length) {
             return;
         }
 

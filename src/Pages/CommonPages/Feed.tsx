@@ -224,7 +224,7 @@ const Feed: React.FC<IRole> = ({ role }) => {
         {posts && posts.map((val) =>
         (
           <div key={val._id} className="border-b border-gray-200 mt-5">
-            <img onClick={() => profDetail(val?.profId._id as string)} src={val.profId.image} className="inline w-7 h-7 object-cover rounded-full cursor-pointer" alt="" />
+            <img onClick={() => profDetail(val?.profId._id as string)} src={val.profId.image} className="inline w-7 h-7 object-cover rounded-full cursor-pointer border border-gray-200" alt="" />
             <h2 onClick={() => profDetail(val?.profId._id as string)} className="inline ml-3 cursor-pointer text-sm font-semibold text-gray-600">{val.profId.firstname} {val.profId.lastname}</h2>
             {val.profId.isVerified && <img src="/verified.png" className="w-5 inline ml-[2px]" alt="" />}
             <img className="mt-4 rounded" src={val.image} />
@@ -312,7 +312,7 @@ const Feed: React.FC<IRole> = ({ role }) => {
                   (
                     <li key={ind}>
                       <a className="flex items-center p-1 font-medium text-sm text-gray-900 rounded-lg hover:bg-gray-100 group hover:shadow">
-                        <img className="w-9 h-9 rounded-full border border-gray-400" src={like.user.image} alt="" />
+                        <img className="w-9 h-9 rounded-full border border-gray-400 object" src={like.user.image} alt="" />
                         {like.type === 'User' ?
                           <span className="flex-1 ms-3 whitespace-nowrap">{like.user.name}</span>
                           :
